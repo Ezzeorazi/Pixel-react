@@ -3,7 +3,7 @@ import React from 'react'
 const Planes = () => {
   return (
     <>
-   <section className="about-section text-center">
+   <section className="about-section text-center animate__animated animate__fadeIn">
       <div className="container">
         <h2 className="text-white text-center mb-4" id="planes">Nuestros planes</h2>
         <div className="row">

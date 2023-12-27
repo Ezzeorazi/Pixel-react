@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mt-3">
         <h2 className="text-center text-white mb-4">
           ¿Interesado en soluciones personalizadas para tus objetivos? Desea un
-          plan ajustado a su presupuesto?{" "}
+          plan ajustado a su presupuesto?
         </h2>
         <p className="text-center text-white mb-4">
           Póngase en contacto con nosotros para conversar sobre su idea y
@@ -23,10 +23,14 @@ const Footer = () => {
       <a
         href="https://wa.me/543413804322?text=Hola,%20estoy%20interesado%20en%20sus%20servicios"
         target="_blank"
-        className="whatsapp-button mb-5 tracking-in-contract-bck-bottom"
+        className="whatsapp-button mb-5"
         aria-label="haz click para chatear por Whatsapp"
       >
-        <i className="fab fa-whatsapp "></i>
+        <img
+          src="img/logo wsp.png"
+          alt="Logo-Whatsapp"
+          style={{ height: "48px", width: "40px" }}
+        />
       </a>
       <footer className="bg-black text-white">
         <div className="container">
@@ -45,7 +49,11 @@ const Footer = () => {
                   target="_blank"
                   aria-label="haz click para seguirnos en facebook"
                 >
-                  <i className="fab fa-facebook"></i>
+                  <img
+                    src="img/logo fb.png"
+                    alt="Logo-facebookp"
+                    style={{ height: "35px", width: "20px" }}
+                  />
                 </a>
                 <a
                   className="mx-2"
@@ -53,7 +61,11 @@ const Footer = () => {
                   target="_blank"
                   aria-label="haz click para seguirnos por linkedin"
                 >
-                  <i className="fa-brands fa-linkedin-in"></i>
+                  <img
+                    src="img/logo linkedin.png"
+                    alt="Logo-linkedin"
+                    style={{ height: "25px", width: "25px" }}
+                  />
                 </a>
                 <a
                   className="mx-2"
@@ -61,7 +73,11 @@ const Footer = () => {
                   target="_blank"
                   aria-label="haz click para seguirnos por instagram"
                 >
-                  <i className="fab fa-instagram"></i>
+                  <img
+                    src="img/logo instagram.png"
+                    alt="Logo-instagram"
+                    style={{ height: "25px", width: "25px" }}
+                  />
                 </a>
                 <a
                   className="mx-2"
@@ -69,7 +85,11 @@ const Footer = () => {
                   target="_blank"
                   aria-label="haz click para contactarte con nosotros"
                 >
-                  <i className="fa-regular fa-envelope"></i>
+                  <img
+                    src="img/logo gmail.png"
+                    alt="Logo-gmail"
+                    style={{ height: "23px", width: "25px" }}
+                  />
                 </a>
               </div>
             </div>

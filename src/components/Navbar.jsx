@@ -59,7 +59,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link font-weight-bold" to="/portfolio">
-                  Portfolio
+                  Portafolio
                 </NavLink>
               </li>
               <li className="nav-item">

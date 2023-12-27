@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Portfolio = () => {
   return (
 <>
-<div className="container bg-black w-100" style={{marginTop: '150px'}}>
+<div className="container bg-black w-100 animate__animated animate__fadeIn" style={{marginTop: '150px'}}>
   <div className="row gx-0 mb-lg-0 justify-content-center" id="projects">
     <h2 className="text-center text-white mb-4">Portafolio</h2>
   <div className="col-lg-6">

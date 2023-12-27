@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Carrousel from "../components/Carrousel";
 
 const Home = () => {
   return (
     <>
-      <header className="masthead" >
+      <header className="masthead animate__animated animate__fadeIn" >
         <div className="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
           <div className="d-flex justify-content-center">
             <div className="text-center">
@@ -20,7 +21,8 @@ const Home = () => {
           </div>
         </div>
       </header>
-
+      {/* carrousel */}
+      <Carrousel/>
       <div className="bg-primary text-dark ">
         <div className="container-fluid px-4 px-lg-5 mb-3 p-0">
           <h2 className="text-center text-white pt-4 ">¿Qué ofrecemos?</h2>

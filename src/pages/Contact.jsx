@@ -3,7 +3,7 @@ import React from 'react'
 const Contact = () => {
   return (
     <>
-<section className="masthead w-100" id="signup" style={{height: '680px', marginTop: '120px'}}>
+<section className="masthead w-100 animate__animated animate__fadeIn" id="signup" style={{height: '680px', marginTop: '120px'}}>
   <div className="container px-4 px-lg-5">
     <div className="row gx-4 gx-lg-5">
       <div className="col-md-12 col-lg-8 mx-auto text-center">
