@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <>
       <div className="container mt-3">
-        <h2 className="text-center text-white mb-4">
+        <h2 className="text-center text-white mb-4 mt-5">
           ¿Interesado en soluciones personalizadas para tus objetivos? Desea un
           plan ajustado a su presupuesto?
         </h2>
@@ -29,10 +29,10 @@ const Footer = () => {
         <img
           src="img/logo wsp.png"
           alt="Logo-Whatsapp"
-          style={{ height: "48px", width: "40px" }}
+          style={{ height: "50px", width: "50px" }}
         />
       </a>
-      <footer className="bg-black text-white">
+      <footer className="bg-black text-white mt-4">
         <div className="container">
           <div className="row ">
             <div className="col-lg-5 mt-3">
@@ -52,7 +52,7 @@ const Footer = () => {
                   <img
                     src="img/logo fb.png"
                     alt="Logo-facebookp"
-                    style={{ height: "35px", width: "20px" }}
+                    style={{ height: "28px", width: "15px" }}
                   />
                 </a>
                 <a
@@ -86,9 +86,9 @@ const Footer = () => {
                   aria-label="haz click para contactarte con nosotros"
                 >
                   <img
-                    src="img/logo gmail.png"
+                    src="img/logo-email.png"
                     alt="Logo-gmail"
-                    style={{ height: "23px", width: "25px" }}
+                    style={{ height: "35px", width: "30px" }}
                   />
                 </a>
               </div>

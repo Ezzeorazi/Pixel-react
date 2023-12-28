@@ -107,10 +107,15 @@ body {
   background-color: green;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 5px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 24px;
+}
+
+.whatsapp-button:hover {
+  background-color: #024e0f;
+
 }
 
 hr {
@@ -11172,7 +11177,7 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 .social a:hover {
-  color: rgba(255, 255, 255, 0.5);
+  background-color: #101214;
 }
 .social a:active {
   color: #fff;

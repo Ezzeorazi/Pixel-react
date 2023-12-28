@@ -5,7 +5,7 @@ import Carrousel from "../components/Carrousel";
 const Home = () => {
   return (
     <>
-      <header className="masthead animate__animated animate__fadeIn" >
+      <header className="masthead animate__animated animate__fadeIn">
         <div className="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
           <div className="d-flex justify-content-center">
             <div className="text-center">
@@ -22,10 +22,10 @@ const Home = () => {
         </div>
       </header>
       {/* carrousel */}
-      <Carrousel/>
+      <Carrousel />
       <div className="bg-primary text-dark ">
-        <div className="container-fluid px-4 px-lg-5 mb-3 p-0">
-          <h2 className="text-center text-white pt-4 ">¿Qué ofrecemos?</h2>
+        <div className="container-fluid px-4 px-lg-5 mb-3 p-0 mt-5">
+          <h2 className="text-center text-white pt-5 ">¿Qué ofrecemos?</h2>
           <h5 className="text-center text-white pb-2">
             Soluciones completas que satisfacen las necesidades de tu proyecto.
           </h5>
@@ -97,7 +97,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-3 mb-md-0 mt-4">
+            <div className="col-md-4 mb-3 mb-md-4 mt-4">
               <div className="card py-4 h-100">
                 <div className="badge">En tendencia</div>
                 <div className="card-body text-center">
@@ -122,7 +122,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-2 mb-md-0 mt-4">
+            <div className="col-md-4 mb-2 mb-md-4 mt-4">
               <div className="card py-4 h-100">
                 <div className="card-body text-center">
                   <img
@@ -145,7 +145,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-3 mb-md-0 mt-4">
+            <div className="col-md-4 mb-3 mb-md-4 mt-4">
               <div className="card py-4 h-100">
                 <div className="badge">En tendencia</div>
                 <div className="card-body text-center">
