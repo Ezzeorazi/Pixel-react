@@ -62,7 +62,7 @@ const NavbarEn = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link font-weight-bold" to="/en/portfolioEn">
-                  Portafolio
+                  Portfolio
                 </NavLink>
               </li>
               <li className="nav-item">
