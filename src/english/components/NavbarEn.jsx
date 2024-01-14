@@ -35,7 +35,9 @@ const NavbarEn = () => {
             />
           </NavLink>
           <div className="d-flex align-items-start">
-            <NavLink hreflang="es" to="/" className="btn-eng">Esp</NavLink>
+            <NavLink hreflang="es" to="/" className="btn-eng">
+              Esp
+            </NavLink>
           </div>
           <button
             className="navbar-toggler"
@@ -56,22 +58,38 @@ const NavbarEn = () => {
           >
             <ul className="navbar-nav ms-auto" style={{ fontSize: "16px" }}>
               <li className="nav-item">
-                <NavLink hreflang="en" className="nav-link font-weight-bold" to="/en">
+                <NavLink
+                  hreflang="en"
+                  className="nav-link font-weight-bold"
+                  to="/en"
+                >
                   About us
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="en" className="nav-link font-weight-bold" to="/en/portfolioEn">
+                <NavLink
+                  hreflang="en"
+                  className="nav-link font-weight-bold"
+                  to="/en/portfolioEn"
+                >
                   Portfolio
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="en" className="nav-link font-weight-bold" to="/en/planesEn">
+                <NavLink
+                  hreflang="en"
+                  className="nav-link font-weight-bold"
+                  to="/en/planesEn"
+                >
                   Plans
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="en" className="nav-link font-weight-bold" to="/en/contactEn">
+                <NavLink
+                  hreflang="en"
+                  className="nav-link font-weight-bold"
+                  to="/en/contactEn"
+                >
                   Contact
                 </NavLink>
               </li>

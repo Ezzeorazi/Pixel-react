@@ -14,7 +14,7 @@ const FooterEn = () => {
           designed especially for you.
         </p>
         <div className="text-center mb-3">
-          <Link hreflang="en" to="/en/contact" className="btn btn-primary">
+          <Link hreflang="en" to="/en/contacten" className="btn btn-primary">
             CONTACT US
           </Link>
         </div>

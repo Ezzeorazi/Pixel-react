@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useRef, useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 const ContactEn = () => {
   const [form, setForm] = useState({
-    company: '',
-    email: '',
-    phone: '',
-    country: '',
-    message: ''
+    company: "",
+    email: "",
+    phone: "",
+    country: "",
+    message: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -21,11 +21,13 @@ const ContactEn = () => {
   const validate = () => {
     let newErrors = {};
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!form.company) newErrors.company = 'The company name is required.';
-    if (!emailRegex.test(form.email)) newErrors.email = 'The email is not valid.';
-    if (!form.phone.match(/^[0-9]+$/)) newErrors.phone = 'The phone should only contain numbers.';
-    if (!form.country) newErrors.country = 'The country is needed.';
-    if (!form.message) newErrors.message = 'The message cannot be empty.';
+    if (!form.company) newErrors.company = "The company name is required.";
+    if (!emailRegex.test(form.email))
+      newErrors.email = "The email is not valid.";
+    if (!form.phone.match(/^[0-9]+$/))
+      newErrors.phone = "The phone should only contain numbers.";
+    if (!form.country) newErrors.country = "The country is needed.";
+    if (!form.message) newErrors.message = "The message cannot be empty.";
     return newErrors;
   };
 
@@ -41,20 +43,25 @@ const ContactEn = () => {
       formRef.current.submit(); // Envía el formulario si la validación es exitosa
     }
   };
-  
 
   return (
     <>
-      <section className="masthead w-100 animate__animated animate__fadeIn" id="signup" style={{ height: '680px', marginTop: '120px' }}>
+      <section
+        className="masthead w-100 animate__animated animate__fadeIn"
+        id="signup"
+        style={{ height: "680px", marginTop: "120px" }}
+      >
         <div className="container px-4 px-lg-5">
           <div className="row gx-4 gx-lg-5">
             <div className="col-md-12 col-lg-8 mx-auto text-center">
               <h2 className="text-white mb-4">Contact us</h2>
-              <Form ref={formRef}
-                    action="https://formsubmit.co/7a3e660869721db4c8c655f2b3bc13d0"
-                    method="POST"
-                    noValidate 
-                    onSubmit={handleSubmit}>
+              <Form
+                ref={formRef}
+                action="https://formsubmit.co/7a3e660869721db4c8c655f2b3bc13d0"
+                method="POST"
+                noValidate
+                onSubmit={handleSubmit}
+              >
                 <Form.Group className="mb-3">
                   {/* <Form.Label htmlFor="company">Name</Form.Label> */}
                   <Form.Control
@@ -131,7 +138,12 @@ const ContactEn = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button type="submit" className="btn border btn-outline-warning mt-3">Contact us</Button>
+                <Button
+                  type="submit"
+                  className="btn border btn-outline-warning mt-3"
+                >
+                  Contact us
+                </Button>
               </Form>
             </div>
           </div>
