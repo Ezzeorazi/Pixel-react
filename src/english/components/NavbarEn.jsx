@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
+const NavbarEn = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
@@ -27,9 +27,9 @@ const Navbar = () => {
         id="mainNav"
       >
         <div className="container px-4 px-lg-5">
-          <NavLink className="navbar-brand m-0" to="/">
+          <NavLink className="navbar-brand" to="/en">
             <img
-              src="img/logo-pixelmaker.png"
+              src="/img/logo-pixelmaker.png"
               className="img-logo"
               alt="LOGO"
             />
@@ -38,7 +38,6 @@ const Navbar = () => {
             <NavLink to="/en" className="btn-eng">Eng</NavLink>
             <NavLink to="/" className="btn-eng">Esp</NavLink>
           </div>
-          
           <button
             className="navbar-toggler"
             type="button"
@@ -58,23 +57,23 @@ const Navbar = () => {
           >
             <ul className="navbar-nav ms-auto" style={{ fontSize: "16px" }}>
               <li className="nav-item">
-                <NavLink className="nav-link font-weight-bold" to="/">
-                  Sobre nosotros
+                <NavLink className="nav-link font-weight-bold" to="/en">
+                  About us
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link font-weight-bold" to="/portfolio">
+                <NavLink className="nav-link font-weight-bold" to="/en/portfolioEn">
                   Portafolio
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link font-weight-bold" to="/planes">
-                  Planes
+                <NavLink className="nav-link font-weight-bold" to="/en/planesEn">
+                  Plans
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link font-weight-bold" to="/contact">
-                  Contacto
+                <NavLink className="nav-link font-weight-bold" to="/en/contactEn">
+                  Contact
                 </NavLink>
               </li>
             </ul>
@@ -85,4 +84,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarEn;

@@ -1,51 +1,51 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Carrousel from "../components/Carrousel";
+import CarrouselEn from "../components/CarrouselEn";
 
-const Home = () => {
+const HomeEn = () => {
   return (
     <>
       <header className="masthead animate__animated animate__fadeIn">
         <div className="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
           <div className="d-flex justify-content-center">
             <div className="text-center">
-              <h1>Agencia de Marketing digital y Desarrollo Web</h1>
+              <h1>Digital Marketing and Web Development Agency</h1>
 
               <NavLink
                 className="btn btn-primary tracking-in-contract-bck-bottom mb-4"
-                to="/"
+                to="/en/portfolioen"
               >
-                Conocenos mas
+                Learn more
               </NavLink>
             </div>
           </div>
         </div>
       </header>
       {/* carrousel */}
-      <Carrousel />
+      <CarrouselEn />
       <div className="bg-primary text-dark ">
         <div className="container-fluid px-4 px-lg-5 mb-3 p-0 mt-5">
-          <h2 className="text-center text-white pt-5 ">¿Qué ofrecemos?</h2>
+          <h2 className="text-center text-white pt-5 ">What we offer?</h2>
           <h5 className="text-center text-white pb-2">
-            Soluciones completas que satisfacen las necesidades de tu proyecto.
+          Complete solutions that meet your project needs.
           </h5>
           <div className="row gx-4 gx-lg-5 justify-content-center">
             <div className="col-md-4 mb-3 mb-md-0 mt-4">
               <div className="card py-4 h-100">
                 <div className="card-body text-center">
                   <img
-                    src="img/sitiosWeb.png"
+                    src="/img/sitiosWeb.png"
                     alt="img-sitiosweb-responsive"
                     style={{ width: "100px", height: "auto" }}
                   />
-                  <h5 className="text-uppercase mt-3">Sitios Web</h5>
+                  <h5 className="text-uppercase mt-3">Websites</h5>
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Creamos sitios web a medida que son la cara digital de tu
-                      negocio o proyecto. Nuestros sitios web son diseños únicos
-                      y funcionales que se adaptan a tus necesidades y reflejan
-                      la personalidad de tu marca.
+                    We create custom websites that are the digital face of your business or project.
+                      business or project. Our websites are unique and functional designs
+                      designs that adapt to your needs and reflect your brand's
+                      your brand's personality.
                     </p>
                   </div>
                 </div>
@@ -54,10 +54,10 @@ const Home = () => {
 
             <div className="col-md-4 mb-2 mb-md-0 mt-4">
               <div className="card py-4 h-100">
-                <div className="badge">En tendencia</div>
+                <div className="badge">tendency</div>
                 <div className="card-body text-center">
                   <img
-                    src="img/landingPage.png"
+                    src="/img/landingPage.png"
                     alt="img-landing-responsive"
                     style={{ width: "100px", height: "auto" }}
                   />
@@ -65,10 +65,10 @@ const Home = () => {
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Un sitio web bien diseñado es esencial para establecer una
-                      presencia en línea sólida. Te ayuda a atraer y retener a
-                      clientes, compartir información relevante y presentar tu
-                      negocio de manera profesional.
+                    A well-designed website is essential to establish a solid online presence.
+                      a solid online presence. It helps you attract and retain
+                      customers, share relevant information and present your business
+                      your business in a professional manner.
                     </p>
                   </div>
                 </div>
@@ -79,18 +79,18 @@ const Home = () => {
               <div className="card py-4 h-100">
                 <div className="card-body text-center">
                   <img
-                    src="img/tiendaOnline.png"
+                    src="/img/tiendaOnline.png"
                     alt="img-sitiosweb-responsive"
                     style={{ width: "100px", height: "auto" }}
                   />
-                  <h5 className="text-uppercase mt-3">Tiendas Online</h5>
+                  <h5 className="text-uppercase mt-3">E-Commerce</h5>
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Creamos tiendas en línea completas donde puedes vender tus
-                      productos o servicios de manera segura y conveniente.
-                      Desde la selección de productos hasta el proceso de pago,
-                      diseñamos una experiencia de compra eficiente.
+                    We create complete e-commerce where you can sell your products or services
+                      products or services in a secure and convenient way.
+                      From product selection to the checkout process,
+                      we design an efficient shopping experience.
                     </p>
                   </div>
                 </div>
@@ -99,10 +99,10 @@ const Home = () => {
 
             <div className="col-md-4 mb-3 mb-md-4 mt-4">
               <div className="card py-4 h-100">
-                <div className="badge">En tendencia</div>
+                <div className="badge">tendency</div>
                 <div className="card-body text-center">
                   <img
-                    src="img/logo-SEO.png"
+                    src="/img/logo-SEO.png"
                     alt="img-SEO"
                     style={{ width: "100px", height: "auto" }}
                   />
@@ -110,12 +110,12 @@ const Home = () => {
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Optimizamos tu sitio web para mejorar su visibilidad en
-                      los motores de búsqueda, asegurando que atraiga a los
-                      visitantes adecuados. A través de estrategias de SEO
-                      efectivas, incrementamos la calidad y cantidad del tráfico
-                      web, conectándote con aquellos que buscan tus productos o
-                      servicios.
+                    We optimize your website to improve its visibility on search engines, ensuring that it
+                      search engines, ensuring it attracts the right visitors.
+                      the right visitors. Through effective SEO strategies
+                      strategies, we increase the quality and quantity of web traffic, connecting you
+                      connecting you with those looking for your products or services.
+                      services.
                     </p>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ const Home = () => {
               <div className="card py-4 h-100">
                 <div className="card-body text-center">
                   <img
-                    src="img/logo-Marketing.png"
+                    src="/img/logo-Marketing.png"
                     alt="img-Marketing-digital"
                     style={{ width: "100px", height: "auto" }}
                   />
@@ -134,11 +134,11 @@ const Home = () => {
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Desarrollamos estrategias de marketing digital efectivas
-                      que incrementan la presencia online de tu negocio. Desde
-                      administración de redes sociales hasta campañas de email
-                      marketing, nos aseguramos de que tu mensaje llegue a tu
-                      público objetivo de la manera más impactante.
+                    We develop effective digital marketing strategies
+                      that increase the online presence of your business. From
+                      social media management to email marketing campaigns
+                      marketing campaigns, we make sure that your message reaches your target
+                      target audience in the most impactful way.
                     </p>
                   </div>
                 </div>
@@ -147,23 +147,23 @@ const Home = () => {
 
             <div className="col-md-4 mb-3 mb-md-4 mt-4">
               <div className="card py-4 h-100">
-                <div className="badge">En tendencia</div>
+                <div className="badge">tendency</div>
                 <div className="card-body text-center">
                   <img
-                    src="img/logo-diseñografico.png"
+                    src="/img/logo-diseñografico.png"
                     alt="img-Logo-DiseñoGrafico"
                     style={{ width: "100px", height: "auto" }}
                   />
-                  <h5 className="text-uppercase mt-3">Diseño Grafico</h5>
+                  <h5 className="text-uppercase mt-3">Graphic Design</h5>
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      Transformamos ideas en diseños gráficos atractivos y
-                      poderosos que capturan la esencia de tu negocio. Desde
-                      logotipos hasta materiales de marketing, nos enfocamos en
-                      crear visuales que no solo llamen la atención, sino que
-                      también establezcan una conexión duradera con tu
-                      audiencia.
+                    We transform ideas into attractive and powerful graphic designs
+                      that capture the essence of your business. From
+                      from logos to marketing materials, we focus on creating visuals that not only
+                      creating visuals that not only catch the eye, but also make a lasting
+                      establish a lasting connection with your audience.
+                      audience.
                     </p>
                   </div>
                 </div>
@@ -176,4 +176,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeEn;
