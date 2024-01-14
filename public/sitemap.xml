@@ -1,50 +1,50 @@
-<?xml version="1.1" encoding="UTF-8"?>
+<?xml version="1.2" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://pixelmaker.com.ar/</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/planes</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/portfolio</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/contact</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/en</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/en/portfolioen</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/en/planesen</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://pixelmaker.com.ar/en/contacten</loc>
-        <lastmod>2023-10-17</lastmod>
+        <lastmod>2024-01-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
