@@ -24,5 +24,30 @@
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
+    <url>
+        <loc>https://pixelmaker.com.ar/en</loc>
+        <lastmod>2023-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+    <url>
+        <loc>https://pixelmaker.com.ar/en/portfolioen</loc>
+        <lastmod>2023-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://pixelmaker.com.ar/en/planesen</loc>
+        <lastmod>2023-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://pixelmaker.com.ar/en/contacten</loc>
+        <lastmod>2023-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
    
 </urlset>
