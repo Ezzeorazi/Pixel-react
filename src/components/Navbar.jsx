@@ -34,7 +34,7 @@ const Navbar = () => {
               alt="LOGO"
             />
           </NavLink>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-start">
             <NavLink to="/en" className="btn-eng">Eng</NavLink>
           </div>
           
