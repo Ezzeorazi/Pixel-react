@@ -12,8 +12,9 @@ const Home = () => {
               <h1>Agencia de Marketing digital y Desarrollo Web</h1>
 
               <NavLink
+              hreflang="es"
                 className="btn btn-primary tracking-in-contract-bck-bottom mb-4"
-                to="/"
+                to="/planes"
               >
                 Conocenos mas
               </NavLink>

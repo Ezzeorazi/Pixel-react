@@ -14,7 +14,7 @@ const Footer = () => {
           descubra el paquete perfecto diseñado especialmente para usted.
         </p>
         <div className="text-center mb-3">
-          <Link to={"/contact"} className="btn btn-primary">
+          <Link hreflang="es" to="/contact" className="btn btn-primary">
             CONTACTAR
           </Link>
         </div>
