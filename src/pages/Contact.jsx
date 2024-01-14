@@ -20,8 +20,9 @@ const Contact = () => {
 
   const validate = () => {
     let newErrors = {};
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!form.company) newErrors.company = 'El nombre de la empresa es necesario.';
-    if (!form.email.includes('@')) newErrors.email = 'El email no es válido.';
+    if (!emailRegex.test(form.email)) newErrors.email = 'El email no es válido.';
     if (!form.phone.match(/^[0-9]+$/)) newErrors.phone = 'El teléfono solo debe contener números.';
     if (!form.country) newErrors.country = 'El país es necesario.';
     if (!form.message) newErrors.message = 'El mensaje no puede estar vacío.';
@@ -55,7 +56,7 @@ const Contact = () => {
                     noValidate 
                     onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Nombre de su empresa</Form.Label>
+                  <Form.Label htmlFor="company">Nombre de su empresa</Form.Label>
                   <Form.Control
                     type="text"
                     name="company"
@@ -70,7 +71,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label htmlFor="email">Email</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -85,7 +86,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Teléfono</Form.Label>
+                  <Form.Label htmlFor="mobil">Teléfono</Form.Label>
                   <Form.Control
                     type="tel"
                     name="phone"
@@ -100,7 +101,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>País</Form.Label>
+                  <Form.Label htmlFor="country">País</Form.Label>
                   <Form.Control
                     type="text"
                     name="country"
@@ -115,7 +116,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Mensaje</Form.Label>
+                  <Form.Label htmlFor="message">Mensaje</Form.Label>
                   <Form.Control
                     as="textarea"
                     name="message"
