@@ -11107,7 +11107,7 @@ body {
 .btn-eng {
   text-decoration: none;
   margin-left: 20px;
-  border: 1px solid #116776;
+  border: 1px solid #0e525e;
   padding: 2px;
   border-radius: 8px;
 }
@@ -11143,6 +11143,8 @@ body {
   }
   .btn-eng {
     margin-left: 10px;
+    padding: 3px;
+    font-size: 13px;
   }
 }
 

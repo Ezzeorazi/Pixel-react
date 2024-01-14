@@ -35,7 +35,6 @@ const NavbarEn = () => {
             />
           </NavLink>
           <div className="d-flex align-items-center">
-            <NavLink to="/en" className="btn-eng">Eng</NavLink>
             <NavLink to="/" className="btn-eng">Esp</NavLink>
           </div>
           <button
