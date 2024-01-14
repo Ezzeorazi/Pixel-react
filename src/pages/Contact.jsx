@@ -56,7 +56,7 @@ const Contact = () => {
                     noValidate 
                     onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="company">Nombre de su empresa</Form.Label>
+                  {/* <Form.Label htmlFor="company">Nombre de su empresa</Form.Label> */}
                   <Form.Control
                     type="text"
                     name="company"
@@ -71,7 +71,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="email">Email</Form.Label>
+                  {/* <Form.Label htmlFor="email">Email</Form.Label> */}
                   <Form.Control
                     type="email"
                     name="email"
@@ -86,7 +86,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="mobil">Teléfono</Form.Label>
+                  {/* <Form.Label htmlFor="mobil">Teléfono</Form.Label> */}
                   <Form.Control
                     type="tel"
                     name="phone"
@@ -101,7 +101,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="country">País</Form.Label>
+                  {/* <Form.Label htmlFor="country">País</Form.Label> */}
                   <Form.Control
                     type="text"
                     name="country"
@@ -116,7 +116,7 @@ const Contact = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="message">Mensaje</Form.Label>
+                  {/* <Form.Label htmlFor="message">Mensaje</Form.Label> */}
                   <Form.Control
                     as="textarea"
                     name="message"
