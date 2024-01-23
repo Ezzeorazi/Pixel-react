@@ -43,11 +43,7 @@ const HomeEn = () => {
                   <hr className="my-4 mx-auto" />
                   <div className="small text-black">
                     <p>
-                      We create custom websites that are the digital face of
-                      your business or project. business or project. Our
-                      websites are unique and functional designs designs that
-                      adapt to your needs and reflect your brand's your brand's
-                      personality.
+                      We specialize in creating unique, functional websites that showcase your business or project. Our designs are tailored to your brand, providing a seamless user experience. From fast-loading pages to SEO optimization, we prioritize performance. Partner with us to elevate your online presence through a custom website that captures your vision.
                     </p>
                   </div>
                 </div>
@@ -68,9 +64,9 @@ const HomeEn = () => {
                   <div className="small text-black">
                     <p>
                       A well-designed website is essential to establish a solid
-                      online presence. a solid online presence. It helps you
+                      online presence. It helps you
                       attract and retain customers, share relevant information
-                      and present your business your business in a professional
+                      and present your business in a professional
                       manner.
                     </p>
                   </div>
@@ -91,7 +87,7 @@ const HomeEn = () => {
                   <div className="small text-black">
                     <p>
                       We create complete e-commerce where you can sell your
-                      products or services products or services in a secure and
+                      products or services in a secure and
                       convenient way. From product selection to the checkout
                       process, we design an efficient shopping experience.
                     </p>
@@ -114,12 +110,12 @@ const HomeEn = () => {
                   <div className="small text-black">
                     <p>
                       We optimize your website to improve its visibility on
-                      search engines, ensuring that it search engines, ensuring
-                      it attracts the right visitors. the right visitors.
-                      Through effective SEO strategies strategies, we increase
+                      search engines, ensuring
+                      it attracts the right visitors.
+                      Through effective SEO strategies, we increase
                       the quality and quantity of web traffic, connecting you
-                      connecting you with those looking for your products or
-                      services. services.
+                      with those looking for your products or
+                      services.
                     </p>
                   </div>
                 </div>
@@ -140,9 +136,8 @@ const HomeEn = () => {
                     <p>
                       We develop effective digital marketing strategies that
                       increase the online presence of your business. From social
-                      media management to email marketing campaigns marketing
-                      campaigns, we make sure that your message reaches your
-                      target target audience in the most impactful way.
+                      media management to email marketing campaigns, we make sure that your message reaches your
+                      target audience in the most impactful way.
                     </p>
                   </div>
                 </div>
@@ -164,10 +159,10 @@ const HomeEn = () => {
                     <p>
                       We transform ideas into attractive and powerful graphic
                       designs that capture the essence of your business. From
-                      from logos to marketing materials, we focus on creating
-                      visuals that not only creating visuals that not only catch
-                      the eye, but also make a lasting establish a lasting
-                      connection with your audience. audience.
+                      logos to marketing materials, we focus on creating
+                      visuals that not only catch
+                      the eye, but also make a lasting establish
+                      connection with your audience.
                     </p>
                   </div>
                 </div>
