@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import NavbarEn from "../components/NavbarEn";
 import FooterEn from "../components/FooterEn";
 import { useEffect } from "react";
+import StructuredData from "../path-to/StructuredData";
 
 export const LayoutPublicEn = () => {
   useEffect(() => {
@@ -16,7 +17,9 @@ export const LayoutPublicEn = () => {
   }, []);
   return (
     <>
+      <StructuredData language="en" />
       <NavbarEn />
+
       <Outlet />
       <FooterEn />
     </>
