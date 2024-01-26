@@ -12,7 +12,7 @@ const HomeEn = () => {
               <h1>Digital Marketing and Web Development Agency</h1>
 
               <NavLink
-                hreflang="en"
+                lang="en"
                 className="btn btn-primary tracking-in-contract-bck-bottom mb-4"
                 to="/en/portfolioen"
               >
