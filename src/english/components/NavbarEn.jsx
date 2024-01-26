@@ -35,7 +35,7 @@ const NavbarEn = () => {
             />
           </NavLink>
           <div className="d-flex align-items-start">
-            <NavLink hreflang="es" to="/" className="btn-eng">
+            <NavLink lang="es" to="/" className="btn-eng">
               Esp
             </NavLink>
           </div>
@@ -59,7 +59,7 @@ const NavbarEn = () => {
             <ul className="navbar-nav ms-auto" style={{ fontSize: "16px" }}>
               <li className="nav-item">
                 <NavLink
-                  hreflang="en"
+                  lang="en"
                   className="nav-link font-weight-bold"
                   to="/en"
                 >
@@ -68,7 +68,7 @@ const NavbarEn = () => {
               </li>
               <li className="nav-item">
                 <NavLink
-                  hreflang="en"
+                  lang="en"
                   className="nav-link font-weight-bold"
                   to="/en/portfolioEn"
                 >
@@ -77,7 +77,7 @@ const NavbarEn = () => {
               </li>
               <li className="nav-item">
                 <NavLink
-                  hreflang="en"
+                  lang="en"
                   className="nav-link font-weight-bold"
                   to="/en/planesEn"
                 >
@@ -86,7 +86,7 @@ const NavbarEn = () => {
               </li>
               <li className="nav-item">
                 <NavLink
-                  hreflang="en"
+                  lang="en"
                   className="nav-link font-weight-bold"
                   to="/en/contactEn"
                 >

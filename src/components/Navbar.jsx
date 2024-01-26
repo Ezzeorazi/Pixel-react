@@ -27,7 +27,7 @@ const Navbar = () => {
         id="mainNav"
       >
         <div className="container px-4 px-lg-5">
-          <NavLink hreflang="es" className="navbar-brand m-0" to="/">
+          <NavLink lang="es" className="navbar-brand m-0" to="/">
             <img
               src="img/logo-pixelmaker.png"
               className="img-logo"
@@ -36,7 +36,7 @@ const Navbar = () => {
           </NavLink>
 
           <div className="d-flex align-items-start">
-            <NavLink to="/en" hreflang="en" className="btn-eng">Eng</NavLink>
+            <NavLink to="/en" lang="en" className="btn-eng">Eng</NavLink>
           </div>
           
           <button
@@ -58,22 +58,22 @@ const Navbar = () => {
           >
             <ul className="navbar-nav ms-auto" style={{ fontSize: "16px" }}>
               <li className="nav-item">
-                <NavLink hreflang="es" className="nav-link font-weight-bold" to="/">
+                <NavLink lang="es" className="nav-link font-weight-bold" to="/">
                   Sobre nosotros
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="es" className="nav-link font-weight-bold" to="/portfolio">
+                <NavLink lang="es" className="nav-link font-weight-bold" to="/portfolio">
                   Portafolio
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="es" className="nav-link font-weight-bold" to="/planes">
+                <NavLink lang="es" className="nav-link font-weight-bold" to="/planes">
                   Planes
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink hreflang="es" className="nav-link font-weight-bold" to="/contact">
+                <NavLink lang="es" className="nav-link font-weight-bold" to="/contact">
                   Contacto
                 </NavLink>
               </li>
