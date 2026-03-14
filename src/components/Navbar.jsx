@@ -1,88 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { NAV_LINKS } from '../constants/data';
+import { Logo } from './Logo';
 
-const Navbar = () => {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-
-  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+export const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const navbarShrink = () => {
-      const navbarCollapsible = document.getElementById("mainNav");
-      if (window.scrollY === 0) {
-        navbarCollapsible.classList.remove("navbar-shrink");
-      } else {
-        navbarCollapsible.classList.add("navbar-shrink");
-      }
-    };
-
-    // Shrink the navbar when page is scrolled
-    window.addEventListener("scroll", navbarShrink);
-    return () => window.removeEventListener("scroll", navbarShrink);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  return (
-    <>
-      <nav
-        className="navbar navbar-expand-lg navbar-light fixed-top"
-        id="mainNav"
-      >
-        <div className="container px-4 px-lg-5">
-          <NavLink lang="es" className="navbar-brand m-0" to="/">
-            <img
-              src="img/logo-pixelmaker.png"
-              className="img-logo"
-              alt="LOGO"
-            />
-          </NavLink>
 
-          <div className="d-flex align-items-start">
-            <NavLink to="/en" lang="en" className="btn-eng">Eng</NavLink>
-          </div>
-          
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarResponsive"
-            aria-controls="navbarResponsive"
-            aria-expanded={!isNavCollapsed ? true : false}
-            aria-label="Toggle navigation"
-            onClick={handleNavCollapse}
-          >
-            Menu
-            <i className="fas fa-bars"></i>
-          </button>
-          <div
-            className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
-            id="navbarResponsive"
-          >
-            <ul className="navbar-nav ms-auto" style={{ fontSize: "16px" }}>
-              <li className="nav-item">
-                <NavLink lang="es" className="nav-link font-weight-bold" to="/">
-                  Sobre nosotros
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink lang="es" className="nav-link font-weight-bold" to="/portfolio">
-                  Portafolio
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink lang="es" className="nav-link font-weight-bold" to="/planes">
-                  Planes
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink lang="es" className="nav-link font-weight-bold" to="/contact">
-                  Contacto
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+  return (
+    <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0a0a0c]/80 backdrop-blur-lg border-b border-white/5 py-3 shadow-2xl' : 'bg-transparent py-5'}`}>
+      <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+        <a href="#inicio" className="hover:opacity-80 transition-opacity">
+          <Logo />
+        </a>
+
+        <nav className="hidden md:flex space-x-8">
+          {NAV_LINKS.map((link) => (
+            <a key={link.name} href={link.href} className="text-sm font-medium text-gray-400 hover:text-purple-400 transition-colors">
+              {link.name}
+            </a>
+          ))}
+        </nav>
+
+        <button className="md:hidden text-gray-300 hover:text-white" onClick={() => setIsOpen(!isOpen)} aria-label="Menú">
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-[#121215] border-t border-white/5 py-4 px-4 flex flex-col space-y-4 shadow-xl">
+          {NAV_LINKS.map((link) => (
+            <a 
+              key={link.name} href={link.href} 
+              className="text-base font-medium text-gray-300 hover:text-purple-400 p-2 rounded-md hover:bg-white/5"
+              onClick={() => setIsOpen(false)}
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
-      </nav>
-    </>
+      )}
+    </header>
   );
 };
-
-export default Navbar;
