@@ -168,7 +168,7 @@ npm run build
 # Sube el contenido de 'dist' a tu proveedor de hosting
 ```
 
-## 🤝 Contribuir
+## 🤝
 
 1. Fork el proyecto
 2. Crea tu rama de feature (`git checkout -b feature/AmazingFeature`)
@@ -176,16 +176,6 @@ npm run build
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📝 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
-## 📞 Contacto
 
-- **Autor:** Ezzeorazi
-- **GitHub:** [https://github.com/Ezzeorazi](https://github.com/Ezzeorazi)
-- **Proyecto:** [https://github.com/Ezzeorazi/Pixel-react](https://github.com/Ezzeorazi/Pixel-react)
-
----
-
-¡Gracias por revisar Pixel React! 🎉
