@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Plus, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { deletePost, togglePublished } from '@/app/actions/admin';
+import { AdminGuard } from '@/components/admin/AdminGuard';
 
 async function getPosts() {
   const supabase = await createAdminClient();
@@ -16,6 +17,7 @@ export default async function AdminBlogPage() {
   const posts = await getPosts();
 
   return (
+    <AdminGuard>
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -102,5 +104,6 @@ export default async function AdminBlogPage() {
         </table>
       </div>
     </div>
+    </AdminGuard>
   );
 }

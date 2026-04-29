@@ -1,6 +1,7 @@
 import { Mail, Trash2, Check } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { markRead, deleteMessage } from '@/app/actions/admin';
+import { AdminGuard } from '@/components/admin/AdminGuard';
 
 async function getMessages() {
   const supabase = await createAdminClient();
@@ -16,6 +17,7 @@ export default async function AdminMessagesPage() {
   const unread = messages.filter((m) => !m.read).length;
 
   return (
+    <AdminGuard>
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white">Mensajes de contacto</h1>
@@ -92,5 +94,6 @@ export default async function AdminMessagesPage() {
         ))}
       </div>
     </div>
+    </AdminGuard>
   );
 }

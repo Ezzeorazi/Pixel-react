@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Plus, Pencil, Trash2, Star } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { deleteProject } from '@/app/actions/admin';
+import { AdminGuard } from '@/components/admin/AdminGuard';
 
 async function getProjects() {
   const supabase = await createAdminClient();
@@ -13,6 +14,7 @@ export default async function AdminProjectsPage() {
   const projects = await getProjects();
 
   return (
+    <AdminGuard>
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -92,5 +94,6 @@ export default async function AdminProjectsPage() {
         </table>
       </div>
     </div>
+    </AdminGuard>
   );
 }
