@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "services": "Services",
+    "blog": "Blog",
+    "projects": "Projects",
+    "contact": "Contact",
+    "getQuote": "Get a quote"
+  },
+  "home": {
+    "badge": "Digital agency · Latin America",
+    "hero": {
+      "titleLine1": "We build the",
+      "titleAccent": "digital future",
+      "titleLine2": "of your business",
+      "subtitle": "Web development agency specialized in custom software, strategic marketing, and business growth. From planning to maintenance — we are your technology partner.",
+      "ctaPrimary": "Get a free quote",
+      "ctaSecondary": "See our work"
+    },
+    "services": {
+      "heading": "What we do",
+      "subtitle": "From planning to maintenance, we cover every stage of your digital project.",
+      "cta": "View all services"
+    },
+    "blog": {
+      "heading": "From the blog",
+      "subtitle": "Insights, tutorials and industry news to keep you ahead.",
+      "cta": "Read all articles"
+    },
+    "projects": {
+      "heading": "Our work",
+      "subtitle": "Real projects built for real businesses.",
+      "cta": "View all projects"
+    },
+    "cta": {
+      "heading": "Ready to build something great?",
+      "subtitle": "Tell us about your project and we'll get back to you within 24 hours.",
+      "button": "Start now"
+    }
+  },
+  "services": {
+    "heading": "Our Services",
+    "subtitle": "End-to-end digital solutions for businesses that want to grow. From the first planning session to long-term maintenance.",
+    "items": {
+      "web-development": {
+        "name": "Web Development",
+        "shortDesc": "Professional, responsive websites built to convert.",
+        "description": "We design and develop modern, fast, and responsive websites tailored to your brand. From landing pages to complex portals, we handle every stage: strategy, UX/UI, development, and launch.",
+        "features": [
+          "Custom responsive design",
+          "Performance-optimized code",
+          "SEO-ready structure",
+          "CMS integration (if needed)",
+          "Cross-browser testing",
+          "Post-launch support"
+        ]
+      },
+      "custom-software": {
+        "name": "Custom Software",
+        "shortDesc": "Tailored digital tools built exactly for your needs.",
+        "description": "We build custom web applications, dashboards, internal tools, and automation systems. When off-the-shelf software doesn't fit, we engineer the exact solution your business requires — scalable, maintainable, and secure.",
+        "features": [
+          "Requirements analysis and planning",
+          "Scalable architecture design",
+          "API development and integrations",
+          "Admin dashboards and panels",
+          "Workflow automation",
+          "Documentation and handover"
+        ]
+      },
+      "ecommerce": {
+        "name": "E-Commerce",
+        "shortDesc": "Online stores designed to convert visitors into customers.",
+        "description": "We develop high-performance e-commerce platforms with payment gateway integration, inventory management, and marketing tools. Built to scale from day one and maximize conversion rates.",
+        "features": [
+          "Custom storefront design",
+          "Payment gateway integration",
+          "Inventory management",
+          "Order tracking",
+          "Analytics and reporting",
+          "Mobile-first checkout"
+        ]
+      },
+      "digital-marketing": {
+        "name": "Digital Marketing",
+        "shortDesc": "Campaigns and strategies to grow your online presence.",
+        "description": "From paid advertising and social media management to email marketing and content strategy, we design and execute data-driven campaigns that attract, engage, and convert your target audience.",
+        "features": [
+          "Google Ads and Meta Ads",
+          "Social media management",
+          "Email marketing campaigns",
+          "Content strategy",
+          "Audience targeting",
+          "Monthly performance reports"
+        ]
+      },
+      "seo": {
+        "name": "SEO & Positioning",
+        "shortDesc": "Rank higher and get found by your ideal customers.",
+        "description": "We optimize your website's technical structure, content, and authority to rank on the first page of Google. Long-term organic traffic is the most sustainable and cost-effective growth channel.",
+        "features": [
+          "Technical SEO audit",
+          "On-page optimization",
+          "Content strategy",
+          "Link building",
+          "Local SEO",
+          "Monthly ranking reports"
+        ]
+      },
+      "marketing-reports": {
+        "name": "Marketing Reports & Opportunities",
+        "shortDesc": "Data-driven insights to find new markets and partners.",
+        "description": "We analyze your industry, competitors, and market to deliver actionable intelligence reports. We identify growth opportunities, potential strategic collaborators, and new market segments to accelerate your business — exactly what we do for our own ventures.",
+        "features": [
+          "Competitive analysis",
+          "Market opportunity mapping",
+          "Potential collaborator identification",
+          "Customer segment research",
+          "Growth strategy recommendations",
+          "Custom executive report"
+        ]
+      },
+      "maintenance": {
+        "name": "Maintenance & Support",
+        "shortDesc": "Keep your digital assets running at peak performance.",
+        "description": "Ongoing technical support, security updates, performance monitoring, and incremental feature additions. We keep your site fast, secure, and up to date — so you can focus entirely on your business.",
+        "features": [
+          "Security monitoring and updates",
+          "Performance optimization",
+          "Regular backups",
+          "Bug fixes and patches",
+          "Feature updates",
+          "Priority support"
+        ]
+      },
+      "consulting": {
+        "name": "Strategic Consulting",
+        "shortDesc": "Expert guidance from ideation to execution.",
+        "description": "Not sure where to start? We work with you from the planning phase, helping define your digital strategy, technology stack, and roadmap. We ensure every decision aligns with your business goals before a single line of code is written.",
+        "features": [
+          "Digital strategy workshop",
+          "Technology stack selection",
+          "Product roadmap creation",
+          "Team and resource planning",
+          "Risk and feasibility assessment",
+          "Vendor evaluation"
+        ]
+      }
+    },
+    "process": {
+      "heading": "How we work",
+      "steps": [
+        { "title": "Discovery", "desc": "We understand your goals, users, and constraints." },
+        { "title": "Planning", "desc": "We define scope, timelines, and deliverables together." },
+        { "title": "Execution", "desc": "We build with quality and clear communication throughout." },
+        { "title": "Launch", "desc": "We deploy, test, and ensure everything works perfectly." },
+        { "title": "Support", "desc": "We stay with you after launch to maintain and improve." }
+      ]
+    }
+  },
+  "blog": {
+    "heading": "Blog",
+    "subtitle": "Insights, strategies, and industry news to help grow your digital business.",
+    "readMore": "Read article",
+    "minRead": "min read",
+    "backToBlog": "Back to blog",
+    "categories": {
+      "all": "All",
+      "development": "Development",
+      "marketing": "Marketing",
+      "business": "Business",
+      "seo": "SEO"
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "subtitle": "A selection of work we're proud of — and a look at what we're building next.",
+    "viewProject": "View project",
+    "visitSite": "Visit site",
+    "backToProjects": "Back to projects",
+    "technologies": "Technologies",
+    "categories": {
+      "all": "All",
+      "web": "Web",
+      "software": "Software",
+      "marketing": "Marketing",
+      "ecommerce": "E-Commerce"
+    }
+  },
+  "contact": {
+    "heading": "Let's talk",
+    "subtitle": "Tell us about your project. No commitment — just a conversation to see if we're the right fit.",
+    "info": {
+      "email": "hello@pixelmaker.dev",
+      "location": "Mexico & Argentina · Latin America",
+      "response": "We respond within 24 hours"
+    },
+    "form": {
+      "name": "Your name",
+      "email": "Email address",
+      "company": "Company (optional)",
+      "service": "Service you're interested in",
+      "message": "Tell us about your project",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "success": "Message sent! We'll be in touch within 24 hours.",
+      "error": "Something went wrong. Please try again."
+    }
+  },
+  "footer": {
+    "tagline": "Building the digital future, one project at a time.",
+    "services": "Services",
+    "blog": "Blog",
+    "projects": "Projects",
+    "contact": "Contact",
+    "copyright": "© {year} Pixel Maker. All rights reserved."
+  }
+}

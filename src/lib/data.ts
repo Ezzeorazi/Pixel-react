@@ -1,0 +1,128 @@
+import type { ServiceSlug, BlogPost, Project } from './types';
+
+export const SERVICES: ServiceSlug[] = [
+  { slug: 'web-development',   icon: 'Code',          color: 'purple',  featured: true },
+  { slug: 'custom-software',   icon: 'Layers',        color: 'fuchsia', featured: true },
+  { slug: 'ecommerce',         icon: 'ShoppingBag',   color: 'pink',    featured: true },
+  { slug: 'digital-marketing', icon: 'Megaphone',     color: 'purple',  featured: false },
+  { slug: 'seo',               icon: 'Search',        color: 'pink',    featured: false },
+  { slug: 'marketing-reports', icon: 'BarChart2',     color: 'fuchsia', featured: true },
+  { slug: 'maintenance',       icon: 'Wrench',        color: 'purple',  featured: false },
+  { slug: 'consulting',        icon: 'Lightbulb',     color: 'pink',    featured: false },
+];
+
+export const FEATURED_SERVICES = SERVICES.filter((s) => s.featured);
+
+export const SAMPLE_POSTS: BlogPost[] = [
+  {
+    id: '1',
+    slug: 'why-your-business-needs-ssl',
+    title: '¿Por qué tu empresa necesita un Certificado SSL?',
+    excerpt: 'La seguridad online ya no es opcional. Descubrí cómo un SSL no solo protege a tus clientes, sino que mejora tu posicionamiento en Google.',
+    content: '',
+    category: 'seo',
+    date: '2026-03-10',
+    read_time: 4,
+    locale: 'es',
+    published: true,
+  },
+  {
+    id: '2',
+    slug: 'responsive-design-impact-on-sales',
+    title: 'El impacto del diseño web responsivo en tus ventas',
+    excerpt: 'Más del 60% del tráfico web viene de dispositivos móviles. Si tu sitio no se adapta, estás perdiendo clientes diariamente.',
+    content: '',
+    category: 'development',
+    date: '2026-02-28',
+    read_time: 5,
+    locale: 'es',
+    published: true,
+  },
+  {
+    id: '3',
+    slug: 'ecommerce-vs-physical-store',
+    title: 'Tienda Online vs Tienda Física: costos y beneficios',
+    excerpt: 'Analizamos por qué expandir tu negocio al mundo digital puede multiplicar tus ingresos con una inversión mucho menor.',
+    content: '',
+    category: 'business',
+    date: '2026-02-15',
+    read_time: 6,
+    locale: 'es',
+    published: true,
+  },
+];
+
+export const SAMPLE_POSTS_EN: BlogPost[] = [
+  {
+    id: '4',
+    slug: 'why-your-business-needs-ssl',
+    title: 'Why Your Business Needs an SSL Certificate',
+    excerpt: 'Online security is no longer optional. Discover how SSL not only protects your customers but also improves your Google rankings.',
+    content: '',
+    category: 'seo',
+    date: '2026-03-10',
+    read_time: 4,
+    locale: 'en',
+    published: true,
+  },
+  {
+    id: '5',
+    slug: 'responsive-design-impact-on-sales',
+    title: 'The Impact of Responsive Design on Your Sales',
+    excerpt: 'Over 60% of web traffic comes from mobile devices. If your site doesn\'t adapt, you\'re losing customers every single day.',
+    content: '',
+    category: 'development',
+    date: '2026-02-28',
+    read_time: 5,
+    locale: 'en',
+    published: true,
+  },
+  {
+    id: '6',
+    slug: 'ecommerce-vs-physical-store',
+    title: 'E-Commerce vs Physical Store: Costs and Benefits',
+    excerpt: 'We analyze why expanding your business to the digital world can multiply your revenue with a much lower investment.',
+    content: '',
+    category: 'business',
+    date: '2026-02-15',
+    read_time: 6,
+    locale: 'en',
+    published: true,
+  },
+];
+
+export const SAMPLE_PROJECTS: Project[] = [
+  {
+    id: '1',
+    slug: 'optilab-chajari',
+    name: 'Optilab Chajarí',
+    description: 'Sitio web corporativo para óptica profesional con sistema de turnos online.',
+    full_description: 'Desarrollo de página web corporativa para Optilab Chajarí con el objetivo de reflejar una imagen profesional y formal. Incluye catálogo de productos, información de servicios y formulario de contacto optimizado.',
+    category: 'web',
+    technologies: ['React', 'Tailwind CSS', 'Vercel'],
+    url: 'https://optilab.com',
+    featured: true,
+  },
+  {
+    id: '2',
+    slug: 'golden-horses',
+    name: 'Golden Horses',
+    description: 'Sitio web responsivo para producto natural premium con e-commerce integrado.',
+    full_description: 'Proyecto que captura la esencia de un producto natural de alta calidad. La plataforma ofrece información detallada sobre el producto, sus beneficios y un sistema de pedidos online.',
+    category: 'web',
+    technologies: ['Next.js', 'TypeScript', 'Supabase'],
+    url: 'https://goldenhorses.com',
+    featured: true,
+  },
+  {
+    id: '3',
+    slug: 'una-vida-tech',
+    name: 'Una Vida .Tech',
+    description: 'Portal de tecnología y lifestyle con blog, newsletter y comunidad.',
+    full_description: 'Sitio web dinámico y eficiente desarrollado para una comunidad de tecnología y lifestyle. Incluye blog, sistema de newsletter y sección de recursos para la comunidad.',
+    category: 'software',
+    technologies: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    url: 'https://unavida.tech',
+    featured: true,
+  },
+];
