@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "blog": "Blog",
+    "projects": "Proyectos",
+    "contact": "Contacto",
+    "getQuote": "Solicitar presupuesto"
+  },
+  "home": {
+    "badge": "Agencia digital · Latinoamérica",
+    "hero": {
+      "titleLine1": "Construimos el",
+      "titleAccent": "futuro digital",
+      "titleLine2": "de tu empresa",
+      "subtitle": "Agencia de desarrollo web especializada en software a medida, marketing estratégico y crecimiento de negocios. Desde la planificación hasta el mantenimiento — somos tu socio tecnológico.",
+      "ctaPrimary": "Obtener presupuesto gratis",
+      "ctaSecondary": "Ver nuestros trabajos"
+    },
+    "services": {
+      "heading": "Qué hacemos",
+      "subtitle": "Desde la planificación hasta el mantenimiento, cubrimos cada etapa de tu proyecto digital.",
+      "cta": "Ver todos los servicios"
+    },
+    "blog": {
+      "heading": "Del blog",
+      "subtitle": "Artículos, tutoriales y novedades del sector para mantenerte adelante.",
+      "cta": "Leer todos los artículos"
+    },
+    "projects": {
+      "heading": "Nuestros trabajos",
+      "subtitle": "Proyectos reales construidos para negocios reales.",
+      "cta": "Ver todos los proyectos"
+    },
+    "cta": {
+      "heading": "¿Listo para construir algo grande?",
+      "subtitle": "Contanos sobre tu proyecto y te respondemos en menos de 24 horas.",
+      "button": "Empezar ahora"
+    }
+  },
+  "services": {
+    "heading": "Nuestros Servicios",
+    "subtitle": "Soluciones digitales completas para empresas que quieren crecer. Desde la primera sesión de planificación hasta el mantenimiento a largo plazo.",
+    "items": {
+      "web-development": {
+        "name": "Desarrollo Web",
+        "shortDesc": "Sitios web profesionales y responsivos construidos para convertir.",
+        "description": "Diseñamos y desarrollamos sitios web modernos, rápidos y responsivos adaptados a tu marca. Desde landing pages hasta portales complejos, manejamos cada etapa: estrategia, UX/UI, desarrollo y lanzamiento.",
+        "features": [
+          "Diseño responsivo personalizado",
+          "Código optimizado para rendimiento",
+          "Estructura lista para SEO",
+          "Integración con CMS (si es necesario)",
+          "Testing cross-browser",
+          "Soporte post-lanzamiento"
+        ]
+      },
+      "custom-software": {
+        "name": "Software a Medida",
+        "shortDesc": "Herramientas digitales diseñadas exactamente para tus necesidades.",
+        "description": "Desarrollamos aplicaciones web personalizadas, dashboards, herramientas internas y sistemas de automatización. Cuando el software genérico no alcanza, diseñamos la solución exacta que tu negocio necesita — escalable, mantenible y segura.",
+        "features": [
+          "Análisis de requerimientos y planificación",
+          "Diseño de arquitectura escalable",
+          "Desarrollo de API e integraciones",
+          "Paneles de administración",
+          "Automatización de procesos",
+          "Documentación y transferencia"
+        ]
+      },
+      "ecommerce": {
+        "name": "E-Commerce",
+        "shortDesc": "Tiendas online diseñadas para convertir visitantes en clientes.",
+        "description": "Desarrollamos plataformas de comercio electrónico de alto rendimiento con integración de pasarelas de pago, gestión de inventario y herramientas de marketing. Construidas para escalar desde el primer día y maximizar la tasa de conversión.",
+        "features": [
+          "Diseño de tienda personalizado",
+          "Integración con pasarelas de pago",
+          "Gestión de inventario",
+          "Seguimiento de pedidos",
+          "Analíticas e informes",
+          "Checkout optimizado para móvil"
+        ]
+      },
+      "digital-marketing": {
+        "name": "Marketing Digital",
+        "shortDesc": "Campañas y estrategias para hacer crecer tu presencia online.",
+        "description": "Desde publicidad paga y gestión de redes sociales hasta email marketing y estrategia de contenido, diseñamos y ejecutamos campañas basadas en datos que atraen, retienen y convierten a tu audiencia objetivo.",
+        "features": [
+          "Google Ads y Meta Ads",
+          "Gestión de redes sociales",
+          "Campañas de email marketing",
+          "Estrategia de contenido",
+          "Segmentación de audiencias",
+          "Informes mensuales de rendimiento"
+        ]
+      },
+      "seo": {
+        "name": "SEO y Posicionamiento",
+        "shortDesc": "Aparecé primero y que tus clientes ideales te encuentren.",
+        "description": "Optimizamos la estructura técnica, contenido y autoridad de tu sitio web para rankear en la primera página de Google. El tráfico orgánico a largo plazo es el canal de crecimiento más sostenible y rentable.",
+        "features": [
+          "Auditoría técnica de SEO",
+          "Optimización on-page",
+          "Estrategia de contenido",
+          "Link building",
+          "SEO local",
+          "Informes mensuales de posicionamiento"
+        ]
+      },
+      "marketing-reports": {
+        "name": "Informes de Marketing y Oportunidades",
+        "shortDesc": "Análisis con datos para encontrar nuevos mercados y aliados.",
+        "description": "Analizamos tu industria, competidores y mercado para entregarte informes accionables. Identificamos oportunidades de crecimiento, potenciales colaboradores y nuevos segmentos de mercado para acelerar tu negocio — exactamente lo que hacemos en nuestros propios emprendimientos.",
+        "features": [
+          "Análisis competitivo",
+          "Mapeo de oportunidades de mercado",
+          "Identificación de potenciales colaboradores",
+          "Investigación de segmentos de clientes",
+          "Recomendaciones de estrategia de crecimiento",
+          "Informe ejecutivo personalizado"
+        ]
+      },
+      "maintenance": {
+        "name": "Mantenimiento y Soporte",
+        "shortDesc": "Tus activos digitales funcionando al máximo rendimiento.",
+        "description": "Soporte técnico continuo, actualizaciones de seguridad, monitoreo de rendimiento y adición de funcionalidades. Mantenemos tu sitio rápido, seguro y actualizado — para que vos puedas enfocarte en tu negocio.",
+        "features": [
+          "Monitoreo y actualización de seguridad",
+          "Optimización de rendimiento",
+          "Backups regulares",
+          "Corrección de errores y parches",
+          "Actualización de funcionalidades",
+          "Soporte prioritario"
+        ]
+      },
+      "consulting": {
+        "name": "Consultoría Estratégica",
+        "shortDesc": "Guía experta desde la ideación hasta la ejecución.",
+        "description": "¿No sabés por dónde empezar? Trabajamos con vos desde la fase de planificación, ayudándote a definir tu estrategia digital, stack tecnológico y roadmap. Nos aseguramos de que cada decisión se alinee con tus objetivos de negocio antes de que se escriba una sola línea de código.",
+        "features": [
+          "Workshop de estrategia digital",
+          "Selección de stack tecnológico",
+          "Creación del roadmap de producto",
+          "Planificación de equipo y recursos",
+          "Evaluación de riesgos y viabilidad",
+          "Evaluación de proveedores"
+        ]
+      }
+    },
+    "process": {
+      "heading": "Cómo trabajamos",
+      "steps": [
+        { "title": "Descubrimiento", "desc": "Entendemos tus objetivos, usuarios y restricciones." },
+        { "title": "Planificación", "desc": "Definimos alcance, tiempos y entregables juntos." },
+        { "title": "Ejecución", "desc": "Construimos con calidad y comunicación clara." },
+        { "title": "Lanzamiento", "desc": "Desplegamos, testeamos y nos aseguramos de que todo funcione." },
+        { "title": "Soporte", "desc": "Nos quedamos con vos después del lanzamiento para mantener y mejorar." }
+      ]
+    }
+  },
+  "blog": {
+    "heading": "Blog",
+    "subtitle": "Artículos, estrategias y novedades del sector para hacer crecer tu negocio digital.",
+    "readMore": "Leer artículo",
+    "minRead": "min de lectura",
+    "backToBlog": "Volver al blog",
+    "categories": {
+      "all": "Todos",
+      "development": "Desarrollo",
+      "marketing": "Marketing",
+      "business": "Negocios",
+      "seo": "SEO"
+    }
+  },
+  "projects": {
+    "heading": "Proyectos",
+    "subtitle": "Una selección de trabajos de los que estamos orgullosos — y un vistazo a lo que estamos construyendo.",
+    "viewProject": "Ver proyecto",
+    "visitSite": "Visitar sitio",
+    "backToProjects": "Volver a proyectos",
+    "technologies": "Tecnologías",
+    "categories": {
+      "all": "Todos",
+      "web": "Web",
+      "software": "Software",
+      "marketing": "Marketing",
+      "ecommerce": "E-Commerce"
+    }
+  },
+  "contact": {
+    "heading": "Hablemos",
+    "subtitle": "Contanos sobre tu proyecto. Sin compromiso — solo una charla para ver si somos el equipo indicado.",
+    "info": {
+      "email": "hola@pixelmaker.dev",
+      "location": "México & Argentina · Latinoamérica",
+      "response": "Respondemos en menos de 24 horas"
+    },
+    "form": {
+      "name": "Tu nombre",
+      "email": "Email",
+      "company": "Empresa (opcional)",
+      "service": "Servicio de interés",
+      "message": "Contanos sobre tu proyecto",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "success": "¡Mensaje enviado! Te respondemos en menos de 24 horas.",
+      "error": "Algo salió mal. Por favor intentá de nuevo."
+    }
+  },
+  "footer": {
+    "tagline": "Construyendo el futuro digital, un proyecto a la vez.",
+    "services": "Servicios",
+    "blog": "Blog",
+    "projects": "Proyectos",
+    "contact": "Contacto",
+    "copyright": "© {year} Pixel Maker. Todos los derechos reservados."
+  }
+}
