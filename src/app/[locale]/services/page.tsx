@@ -51,7 +51,7 @@ function ProcessSection() {
               {step.number}
             </div>
             <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">{step.title}</h4>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{step.desc}</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{step.desc}</p>
           </div>
         ))}
       </div>

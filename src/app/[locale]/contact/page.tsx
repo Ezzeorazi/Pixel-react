@@ -50,12 +50,12 @@ export default async function ContactPage({ params }: Props) {
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
               <GradientText>{t('heading')}</GradientText>
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-8">{t('subtitle')}</p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">{t('subtitle')}</p>
 
             {/* WhatsApp buttons */}
             {waNumbers.length > 0 && (
               <div className="mb-8 space-y-3">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+                <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3">
                   WhatsApp
                 </p>
                 {waNumbers.map(({ digits, flag, country, name }) => {
@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: Props) {
                     >
                       <span className="text-2xl leading-none">{flag}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-green-400 group-hover:text-green-300 transition-colors">
+                        <p className="text-sm font-semibold text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">
                           {name}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">{country}</p>
@@ -106,7 +106,7 @@ export default async function ContactPage({ params }: Props) {
           </div>
 
           {/* Form */}
-          <div className="md:col-span-3 bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-100 dark:border-white/5 p-8">
+          <div className="md:col-span-3 bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-200 dark:border-white/5 p-8">
             <ContactForm />
           </div>
 
