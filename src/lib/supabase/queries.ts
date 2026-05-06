@@ -1,6 +1,6 @@
 import { createClient } from './server';
 import { SAMPLE_POSTS, SAMPLE_POSTS_EN, SAMPLE_PROJECTS } from '@/lib/data';
-import type { BlogPost, Project, ContactMessage, Locale, Service } from '@/lib/types';
+import type { BlogPost, Project, ContactMessage, Locale, Service, SiteSettings } from '@/lib/types';
 
 // ── Blog ──────────────────────────────────────────────────────────────────────
 
@@ -147,6 +147,18 @@ export async function getFeaturedServices(): Promise<Service[]> {
     return data as Service[];
   } catch {
     return [];
+  }
+}
+
+// ── Site Settings ─────────────────────────────────────────────────────────────
+
+export async function getPublicSettings(): Promise<SiteSettings | null> {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.from('site_settings').select('*').limit(1).single();
+    return data ?? null;
+  } catch {
+    return null;
   }
 }
 

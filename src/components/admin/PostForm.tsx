@@ -14,6 +14,7 @@ interface PostFormProps {
     locale: string;
     date: string;
     read_time: number;
+    image_url?: string | null;
     published: boolean;
   };
 }
@@ -68,6 +69,15 @@ export function PostForm({ post }: PostFormProps) {
 
       <Field label="Extracto *">
         <textarea name="excerpt" defaultValue={post?.excerpt} required rows={3} className={`${inputClass} resize-none`} />
+      </Field>
+
+      <Field label="URL de imagen (ej: /img/blog/mi-imagen.webp)">
+        <input
+          name="image_url"
+          defaultValue={post?.image_url ?? ''}
+          placeholder="/img/blog/nombre-imagen.webp"
+          className={inputClass}
+        />
       </Field>
 
       <Field label="Contenido">

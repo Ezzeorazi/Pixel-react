@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, Clock } from 'lucide-react';
@@ -46,7 +47,20 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="pb-20">
         <Container>
           <div className="max-w-3xl mx-auto">
-            <div className="h-64 md:h-80 rounded-2xl bg-gradient-to-br from-purple-900/20 to-pink-900/20 mb-10" />
+            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-10">
+              {post.image_url ? (
+                <Image
+                  src={post.image_url}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 768px"
+                />
+              ) : (
+                <div className="h-full bg-linear-to-br from-purple-900/20 to-pink-900/20" />
+              )}
+            </div>
             <article className="prose prose-gray dark:prose-invert max-w-none">
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{post.excerpt}</p>
               {post.content ? (

@@ -35,6 +35,15 @@ export interface ContactMessage {
   message: string;
 }
 
+export interface SiteSettings {
+  id?: string;
+  whatsapp1?: string | null;
+  whatsapp2?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  email?: string | null;
+}
+
 export interface ServiceSlug {
   slug: string;
   icon: string;

@@ -31,6 +31,7 @@ export async function createPost(data: FormData) {
     locale:     data.get('locale') as string,
     date:       data.get('date') as string,
     read_time:  Number(data.get('read_time')),
+    image_url:  (data.get('image_url') as string) || null,
     slug:       slugify(data.get('title') as string),
     published:  data.get('published') === 'true',
   };
@@ -50,6 +51,7 @@ export async function updatePost(id: string, data: FormData) {
     locale:     data.get('locale') as string,
     date:       data.get('date') as string,
     read_time:  Number(data.get('read_time')),
+    image_url:  (data.get('image_url') as string) || null,
     published:  data.get('published') === 'true',
   };
   const { error } = await supabase.from('blog_posts').update(payload).eq('id', id);
