@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, Clock } from 'lucide-react';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
@@ -30,7 +31,19 @@ function BlogPreview({ posts }: Props) {
               href={`/${locale}/blog/${post.slug}`}
               className="group bg-white dark:bg-[#18181c] rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.08)] hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="h-44 bg-gradient-to-br from-purple-900/20 to-pink-900/20 dark:from-purple-900/30 dark:to-pink-900/30" />
+              <div className="relative h-44 overflow-hidden">
+                {post.image_url ? (
+                  <Image
+                    src={post.image_url}
+                    alt={post.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                ) : (
+                  <div className="h-full bg-linear-to-br from-purple-900/20 to-pink-900/20 dark:from-purple-900/30 dark:to-pink-900/30" />
+                )}
+              </div>
               <div className="p-6">
                 <Badge variant="gray">{post.category}</Badge>
                 <h3 className="mt-3 font-bold text-gray-900 dark:text-white text-base leading-snug group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors line-clamp-2">

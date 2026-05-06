@@ -82,7 +82,8 @@ export async function createProject(data: FormData) {
     full_description: data.get('full_description') as string,
     category:         data.get('category') as string,
     technologies:     (data.get('technologies') as string).split(',').map((t) => t.trim()).filter(Boolean),
-    url:              data.get('url') as string || null,
+    url:              (data.get('url') as string) || null,
+    image_url:        (data.get('image_url') as string) || null,
     featured:         data.get('featured') === 'true',
     slug:             slugify(data.get('name') as string),
   };
@@ -100,7 +101,8 @@ export async function updateProject(id: string, data: FormData) {
     full_description: data.get('full_description') as string,
     category:         data.get('category') as string,
     technologies:     (data.get('technologies') as string).split(',').map((t) => t.trim()).filter(Boolean),
-    url:              data.get('url') as string || null,
+    url:              (data.get('url') as string) || null,
+    image_url:        (data.get('image_url') as string) || null,
     featured:         data.get('featured') === 'true',
   };
   const { error } = await supabase.from('projects').update(payload).eq('id', id);

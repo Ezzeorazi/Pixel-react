@@ -12,7 +12,8 @@ interface ProjectFormProps {
     full_description: string;
     category: string;
     technologies: string[];
-    url?: string;
+    url?: string | null;
+    image_url?: string | null;
     featured: boolean;
   };
 }
@@ -73,8 +74,13 @@ export function ProjectForm({ project }: ProjectFormProps) {
       </Field>
 
       <Field label="URL del sitio">
-        <input type="url" name="url" defaultValue={project?.url} className={inputClass}
+        <input type="url" name="url" defaultValue={project?.url ?? ''} className={inputClass}
           placeholder="https://ejemplo.com" />
+      </Field>
+
+      <Field label="Imagen (ej: /img/nombre-proyecto.webp)">
+        <input name="image_url" defaultValue={project?.image_url ?? ''} className={inputClass}
+          placeholder="/img/nombre-proyecto.webp" />
       </Field>
 
       <div className="flex items-center gap-3">
