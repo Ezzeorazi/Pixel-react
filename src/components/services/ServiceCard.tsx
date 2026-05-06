@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
-import { ArrowRight, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb } from 'lucide-react';
-import type { ServiceSlug } from '@/lib/types';
+import { useLocale } from 'next-intl';
+import { ArrowRight, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star } from 'lucide-react';
+import type { Service } from '@/lib/types';
 
 const ICONS: Record<string, React.ElementType> = {
-  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb,
+  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star,
 };
 
 const COLOR_CLASSES: Record<string, { icon: string; glow: string; iconBg: string }> = {
@@ -25,11 +25,10 @@ const COLOR_CLASSES: Record<string, { icon: string; glow: string; iconBg: string
   },
 };
 
-export function ServiceCard({ service }: { service: ServiceSlug }) {
-  const t = useTranslations(`services.items.${service.slug}`);
+export function ServiceCard({ service }: { service: Service }) {
   const locale = useLocale();
   const Icon = ICONS[service.icon] ?? Code;
-  const colors = COLOR_CLASSES[service.color];
+  const colors = COLOR_CLASSES[service.color] ?? COLOR_CLASSES.purple;
 
   return (
     <Link
@@ -42,11 +41,14 @@ export function ServiceCard({ service }: { service: ServiceSlug }) {
         <Icon className={`w-8 h-8 ${colors.icon}`} />
       </div>
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-        {t('name')}
+        {service.name}
       </h3>
-      <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">{t('shortDesc')}</p>
+      <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">{service.description}</p>
+      {service.price_label && (
+        <p className="text-sm font-semibold text-green-500 dark:text-green-400 mb-4">{service.price_label}</p>
+      )}
       <span className="inline-flex items-center gap-1 text-sm font-semibold text-purple-500 group-hover:text-purple-400 transition-colors">
-        Learn more <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+        Ver más <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
       </span>
     </Link>
   );

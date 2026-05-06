@@ -1,22 +1,22 @@
 import { useTranslations } from 'next-intl';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { ServiceCard } from '@/components/services/ServiceCard';
-import { SERVICES } from '@/lib/data';
+import { getServices } from '@/lib/supabase/queries';
 
-export default function ServicesPage() {
-  const t = useTranslations('services');
+export default async function ServicesPage() {
+  const services = await getServices();
 
   return (
     <Section className="pt-36 md:pt-40">
       <Container>
         <SectionHeader
           eyebrow="Services"
-          heading={t('heading')}
-          subtitle={t('subtitle')}
+          heading="Nuestros servicios"
+          subtitle="Todo lo que necesitás para crecer en el mundo digital, con resultados medibles."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((service) => (
+          {services.map((service) => (
             <ServiceCard key={service.slug} service={service} />
           ))}
         </div>

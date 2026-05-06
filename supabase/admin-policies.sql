@@ -21,3 +21,10 @@ create policy "Admins can manage messages"
   to authenticated
   using (true)
   with check (true);
+
+-- Services: full CRUD for authenticated users
+create policy "Admins can manage services"
+  on services for all
+  to authenticated
+  using (true)
+  with check (true);

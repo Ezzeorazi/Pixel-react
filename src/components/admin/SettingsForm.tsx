@@ -1,0 +1,120 @@
+'use client';
+
+import { useTransition, useState } from 'react';
+import { upsertSettings } from '@/app/actions/admin';
+
+interface SettingsFormProps {
+  settings: {
+    whatsapp1?: string | null;
+    whatsapp2?: string | null;
+    facebook?: string | null;
+    instagram?: string | null;
+    email?: string | null;
+  } | null;
+}
+
+export function SettingsForm({ settings }: SettingsFormProps) {
+  const [isPending, startTransition] = useTransition();
+  const [saved, setSaved] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    setSaved(false);
+    startTransition(async () => {
+      await upsertSettings(data);
+      setSaved(true);
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
+
+      <fieldset className="space-y-4">
+        <legend className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 block">
+          WhatsApp
+        </legend>
+        <Field label="WhatsApp principal (con código de país, ej: +5491112345678)">
+          <input
+            name="whatsapp1"
+            defaultValue={settings?.whatsapp1 ?? ''}
+            placeholder="+5491112345678"
+            className={inputClass}
+          />
+        </Field>
+        <Field label="WhatsApp secundario">
+          <input
+            name="whatsapp2"
+            defaultValue={settings?.whatsapp2 ?? ''}
+            placeholder="+5491187654321"
+            className={inputClass}
+          />
+        </Field>
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 block">
+          Redes sociales
+        </legend>
+        <Field label="Facebook (URL completa)">
+          <input
+            name="facebook"
+            type="url"
+            defaultValue={settings?.facebook ?? ''}
+            placeholder="https://facebook.com/pixelmaker"
+            className={inputClass}
+          />
+        </Field>
+        <Field label="Instagram (URL completa)">
+          <input
+            name="instagram"
+            type="url"
+            defaultValue={settings?.instagram ?? ''}
+            placeholder="https://instagram.com/pixelmaker"
+            className={inputClass}
+          />
+        </Field>
+      </fieldset>
+
+      <fieldset className="space-y-4">
+        <legend className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 block">
+          Contacto
+        </legend>
+        <Field label="Email de contacto">
+          <input
+            name="email"
+            type="email"
+            defaultValue={settings?.email ?? ''}
+            placeholder="hola@pixelmaker.dev"
+            className={inputClass}
+          />
+        </Field>
+      </fieldset>
+
+      <div className="flex items-center gap-4 pt-2">
+        <button
+          type="submit"
+          disabled={isPending}
+          className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all disabled:opacity-60"
+        >
+          {isPending ? 'Guardando...' : 'Guardar configuración'}
+        </button>
+        {saved && (
+          <span className="text-green-400 text-sm font-medium">¡Guardado correctamente!</span>
+        )}
+      </div>
+    </form>
+  );
+}
+
+const inputClass =
+  'w-full px-4 py-2.5 rounded-lg bg-[#0a0a0c] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-colors text-sm';
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-300 mb-1.5">{label}</label>
+      {children}
+    </div>
+  );
+}

@@ -1,6 +1,6 @@
 import { createClient } from './server';
 import { SAMPLE_POSTS, SAMPLE_POSTS_EN, SAMPLE_PROJECTS } from '@/lib/data';
-import type { BlogPost, Project, ContactMessage, Locale } from '@/lib/types';
+import type { BlogPost, Project, ContactMessage, Locale, Service } from '@/lib/types';
 
 // ── Blog ──────────────────────────────────────────────────────────────────────
 
@@ -94,6 +94,59 @@ export async function getFeaturedProjects(): Promise<Project[]> {
     return data as Project[];
   } catch {
     return SAMPLE_PROJECTS.filter((p) => p.featured);
+  }
+}
+
+// ── Services ──────────────────────────────────────────────────────────────────
+
+export async function getServices(): Promise<Service[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('active', true)
+      .order('sort_order', { ascending: true });
+
+    if (error || !data?.length) return [];
+    return data as Service[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getService(slug: string): Promise<Service | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('slug', slug)
+      .eq('active', true)
+      .single();
+
+    if (error || !data) return null;
+    return data as Service;
+  } catch {
+    return null;
+  }
+}
+
+export async function getFeaturedServices(): Promise<Service[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('active', true)
+      .eq('featured', true)
+      .order('sort_order', { ascending: true })
+      .limit(6);
+
+    if (error || !data?.length) return [];
+    return data as Service[];
+  } catch {
+    return [];
   }
 }
 

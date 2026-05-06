@@ -1,7 +1,8 @@
-import { Mail, Trash2, Check } from 'lucide-react';
+import { Mail, Check } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { markRead, deleteMessage } from '@/app/actions/admin';
 import { AdminGuard } from '@/components/admin/AdminGuard';
+import { DeleteButton } from '@/components/admin/DeleteButton';
 
 async function getMessages() {
   const supabase = await createAdminClient();
@@ -81,13 +82,10 @@ export default async function AdminMessagesPage() {
                     </button>
                   </form>
                 )}
-                <form action={deleteMessage.bind(null, msg.id)}>
-                  <button type="submit" title="Eliminar"
-                    className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"
-                    onClick={(e) => { if (!confirm('¿Eliminar este mensaje?')) e.preventDefault(); }}>
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </form>
+                <DeleteButton
+                  action={deleteMessage.bind(null, msg.id)}
+                  confirm="¿Eliminar este mensaje?"
+                />
               </div>
             </div>
           </div>

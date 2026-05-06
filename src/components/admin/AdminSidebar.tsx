@@ -2,14 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, Briefcase, Mail, LogOut } from 'lucide-react';
+import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings2, SlidersHorizontal } from 'lucide-react';
 import { logout } from '@/app/actions/admin';
 
 const links = [
-  { href: '/admin',          label: 'Dashboard',  icon: LayoutDashboard },
-  { href: '/admin/blog',     label: 'Blog',        icon: FileText },
-  { href: '/admin/projects', label: 'Proyectos',   icon: Briefcase },
-  { href: '/admin/messages', label: 'Mensajes',    icon: Mail },
+  { href: '/admin',            label: 'Dashboard',      icon: LayoutDashboard },
+  { href: '/admin/blog',       label: 'Blog',            icon: FileText },
+  { href: '/admin/projects',   label: 'Proyectos',       icon: Briefcase },
+  { href: '/admin/services',   label: 'Servicios',       icon: Settings2 },
+  { href: '/admin/messages',   label: 'Mensajes',        icon: Mail },
+  { href: '/admin/settings',   label: 'Configuración',   icon: SlidersHorizontal },
 ];
 
 export function AdminSidebar() {

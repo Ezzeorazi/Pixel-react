@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { Plus, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Pencil, Eye, EyeOff } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { deletePost, togglePublished } from '@/app/actions/admin';
 import { AdminGuard } from '@/components/admin/AdminGuard';
+import { DeleteButton } from '@/components/admin/DeleteButton';
 
 async function getPosts() {
   const supabase = await createAdminClient();
@@ -89,13 +90,10 @@ export default async function AdminBlogPage() {
                       className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
                       <Pencil className="w-4 h-4" />
                     </Link>
-                    <form action={deletePost.bind(null, post.id)}>
-                      <button type="submit" title="Eliminar"
-                        className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"
-                        onClick={(e) => { if (!confirm('¿Eliminar este artículo?')) e.preventDefault(); }}>
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </form>
+                    <DeleteButton
+                      action={deletePost.bind(null, post.id)}
+                      confirm="¿Eliminar este artículo?"
+                    />
                   </div>
                 </td>
               </tr>

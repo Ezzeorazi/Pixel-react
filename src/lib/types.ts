@@ -41,3 +41,19 @@ export interface ServiceSlug {
   color: 'purple' | 'pink' | 'fuchsia';
   featured: boolean;
 }
+
+export interface Service {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: 'purple' | 'pink' | 'fuchsia';
+  price: number | null;
+  price_label: string | null;
+  features: string[];
+  featured: boolean;
+  active: boolean;
+  sort_order: number;
+  created_at?: string;
+}
