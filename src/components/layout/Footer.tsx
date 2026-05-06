@@ -16,7 +16,7 @@ export async function Footer() {
   ].filter(Boolean) as { label: string; href: string }[];
 
   return (
-    <footer className="border-t border-black/5 dark:border-white/5 bg-gray-50 dark:bg-[#0a0a0c]">
+    <footer className="border-t border-black/10 dark:border-white/5 bg-gray-50 dark:bg-[#0a0a0c]">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           <div className="md:col-span-2">
@@ -56,7 +56,7 @@ export async function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -72,7 +72,7 @@ export async function Footer() {
                 <li>
                   <a
                     href={`mailto:${settings.email}`}
-                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     {settings.email}
                   </a>
@@ -84,7 +84,7 @@ export async function Footer() {
                     href={`https://wa.me/${settings.whatsapp1.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     WhatsApp
                   </a>
@@ -97,8 +97,8 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-black/5 dark:border-white/5 pt-6">
-          <p className="text-sm text-gray-400 dark:text-gray-500 text-center">
+        <div className="border-t border-black/10 dark:border-white/5 pt-6">
+          <p className="text-sm text-gray-500 dark:text-gray-500 text-center">
             {t('copyright', { year })}
           </p>
         </div>

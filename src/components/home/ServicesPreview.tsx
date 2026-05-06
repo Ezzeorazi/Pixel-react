@@ -55,17 +55,17 @@ function ServicesPreviewContent({ services }: { services: Awaited<ReturnType<typ
             <Link
               key={service.slug}
               href={`/${locale}/services/${service.slug}`}
-              className={`group bg-gray-50 dark:bg-[#18181c] p-7 rounded-2xl border border-gray-100 dark:border-white/5 ${colors.glow} hover:-translate-y-1 transition-all duration-300`}
+              className={`group bg-gray-50 dark:bg-[#18181c] p-7 rounded-2xl border border-gray-200 dark:border-white/5 ${colors.glow} hover:-translate-y-1 transition-all duration-300`}
             >
               <div
-                className={`w-14 h-14 bg-white dark:bg-[#0a0a0c] border border-gray-100 dark:border-white/5 rounded-xl flex items-center justify-center mb-5 ${colors.border} transition-colors`}
+                className={`w-14 h-14 bg-white dark:bg-[#0a0a0c] border border-gray-200 dark:border-white/5 rounded-xl flex items-center justify-center mb-5 ${colors.border} transition-colors`}
               >
                 <Icon className={`w-7 h-7 ${colors.icon}`} />
               </div>
               <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
                 {service.name}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                 {service.description}
               </p>
               {service.price_label && (

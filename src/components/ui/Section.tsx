@@ -31,7 +31,7 @@ export function SectionHeader({ eyebrow, heading, subtitle, centered = true }: S
   return (
     <div className={`mb-14 ${centered ? 'text-center max-w-3xl mx-auto' : 'max-w-2xl'}`}>
       {eyebrow && (
-        <span className="text-purple-400 font-semibold tracking-wider uppercase text-sm">
+        <span className="text-purple-600 dark:text-purple-400 font-semibold tracking-wider uppercase text-sm">
           {eyebrow}
         </span>
       )}
@@ -39,7 +39,7 @@ export function SectionHeader({ eyebrow, heading, subtitle, centered = true }: S
         {heading}
       </h2>
       {subtitle && (
-        <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">{subtitle}</p>
+        <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">{subtitle}</p>
       )}
     </div>
   );

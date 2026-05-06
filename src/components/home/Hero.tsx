@@ -30,7 +30,7 @@ export function Hero() {
             {t('hero.titleLine2')}
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-10 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 leading-relaxed max-w-2xl">
             {t('hero.subtitle')}
           </p>
 

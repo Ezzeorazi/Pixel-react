@@ -16,7 +16,7 @@ export function CTASection() {
           <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-5">
             {t('heading')}
           </h2>
-          <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
             {t('subtitle')}
           </p>
           <Link

@@ -29,7 +29,7 @@ function ProjectsPreview({ projects }: Props) {
             <Link
               key={project.id}
               href={`/${locale}/projects/${project.slug}`}
-              className="group bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.08)] hover:-translate-y-1 transition-all duration-300"
+              className="group bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-200 dark:border-white/5 overflow-hidden hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.08)] hover:-translate-y-1 transition-all duration-300"
             >
               <div className="relative h-48 overflow-hidden">
                 {project.image_url ? (
@@ -56,14 +56,14 @@ function ProjectsPreview({ projects }: Props) {
                 <h3 className="mt-3 font-bold text-gray-900 dark:text-white text-base group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">
                   {project.name}
                 </h3>
-                <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
+                <p className="mt-1.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">
                   {project.description}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {project.technologies.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10"
+                      className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10"
                     >
                       {tech}
                     </span>

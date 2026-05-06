@@ -33,17 +33,17 @@ export function ServiceCard({ service }: { service: Service }) {
   return (
     <Link
       href={`/${locale}/services/${service.slug}`}
-      className={`group bg-gray-50 dark:bg-[#18181c] p-8 rounded-2xl border border-gray-100 dark:border-white/5 ${colors.glow} hover:-translate-y-1 transition-all duration-300`}
+      className={`group bg-gray-50 dark:bg-[#18181c] p-8 rounded-2xl border border-gray-200 dark:border-white/5 ${colors.glow} hover:-translate-y-1 transition-all duration-300`}
     >
       <div
-        className={`w-16 h-16 bg-white dark:bg-[#0a0a0c] border border-gray-100 dark:border-white/5 rounded-xl flex items-center justify-center mb-6 ${colors.iconBg} transition-colors`}
+        className={`w-16 h-16 bg-white dark:bg-[#0a0a0c] border border-gray-200 dark:border-white/5 rounded-xl flex items-center justify-center mb-6 ${colors.iconBg} transition-colors`}
       >
         <Icon className={`w-8 h-8 ${colors.icon}`} />
       </div>
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
         {service.name}
       </h3>
-      <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">{service.description}</p>
+      <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">{service.description}</p>
       {service.price_label && (
         <p className="text-sm font-semibold text-green-500 dark:text-green-400 mb-4">{service.price_label}</p>
       )}
