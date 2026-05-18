@@ -47,6 +47,8 @@ export async function createPost(data: FormData) {
 
   if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/blog');
+  revalidatePath('/es/blog');
+  revalidatePath('/en/blog');
   return { ok: true };
 }
 
@@ -68,9 +70,14 @@ export async function updatePost(id: string, data: FormData) {
   }
 
   const supabase = await createAdminClient();
-  const { error } = await supabase.from('blog_posts').update(result.data).eq('id', id);
+  const { error } = await supabase.from('blog_posts').update({
+    ...result.data,
+    updated_at: new Date().toISOString(),
+  }).eq('id', id);
   if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/blog');
+  revalidatePath('/es/blog');
+  revalidatePath('/en/blog');
   return { ok: true };
 }
 
@@ -79,6 +86,8 @@ export async function deletePost(id: string) {
   const { error } = await supabase.from('blog_posts').delete().eq('id', id);
   if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/blog');
+  revalidatePath('/es/blog');
+  revalidatePath('/en/blog');
   return { ok: true };
 }
 
@@ -86,6 +95,8 @@ export async function togglePublished(id: string, current: boolean) {
   const supabase = await createAdminClient();
   await supabase.from('blog_posts').update({ published: !current }).eq('id', id);
   revalidatePath('/admin/blog');
+  revalidatePath('/es/blog');
+  revalidatePath('/en/blog');
 }
 
 // ── Projects ──────────────────────────────────────────────────────────────────
@@ -114,6 +125,8 @@ export async function createProject(data: FormData) {
 
   if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/projects');
+  revalidatePath('/es/projects');
+  revalidatePath('/en/projects');
   return { ok: true };
 }
 
@@ -137,6 +150,8 @@ export async function updateProject(id: string, data: FormData) {
   const { error } = await supabase.from('projects').update(result.data).eq('id', id);
   if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/projects');
+  revalidatePath('/es/projects');
+  revalidatePath('/en/projects');
   return { ok: true };
 }
 
@@ -145,6 +160,8 @@ export async function deleteProject(id: string) {
   const { error } = await supabase.from('projects').delete().eq('id', id);
   if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/projects');
+  revalidatePath('/es/projects');
+  revalidatePath('/en/projects');
   return { ok: true };
 }
 

@@ -39,7 +39,8 @@ export function PostForm({ post }: PostFormProps) {
         : await createPost(data);
 
       if (result?.ok === false) {
-        setError(result.error ?? 'Error al guardar');
+        const msgs = Object.values(result.errors ?? {}).flat();
+        setError(msgs.join(' · ') || 'Error al guardar');
       } else {
         router.push('/admin/blog');
         router.refresh();

@@ -38,7 +38,8 @@ export function ProjectForm({ project }: ProjectFormProps) {
         : await createProject(data);
 
       if (result?.ok === false) {
-        setError(result.error ?? 'Error al guardar');
+        const msgs = Object.values(result.errors ?? {}).flat();
+        setError(msgs.join(' · ') || 'Error al guardar');
       } else {
         router.push('/admin/projects');
         router.refresh();
