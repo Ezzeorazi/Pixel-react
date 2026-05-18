@@ -7,8 +7,38 @@ import { Badge } from '@/components/ui/Badge';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
 import { getProject } from '@/lib/supabase/queries';
+import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const project = await getProject(slug);
+  if (!project) return {};
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const url = `${siteUrl}/${locale}/projects/${slug}`;
+
+  return {
+    title: `${project.name} | Pixel Maker`,
+    description: project.description,
+    openGraph: {
+      title: project.name,
+      description: project.description,
+      url,
+      siteName: 'Pixel Maker',
+      type: 'website',
+      ...(project.image_url ? { images: [{ url: project.image_url }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.name,
+      description: project.description,
+      ...(project.image_url ? { images: [project.image_url] } : {}),
+    },
+    alternates: { canonical: url },
+  };
+}
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug, locale } = await params;

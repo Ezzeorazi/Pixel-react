@@ -6,6 +6,7 @@ import { Container } from '@/components/ui/Section';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
 import { getService } from '@/lib/supabase/queries';
+import type { Metadata } from 'next';
 
 const ICONS: Record<string, React.ElementType> = {
   Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star,
@@ -14,6 +15,33 @@ const ICONS: Record<string, React.ElementType> = {
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const service = await getService(slug);
+  if (!service) return {};
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const url = `${siteUrl}/${locale}/services/${slug}`;
+
+  return {
+    title: `${service.name} | Pixel Maker`,
+    description: service.description,
+    openGraph: {
+      title: service.name,
+      description: service.description,
+      url,
+      siteName: 'Pixel Maker',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: service.name,
+      description: service.description,
+    },
+    alternates: { canonical: url },
+  };
+}
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;

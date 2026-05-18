@@ -2,6 +2,28 @@ import { useTranslations } from 'next-intl';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { getServices } from '@/lib/supabase/queries';
+import type { Metadata } from 'next';
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const isEs = locale === 'es';
+
+  return {
+    title: isEs ? 'Servicios | Pixel Maker' : 'Services | Pixel Maker',
+    description: isEs
+      ? 'Diseño web, e-commerce, marketing digital y más. Todo lo que necesitás para crecer online.'
+      : 'Web design, e-commerce, digital marketing and more. Everything you need to grow online.',
+    openGraph: {
+      url: `${siteUrl}/${locale}/services`,
+      siteName: 'Pixel Maker',
+      type: 'website',
+    },
+    alternates: { canonical: `${siteUrl}/${locale}/services` },
+  };
+}
 
 export default async function ServicesPage() {
   const services = await getServices();

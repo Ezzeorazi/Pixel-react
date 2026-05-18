@@ -8,8 +8,38 @@ import { Badge } from '@/components/ui/Badge';
 import { CTASection } from '@/components/home/CTASection';
 import { getBlogPost } from '@/lib/supabase/queries';
 import type { Locale } from '@/lib/types';
+import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const post = await getBlogPost(slug, locale as Locale);
+  if (!post) return {};
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const url = `${siteUrl}/${locale}/blog/${slug}`;
+
+  return {
+    title: `${post.title} | Pixel Maker`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url,
+      siteName: 'Pixel Maker',
+      type: 'article',
+      ...(post.image_url ? { images: [{ url: post.image_url }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      ...(post.image_url ? { images: [post.image_url] } : {}),
+    },
+    alternates: { canonical: url },
+  };
+}
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug, locale } = await params;
