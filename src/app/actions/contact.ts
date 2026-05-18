@@ -1,11 +1,14 @@
 'use server';
 
 import { sendContactMessage } from '@/lib/supabase/queries';
-import type { ContactMessage } from '@/lib/types';
+import { ContactSchema } from '@/lib/schemas';
 
-export async function submitContact(data: ContactMessage) {
-  if (!data.name || !data.email || !data.message) {
-    return { ok: false, error: 'Missing required fields' };
+export async function submitContact(data: unknown) {
+  const result = ContactSchema.safeParse(data);
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
   }
-  return sendContactMessage(data);
+
+  return sendContactMessage(result.data);
 }

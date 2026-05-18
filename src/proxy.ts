@@ -1,16 +1,45 @@
 import createMiddleware from 'next-intl/middleware';
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-export default function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Admin routes: inject pathname header so layout can detect /admin/login
   if (pathname.startsWith('/admin')) {
+    // Login page is always accessible
+    if (pathname === '/admin/login') {
+      return NextResponse.next();
+    }
+
+    // Check Supabase session before allowing access
     const response = NextResponse.next();
-    response.headers.set('x-pathname', pathname);
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              request.cookies.set(name, value);
+              response.cookies.set(name, value, options);
+            });
+          },
+        },
+      }
+    );
+
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+
     return response;
   }
 

@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { BlogPostSchema, ProjectSchema, ServiceSchema, SiteSettingsSchema } from '@/lib/schemas';
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
@@ -22,48 +23,63 @@ export async function logout() {
 // ── Blog ──────────────────────────────────────────────────────────────────────
 
 export async function createPost(data: FormData) {
+  const result = BlogPostSchema.safeParse({
+    title:     data.get('title'),
+    excerpt:   data.get('excerpt'),
+    content:   data.get('content'),
+    category:  data.get('category'),
+    locale:    data.get('locale'),
+    date:      data.get('date'),
+    read_time: data.get('read_time'),
+    image_url: data.get('image_url') || null,
+    published: data.get('published') === 'true',
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
   const supabase = await createAdminClient();
-  const payload = {
-    title:      data.get('title') as string,
-    excerpt:    data.get('excerpt') as string,
-    content:    data.get('content') as string,
-    category:   data.get('category') as string,
-    locale:     data.get('locale') as string,
-    date:       data.get('date') as string,
-    read_time:  Number(data.get('read_time')),
-    image_url:  (data.get('image_url') as string) || null,
-    slug:       slugify(data.get('title') as string),
-    published:  data.get('published') === 'true',
-  };
-  const { error } = await supabase.from('blog_posts').insert([payload]);
-  if (error) return { ok: false, error: error.message };
+  const { error } = await supabase.from('blog_posts').insert([{
+    ...result.data,
+    slug: slugify(result.data.title),
+  }]);
+
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/blog');
   return { ok: true };
 }
 
 export async function updatePost(id: string, data: FormData) {
+  const result = BlogPostSchema.safeParse({
+    title:     data.get('title'),
+    excerpt:   data.get('excerpt'),
+    content:   data.get('content'),
+    category:  data.get('category'),
+    locale:    data.get('locale'),
+    date:      data.get('date'),
+    read_time: data.get('read_time'),
+    image_url: data.get('image_url') || null,
+    published: data.get('published') === 'true',
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
   const supabase = await createAdminClient();
-  const payload = {
-    title:      data.get('title') as string,
-    excerpt:    data.get('excerpt') as string,
-    content:    data.get('content') as string,
-    category:   data.get('category') as string,
-    locale:     data.get('locale') as string,
-    date:       data.get('date') as string,
-    read_time:  Number(data.get('read_time')),
-    image_url:  (data.get('image_url') as string) || null,
-    published:  data.get('published') === 'true',
-  };
-  const { error } = await supabase.from('blog_posts').update(payload).eq('id', id);
-  if (error) return { ok: false, error: error.message };
+  const { error } = await supabase.from('blog_posts').update(result.data).eq('id', id);
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/blog');
   return { ok: true };
 }
 
 export async function deletePost(id: string) {
   const supabase = await createAdminClient();
-  await supabase.from('blog_posts').delete().eq('id', id);
+  const { error } = await supabase.from('blog_posts').delete().eq('id', id);
+  if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/blog');
+  return { ok: true };
 }
 
 export async function togglePublished(id: string, current: boolean) {
@@ -75,97 +91,125 @@ export async function togglePublished(id: string, current: boolean) {
 // ── Projects ──────────────────────────────────────────────────────────────────
 
 export async function createProject(data: FormData) {
-  const supabase = await createAdminClient();
-  const payload = {
-    name:             data.get('name') as string,
-    description:      data.get('description') as string,
-    full_description: data.get('full_description') as string,
-    category:         data.get('category') as string,
-    technologies:     (data.get('technologies') as string).split(',').map((t) => t.trim()).filter(Boolean),
-    url:              (data.get('url') as string) || null,
-    image_url:        (data.get('image_url') as string) || null,
+  const result = ProjectSchema.safeParse({
+    name:             data.get('name'),
+    description:      data.get('description'),
+    full_description: data.get('full_description'),
+    category:         data.get('category'),
+    technologies:     data.get('technologies'),
+    url:              data.get('url') || null,
+    image_url:        data.get('image_url') || null,
     featured:         data.get('featured') === 'true',
-    slug:             slugify(data.get('name') as string),
-  };
-  const { error } = await supabase.from('projects').insert([payload]);
-  if (error) return { ok: false, error: error.message };
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('projects').insert([{
+    ...result.data,
+    slug: slugify(result.data.name),
+  }]);
+
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/projects');
   return { ok: true };
 }
 
 export async function updateProject(id: string, data: FormData) {
-  const supabase = await createAdminClient();
-  const payload = {
-    name:             data.get('name') as string,
-    description:      data.get('description') as string,
-    full_description: data.get('full_description') as string,
-    category:         data.get('category') as string,
-    technologies:     (data.get('technologies') as string).split(',').map((t) => t.trim()).filter(Boolean),
-    url:              (data.get('url') as string) || null,
-    image_url:        (data.get('image_url') as string) || null,
+  const result = ProjectSchema.safeParse({
+    name:             data.get('name'),
+    description:      data.get('description'),
+    full_description: data.get('full_description'),
+    category:         data.get('category'),
+    technologies:     data.get('technologies'),
+    url:              data.get('url') || null,
+    image_url:        data.get('image_url') || null,
     featured:         data.get('featured') === 'true',
-  };
-  const { error } = await supabase.from('projects').update(payload).eq('id', id);
-  if (error) return { ok: false, error: error.message };
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('projects').update(result.data).eq('id', id);
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/projects');
   return { ok: true };
 }
 
 export async function deleteProject(id: string) {
   const supabase = await createAdminClient();
-  await supabase.from('projects').delete().eq('id', id);
+  const { error } = await supabase.from('projects').delete().eq('id', id);
+  if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/projects');
+  return { ok: true };
 }
 
 // ── Services ──────────────────────────────────────────────────────────────────
 
 export async function createService(data: FormData) {
-  const supabase = await createAdminClient();
-  const priceRaw = data.get('price') as string;
-  const payload = {
-    name:        data.get('name') as string,
-    description: data.get('description') as string,
-    icon:        data.get('icon') as string,
-    color:       data.get('color') as string,
-    price:       priceRaw ? parseFloat(priceRaw) : null,
-    price_label: (data.get('price_label') as string) || null,
-    features:    (data.get('features') as string).split('\n').map((f) => f.trim()).filter(Boolean),
+  const result = ServiceSchema.safeParse({
+    name:        data.get('name'),
+    description: data.get('description'),
+    icon:        data.get('icon'),
+    color:       data.get('color'),
+    price:       data.get('price') || null,
+    price_label: data.get('price_label') || null,
+    features:    data.get('features'),
     featured:    data.get('featured') === 'true',
     active:      data.get('active') === 'true',
-    sort_order:  Number(data.get('sort_order') ?? 0),
-    slug:        slugify(data.get('name') as string),
-  };
-  const { error } = await supabase.from('services').insert([payload]);
-  if (error) return { ok: false, error: error.message };
+    sort_order:  data.get('sort_order') ?? 0,
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('services').insert([{
+    ...result.data,
+    slug: slugify(result.data.name),
+  }]);
+
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/services');
   return { ok: true };
 }
 
 export async function updateService(id: string, data: FormData) {
-  const supabase = await createAdminClient();
-  const priceRaw = data.get('price') as string;
-  const payload = {
-    name:        data.get('name') as string,
-    description: data.get('description') as string,
-    icon:        data.get('icon') as string,
-    color:       data.get('color') as string,
-    price:       priceRaw ? parseFloat(priceRaw) : null,
-    price_label: (data.get('price_label') as string) || null,
-    features:    (data.get('features') as string).split('\n').map((f) => f.trim()).filter(Boolean),
+  const result = ServiceSchema.safeParse({
+    name:        data.get('name'),
+    description: data.get('description'),
+    icon:        data.get('icon'),
+    color:       data.get('color'),
+    price:       data.get('price') || null,
+    price_label: data.get('price_label') || null,
+    features:    data.get('features'),
     featured:    data.get('featured') === 'true',
     active:      data.get('active') === 'true',
-    sort_order:  Number(data.get('sort_order') ?? 0),
-  };
-  const { error } = await supabase.from('services').update(payload).eq('id', id);
-  if (error) return { ok: false, error: error.message };
+    sort_order:  data.get('sort_order') ?? 0,
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('services').update(result.data).eq('id', id);
+  if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/services');
   return { ok: true };
 }
 
 export async function deleteService(id: string) {
   const supabase = await createAdminClient();
-  await supabase.from('services').delete().eq('id', id);
+  const { error } = await supabase.from('services').delete().eq('id', id);
+  if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/services');
+  return { ok: true };
 }
 
 // ── Messages ──────────────────────────────────────────────────────────────────
@@ -178,8 +222,10 @@ export async function markRead(id: string) {
 
 export async function deleteMessage(id: string) {
   const supabase = await createAdminClient();
-  await supabase.from('contact_messages').delete().eq('id', id);
+  const { error } = await supabase.from('contact_messages').delete().eq('id', id);
+  if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/messages');
+  return { ok: true };
 }
 
 // ── Site Settings ─────────────────────────────────────────────────────────────
@@ -191,22 +237,30 @@ export async function getSettings() {
 }
 
 export async function upsertSettings(formData: FormData) {
+  const result = SiteSettingsSchema.safeParse({
+    whatsapp1: formData.get('whatsapp1') || null,
+    whatsapp2: formData.get('whatsapp2') || null,
+    facebook:  formData.get('facebook') || null,
+    instagram: formData.get('instagram') || null,
+    email:     formData.get('email') || null,
+  });
+
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
   const supabase = await createAdminClient();
-  const payload = {
-    whatsapp1: (formData.get('whatsapp1') as string) || null,
-    whatsapp2: (formData.get('whatsapp2') as string) || null,
-    facebook:  (formData.get('facebook') as string) || null,
-    instagram: (formData.get('instagram') as string) || null,
-    email:     (formData.get('email') as string) || null,
-    updated_at: new Date().toISOString(),
-  };
+  const payload = { ...result.data, updated_at: new Date().toISOString() };
   const { data: existing } = await supabase.from('site_settings').select('id').limit(1).single();
+
   if (existing?.id) {
     await supabase.from('site_settings').update(payload).eq('id', existing.id);
   } else {
     await supabase.from('site_settings').insert([payload]);
   }
+
   revalidatePath('/admin/settings');
+  return { ok: true };
 }
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
