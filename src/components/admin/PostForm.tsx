@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPost, updatePost } from '@/app/actions/admin';
+import { ImageUpload } from '@/components/admin/ImageUpload';
 
 interface PostFormProps {
   post?: {
@@ -72,13 +73,8 @@ export function PostForm({ post }: PostFormProps) {
         <textarea name="excerpt" defaultValue={post?.excerpt} required rows={3} className={`${inputClass} resize-none`} />
       </Field>
 
-      <Field label="URL de imagen (ej: /img/blog/mi-imagen.webp)">
-        <input
-          name="image_url"
-          defaultValue={post?.image_url ?? ''}
-          placeholder="/img/blog/nombre-imagen.webp"
-          className={inputClass}
-        />
+      <Field label="Imagen del artículo">
+        <ImageUpload name="image_url" defaultValue={post?.image_url} folder="blog" />
       </Field>
 
       <Field label="Contenido">

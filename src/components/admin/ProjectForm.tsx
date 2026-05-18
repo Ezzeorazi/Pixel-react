@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { createProject, updateProject } from '@/app/actions/admin';
+import { ImageUpload } from '@/components/admin/ImageUpload';
 
 interface ProjectFormProps {
   project?: {
@@ -79,9 +80,8 @@ export function ProjectForm({ project }: ProjectFormProps) {
           placeholder="https://ejemplo.com" />
       </Field>
 
-      <Field label="Imagen (ej: /img/nombre-proyecto.webp)">
-        <input name="image_url" defaultValue={project?.image_url ?? ''} className={inputClass}
-          placeholder="/img/nombre-proyecto.webp" />
+      <Field label="Imagen del proyecto">
+        <ImageUpload name="image_url" defaultValue={project?.image_url} folder="projects" />
       </Field>
 
       <div className="flex items-center gap-3">
