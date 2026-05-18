@@ -4,7 +4,7 @@ import { useTransition } from 'react';
 import { Trash2 } from 'lucide-react';
 
 interface DeleteButtonProps {
-  action: () => Promise<void>;
+  action: () => Promise<unknown>;
   confirm?: string;
 }
 

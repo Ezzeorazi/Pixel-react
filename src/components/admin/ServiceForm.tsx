@@ -15,16 +15,18 @@ const COLORS = ['purple', 'pink', 'fuchsia'] as const;
 export function ServiceForm({ service }: ServiceFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [featured, setFeatured] = useState(service?.featured ?? false);
   const [active, setActive] = useState(service?.active ?? true);
+
+  const fe = (key: string) => errors[key]?.[0];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     data.set('featured', String(featured));
     data.set('active', String(active));
-    setError('');
+    setErrors({});
 
     startTransition(async () => {
       const result = service
@@ -32,7 +34,7 @@ export function ServiceForm({ service }: ServiceFormProps) {
         : await createService(data);
 
       if (result?.ok === false) {
-        setError(result.error ?? 'Error al guardar');
+        setErrors(result.errors ?? {});
       } else {
         router.push('/admin/services');
         router.refresh();
@@ -43,10 +45,10 @@ export function ServiceForm({ service }: ServiceFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Nombre del servicio *">
+        <Field label="Nombre del servicio *" error={fe('name')}>
           <input name="name" defaultValue={service?.name} required className={inputClass} />
         </Field>
-        <Field label="Ícono">
+        <Field label="Ícono" error={fe('icon')}>
           <select name="icon" defaultValue={service?.icon ?? 'Code'} className={selectClass}>
             {ICONS.map((i) => <option key={i} value={i}>{i}</option>)}
           </select>
@@ -54,32 +56,32 @@ export function ServiceForm({ service }: ServiceFormProps) {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Color">
+        <Field label="Color" error={fe('color')}>
           <select name="color" defaultValue={service?.color ?? 'purple'} className={selectClass}>
             {COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
-        <Field label="Orden de visualización">
+        <Field label="Orden de visualización" error={fe('sort_order')}>
           <input type="number" name="sort_order" defaultValue={service?.sort_order ?? 0} min={0} className={inputClass} />
         </Field>
       </div>
 
-      <Field label="Descripción corta *">
+      <Field label="Descripción corta *" error={fe('description')}>
         <textarea name="description" defaultValue={service?.description} required rows={2} className={`${inputClass} resize-none`} />
       </Field>
 
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Precio (número, ej: 500)">
+        <Field label="Precio (número, ej: 500)" error={fe('price')}>
           <input type="number" name="price" defaultValue={service?.price ?? ''} min={0} step={0.01} className={inputClass}
             placeholder="500" />
         </Field>
-        <Field label="Etiqueta de precio (ej: desde $500 USD)">
+        <Field label="Etiqueta de precio (ej: desde $500 USD)" error={fe('price_label')}>
           <input name="price_label" defaultValue={service?.price_label ?? ''} className={inputClass}
             placeholder="desde $500 USD" />
         </Field>
       </div>
 
-      <Field label="Características incluidas (una por línea)">
+      <Field label="Características incluidas (una por línea)" error={fe('features')}>
         <textarea name="features" defaultValue={service?.features?.join('\n')} rows={6} className={`${inputClass} resize-none`}
           placeholder={'Diseño personalizado\nResponsive mobile-first\nSEO básico incluido'} />
       </Field>
@@ -101,7 +103,7 @@ export function ServiceForm({ service }: ServiceFormProps) {
         </div>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {errors._ && <p className="text-red-400 text-sm">{errors._[0]}</p>}
 
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={isPending}
@@ -120,11 +122,12 @@ export function ServiceForm({ service }: ServiceFormProps) {
 const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-[#0a0a0c] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-colors text-sm';
 const selectClass = `${inputClass} cursor-pointer`;
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children, error }: { label: string; children: React.ReactNode; error?: string }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-1.5">{label}</label>
       {children}
+      {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
     </div>
   );
 }

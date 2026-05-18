@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPost, updatePost } from '@/app/actions/admin';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { MarkdownEditor } from '@/components/admin/MarkdownEditor';
 
 interface PostFormProps {
   post?: {
@@ -25,14 +26,16 @@ const CATEGORIES = ['development', 'marketing', 'business', 'seo', 'general'];
 export function PostForm({ post }: PostFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [published, setPublished] = useState(post?.published ?? false);
+
+  const fe = (key: string) => errors[key]?.[0];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     data.set('published', String(published));
-    setError('');
+    setErrors({});
 
     startTransition(async () => {
       const result = post
@@ -40,8 +43,7 @@ export function PostForm({ post }: PostFormProps) {
         : await createPost(data);
 
       if (result?.ok === false) {
-        const msgs = Object.values(result.errors ?? {}).flat();
-        setError(msgs.join(' · ') || 'Error al guardar');
+        setErrors(result.errors ?? {});
       } else {
         router.push('/admin/blog');
         router.refresh();
@@ -52,41 +54,40 @@ export function PostForm({ post }: PostFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Idioma *">
+        <Field label="Idioma *" error={fe('locale')}>
           <select name="locale" defaultValue={post?.locale ?? 'es'} className={selectClass}>
             <option value="es">Español</option>
             <option value="en">English</option>
           </select>
         </Field>
-        <Field label="Categoría *">
+        <Field label="Categoría *" error={fe('category')}>
           <select name="category" defaultValue={post?.category ?? 'general'} className={selectClass}>
             {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
       </div>
 
-      <Field label="Título *">
+      <Field label="Título *" error={fe('title')}>
         <input name="title" defaultValue={post?.title} required className={inputClass} />
       </Field>
 
-      <Field label="Extracto *">
+      <Field label="Extracto *" error={fe('excerpt')}>
         <textarea name="excerpt" defaultValue={post?.excerpt} required rows={3} className={`${inputClass} resize-none`} />
       </Field>
 
-      <Field label="Imagen del artículo">
+      <Field label="Imagen del artículo" error={fe('image_url')}>
         <ImageUpload name="image_url" defaultValue={post?.image_url} folder="blog" />
       </Field>
 
-      <Field label="Contenido">
-        <textarea name="content" defaultValue={post?.content} rows={12} className={`${inputClass} resize-none font-mono text-sm`}
-          placeholder="Escribí el contenido del artículo acá..." />
+      <Field label="Contenido" error={fe('content')}>
+        <MarkdownEditor name="content" defaultValue={post?.content} error={fe('content')} />
       </Field>
 
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Fecha *">
+        <Field label="Fecha *" error={fe('date')}>
           <input type="date" name="date" defaultValue={post?.date ?? new Date().toISOString().slice(0, 10)} required className={inputClass} />
         </Field>
-        <Field label="Tiempo de lectura (min) *">
+        <Field label="Tiempo de lectura (min) *" error={fe('read_time')}>
           <input type="number" name="read_time" defaultValue={post?.read_time ?? 5} min={1} max={60} required className={inputClass} />
         </Field>
       </div>
@@ -99,7 +100,7 @@ export function PostForm({ post }: PostFormProps) {
         <span className="text-sm text-gray-300">{published ? 'Publicado' : 'Borrador'}</span>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {errors._ && <p className="text-red-400 text-sm">{errors._[0]}</p>}
 
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={isPending}
@@ -118,11 +119,12 @@ export function PostForm({ post }: PostFormProps) {
 const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-[#0a0a0c] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-colors text-sm';
 const selectClass = `${inputClass} cursor-pointer`;
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children, error }: { label: string; children: React.ReactNode; error?: string }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-1.5">{label}</label>
       {children}
+      {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
     </div>
   );
 }

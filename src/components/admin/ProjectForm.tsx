@@ -24,14 +24,16 @@ const CATEGORIES = ['web', 'software', 'marketing', 'ecommerce'];
 export function ProjectForm({ project }: ProjectFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [featured, setFeatured] = useState(project?.featured ?? false);
+
+  const fe = (key: string) => errors[key]?.[0];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     data.set('featured', String(featured));
-    setError('');
+    setErrors({});
 
     startTransition(async () => {
       const result = project
@@ -39,8 +41,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
         : await createProject(data);
 
       if (result?.ok === false) {
-        const msgs = Object.values(result.errors ?? {}).flat();
-        setError(msgs.join(' · ') || 'Error al guardar');
+        setErrors(result.errors ?? {});
       } else {
         router.push('/admin/projects');
         router.refresh();
@@ -51,36 +52,36 @@ export function ProjectForm({ project }: ProjectFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
       <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Nombre del proyecto *">
+        <Field label="Nombre del proyecto *" error={fe('name')}>
           <input name="name" defaultValue={project?.name} required className={inputClass} />
         </Field>
-        <Field label="Categoría *">
+        <Field label="Categoría *" error={fe('category')}>
           <select name="category" defaultValue={project?.category ?? 'web'} className={selectClass}>
             {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
       </div>
 
-      <Field label="Descripción corta *">
+      <Field label="Descripción corta *" error={fe('description')}>
         <textarea name="description" defaultValue={project?.description} required rows={2} className={`${inputClass} resize-none`} />
       </Field>
 
-      <Field label="Descripción completa">
+      <Field label="Descripción completa" error={fe('full_description')}>
         <textarea name="full_description" defaultValue={project?.full_description} rows={6} className={`${inputClass} resize-none`}
           placeholder="Descripción detallada del proyecto..." />
       </Field>
 
-      <Field label="Tecnologías (separadas por coma) *">
+      <Field label="Tecnologías (separadas por coma) *" error={fe('technologies')}>
         <input name="technologies" defaultValue={project?.technologies?.join(', ')} required className={inputClass}
           placeholder="Next.js, TypeScript, Supabase, Tailwind CSS" />
       </Field>
 
-      <Field label="URL del sitio">
+      <Field label="URL del sitio" error={fe('url')}>
         <input type="url" name="url" defaultValue={project?.url ?? ''} className={inputClass}
           placeholder="https://ejemplo.com" />
       </Field>
 
-      <Field label="Imagen del proyecto">
+      <Field label="Imagen del proyecto" error={fe('image_url')}>
         <ImageUpload name="image_url" defaultValue={project?.image_url} folder="projects" />
       </Field>
 
@@ -92,7 +93,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
         <span className="text-sm text-gray-300">Destacado en Home</span>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {errors._ && <p className="text-red-400 text-sm">{errors._[0]}</p>}
 
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={isPending}
@@ -111,11 +112,12 @@ export function ProjectForm({ project }: ProjectFormProps) {
 const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-[#0a0a0c] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-colors text-sm';
 const selectClass = `${inputClass} cursor-pointer`;
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children, error }: { label: string; children: React.ReactNode; error?: string }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-1.5">{label}</label>
       {children}
+      {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
     </div>
   );
 }

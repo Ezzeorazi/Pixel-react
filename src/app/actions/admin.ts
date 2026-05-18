@@ -117,11 +117,20 @@ export async function createProject(data: FormData) {
     return { ok: false, errors: result.error.flatten().fieldErrors };
   }
 
+  const slug = slugify(result.data.name);
   const supabase = await createAdminClient();
-  const { error } = await supabase.from('projects').insert([{
-    ...result.data,
-    slug: slugify(result.data.name),
-  }]);
+
+  const { data: existing } = await supabase
+    .from('projects')
+    .select('id')
+    .eq('slug', slug)
+    .maybeSingle();
+
+  if (existing) {
+    return { ok: false, errors: { name: ['Ya existe un proyecto con ese nombre'] } };
+  }
+
+  const { error } = await supabase.from('projects').insert([{ ...result.data, slug }]);
 
   if (error) return { ok: false, errors: { _: [error.message] } };
   revalidatePath('/admin/projects');
