@@ -22,7 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'Pixel Maker',
       type: 'website',
     },
-    alternates: { canonical: `${siteUrl}/${locale}/blog` },
+    alternates: {
+      canonical: `${siteUrl}/${locale}/blog`,
+      languages: {
+        es: `${siteUrl}/es/blog`,
+        en: `${siteUrl}/en/blog`,
+        'x-default': `${siteUrl}/es/blog`,
+      },
+    },
   };
 }
 

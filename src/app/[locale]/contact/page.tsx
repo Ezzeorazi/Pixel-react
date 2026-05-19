@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { Mail, MapPin, Clock } from 'lucide-react';
 import { Section, Container } from '@/components/ui/Section';
@@ -7,6 +8,27 @@ import { getPublicSettings } from '@/lib/supabase/queries';
 import type { Locale } from '@/lib/types';
 
 type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const isEs = locale === 'es';
+
+  return {
+    title: isEs ? 'Contacto | Pixel Maker' : 'Contact | Pixel Maker',
+    description: isEs
+      ? 'Contactanos para hablar sobre tu proyecto. Respondemos en menos de 24 horas.'
+      : 'Contact us to discuss your project. We respond in less than 24 hours.',
+    alternates: {
+      canonical: `${siteUrl}/${locale}/contact`,
+      languages: {
+        es: `${siteUrl}/es/contact`,
+        en: `${siteUrl}/en/contact`,
+        'x-default': `${siteUrl}/es/contact`,
+      },
+    },
+  };
+}
 
 const WHATSAPP_CONTACTS: Record<string, { flag: string; country: string; name: string }> = {
   '54': { flag: '🇦🇷', country: 'Argentina', name: 'Gonzalo Diaz Viñuela' },

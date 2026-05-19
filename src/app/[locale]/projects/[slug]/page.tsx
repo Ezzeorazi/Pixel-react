@@ -39,7 +39,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: project.description,
       ...(project.image_url ? { images: [project.image_url] } : {}),
     },
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `${siteUrl}/es/projects/${slug}`,
+        en: `${siteUrl}/en/projects/${slug}`,
+        'x-default': `${siteUrl}/es/projects/${slug}`,
+      },
+    },
   };
 }
 

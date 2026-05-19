@@ -28,7 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: service.description,
     openGraph: { title: service.name, description: service.description, url, siteName: 'Pixel Maker', type: 'website' },
     twitter: { card: 'summary_large_image', title: service.name, description: service.description },
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `${siteUrl}/es/services/${slug}`,
+        en: `${siteUrl}/en/services/${slug}`,
+        'x-default': `${siteUrl}/es/services/${slug}`,
+      },
+    },
   };
 }
 

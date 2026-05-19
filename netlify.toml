@@ -12,7 +12,22 @@
 [[redirects]]
   from = "/"
   to = "/es"
-  status = 302
+  status = 301
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/es/projects"
+  status = 301
+
+[[redirects]]
+  from = "/planes"
+  to = "/es/services"
+  status = 301
+
+[[redirects]]
+  from = "/en/portfolioen"
+  to = "/en/projects"
+  status = 301
 
 [[headers]]
   for = "/sitemap.xml"
