@@ -178,6 +178,10 @@
     "visitSite": "Visitar sitio",
     "backToProjects": "Volver a proyectos",
     "technologies": "Tecnologías",
+    "category": "Categoría",
+    "featured": "Destacado",
+    "relatedProjects": "Proyectos relacionados",
+    "noProjects": "No hay proyectos en esta categoría todavía.",
     "categories": {
       "all": "Todos",
       "web": "Web",

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
+import { ProjectImage } from '@/components/projects/ProjectImage';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
@@ -32,21 +32,10 @@ function ProjectsPreview({ projects }: Props) {
               className="group bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-200 dark:border-white/5 overflow-hidden hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.08)] hover:-translate-y-1 transition-all duration-300"
             >
               <div className="relative h-48 overflow-hidden">
-                {project.image_url ? (
-                  <Image
-                    src={project.image_url}
-                    alt={project.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                ) : (
-                  <div className="h-full bg-linear-to-br from-purple-600/20 via-fuchsia-600/10 to-pink-600/20 relative flex items-center justify-center">
-                    <span className="text-4xl font-black text-white/10 select-none">
-                      {project.name[0]}
-                    </span>
-                  </div>
-                )}
+                <ProjectImage
+                  imageUrl={project.image_url}
+                  name={project.name}
+                />
                 <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                   <ExternalLink className="w-4 h-4 text-white/60" />
                 </div>

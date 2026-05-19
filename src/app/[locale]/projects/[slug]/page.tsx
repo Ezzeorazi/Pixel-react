@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
@@ -6,7 +7,8 @@ import { Container } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
-import { getProject } from '@/lib/supabase/queries';
+import { ProjectCard } from '@/components/projects/ProjectCard';
+import { getProject, getProjects } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
@@ -43,8 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'projects' });
-  const project = await getProject(slug);
+  const [project, allProjects] = await Promise.all([getProject(slug), getProjects()]);
   if (!project) notFound();
+
+  const related = allProjects
+    .filter((p) => p.slug !== slug && p.category === project.category)
+    .slice(0, 3);
 
   return (
     <>
@@ -81,7 +87,19 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       <section className="pb-20">
         <Container>
-          <div className="h-72 md:h-96 rounded-2xl bg-gradient-to-br from-purple-600/20 via-fuchsia-600/10 to-pink-600/20 mb-12" />
+          <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-purple-600/20 via-fuchsia-600/10 to-pink-600/20">
+            {project.image_url && (
+              <Image
+                src={project.image_url}
+                alt={project.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 1200px"
+                priority
+              />
+            )}
+          </div>
+
           <div className="grid md:grid-cols-3 gap-10">
             <div className="md:col-span-2">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
@@ -106,7 +124,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-3">
-                  Category
+                  {t('category')}
                 </h3>
                 <Badge variant="purple">{project.category}</Badge>
               </div>
@@ -114,6 +132,21 @@ export default async function ProjectDetailPage({ params }: Props) {
           </div>
         </Container>
       </section>
+
+      {related.length > 0 && (
+        <section className="pb-20">
+          <Container>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+              {t('relatedProjects')}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {related.map((p) => (
+                <ProjectCard key={p.id} project={p} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <CTASection />
     </>

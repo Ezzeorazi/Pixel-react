@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
-import { ProjectCard } from '@/components/projects/ProjectCard';
+import { ProjectsFilter } from '@/components/projects/ProjectsFilter';
 import { getProjects } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
 
@@ -34,11 +34,7 @@ export default async function ProjectsPage({ params }: Props) {
     <Section className="pt-36 md:pt-40">
       <Container>
         <SectionHeader eyebrow="Portfolio" heading={t('heading')} subtitle={t('subtitle')} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <ProjectsFilter projects={projects} />
       </Container>
     </Section>
   );
