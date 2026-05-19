@@ -9,6 +9,7 @@ import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 import { getProject, getProjects } from '@/lib/supabase/queries';
+import type { Locale } from '@/lib/types';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
@@ -45,7 +46,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: 'projects' });
-  const [project, allProjects] = await Promise.all([getProject(slug), getProjects()]);
+  const [project, allProjects] = await Promise.all([
+    getProject(slug, locale as Locale),
+    getProjects(locale as Locale),
+  ]);
   if (!project) notFound();
 
   const related = allProjects

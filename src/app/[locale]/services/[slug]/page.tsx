@@ -1,24 +1,23 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, Check, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Section';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
 import { getService } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
+import type { Locale } from '@/lib/types';
 
 const ICONS: Record<string, React.ElementType> = {
   Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star,
 };
 
-type Props = {
-  params: Promise<{ slug: string; locale: string }>;
-};
+type Props = { params: Promise<{ slug: string; locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
-  const service = await getService(slug);
+  const service = await getService(slug, locale as Locale);
   if (!service) return {};
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
@@ -27,33 +26,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${service.name} | Pixel Maker`,
     description: service.description,
-    openGraph: {
-      title: service.name,
-      description: service.description,
-      url,
-      siteName: 'Pixel Maker',
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: service.name,
-      description: service.description,
-    },
+    openGraph: { title: service.name, description: service.description, url, siteName: 'Pixel Maker', type: 'website' },
+    twitter: { card: 'summary_large_image', title: service.name, description: service.description },
     alternates: { canonical: url },
   };
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const service = await getService(slug);
+  const { slug, locale } = await params;
+  const [service, t] = await Promise.all([
+    getService(slug, locale as Locale),
+    getTranslations({ locale, namespace: 'services' }),
+  ]);
   if (!service) notFound();
 
-  return <ServiceDetailContent service={service} />;
-}
-
-function ServiceDetailContent({ service }: { service: Awaited<ReturnType<typeof getService>> & {} }) {
-  const locale = useLocale();
-  const Icon = ICONS[service!.icon] ?? Code;
+  const Icon = ICONS[service.icon] ?? Code;
 
   return (
     <>
@@ -64,7 +51,7 @@ function ServiceDetailContent({ service }: { service: Awaited<ReturnType<typeof 
             href={`/${locale}/services`}
             className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-8 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" /> Volver a servicios
+            <ArrowLeft className="w-4 h-4" /> {t('backToServices')}
           </Link>
 
           <div className="max-w-3xl">
@@ -72,36 +59,36 @@ function ServiceDetailContent({ service }: { service: Awaited<ReturnType<typeof 
               <Icon className="w-8 h-8 text-purple-500" />
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6">
-              <GradientText>{service!.name}</GradientText>
+              <GradientText>{service.name}</GradientText>
             </h1>
             <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
-              {service!.description}
+              {service.description}
             </p>
-            {service!.price_label && (
+            {service.price_label && (
               <p className="text-2xl font-bold text-green-500 dark:text-green-400 mb-8">
-                {service!.price_label}
+                {service.price_label}
               </p>
             )}
             <Link
               href={`/${locale}/contact`}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] transition-all hover:-translate-y-0.5"
             >
-              Consultar precio <ArrowRight className="w-4 h-4" />
+              {t('askPrice')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </Container>
       </section>
 
-      {service!.features?.length > 0 && (
+      {service.features?.length > 0 && (
         <section className="py-16 md:py-20">
           <Container>
             <div className="grid md:grid-cols-2 gap-12 items-start">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">
-                  ¿Qué incluye?
+                  {t('whatsIncluded')}
                 </h2>
                 <ul className="space-y-4">
-                  {service!.features.map((feature: string) => (
+                  {service.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-3 h-3 text-white" />
@@ -113,20 +100,20 @@ function ServiceDetailContent({ service }: { service: Awaited<ReturnType<typeof 
               </div>
 
               <div className="bg-gray-50 dark:bg-[#18181c] rounded-2xl border border-gray-100 dark:border-white/5 p-8">
-                <h3 className="font-bold text-gray-900 dark:text-white mb-4">¿Listo para empezar?</h3>
+                <h3 className="font-bold text-gray-900 dark:text-white mb-4">{t('readyToStart')}</h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-                  Contanos tu proyecto y te respondemos en menos de 24 horas.
+                  {t('contactDesc')}
                 </p>
-                {service!.price_label && (
+                {service.price_label && (
                   <p className="text-xl font-bold text-green-500 dark:text-green-400 mb-6">
-                    {service!.price_label}
+                    {service.price_label}
                   </p>
                 )}
                 <Link
                   href={`/${locale}/contact`}
                   className="block w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all"
                 >
-                  Contactarnos
+                  {t('contactUs')}
                 </Link>
               </div>
             </div>

@@ -43,65 +43,102 @@ export function ServiceForm({ service }: ServiceFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Nombre del servicio *" error={fe('name')}>
-          <input name="name" defaultValue={service?.name} required className={inputClass} />
-        </Field>
-        <Field label="Ícono" error={fe('icon')}>
-          <select name="icon" defaultValue={service?.icon ?? 'Code'} className={selectClass}>
-            {ICONS.map((i) => <option key={i} value={i}>{i}</option>)}
-          </select>
-        </Field>
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
 
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Color" error={fe('color')}>
-          <select name="color" defaultValue={service?.color ?? 'purple'} className={selectClass}>
-            {COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </Field>
-        <Field label="Orden de visualización" error={fe('sort_order')}>
-          <input type="number" name="sort_order" defaultValue={service?.sort_order ?? 0} min={0} className={inputClass} />
-        </Field>
-      </div>
+      {/* ── Español ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          🇦🇷 Español
+        </h2>
 
-      <Field label="Descripción corta *" error={fe('description')}>
-        <textarea name="description" defaultValue={service?.description} required rows={2} className={`${inputClass} resize-none`} />
-      </Field>
-
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Precio (número, ej: 500)" error={fe('price')}>
-          <input type="number" name="price" defaultValue={service?.price ?? ''} min={0} step={0.01} className={inputClass}
-            placeholder="500" />
-        </Field>
-        <Field label="Etiqueta de precio (ej: desde $500 USD)" error={fe('price_label')}>
-          <input name="price_label" defaultValue={service?.price_label ?? ''} className={inputClass}
-            placeholder="desde $500 USD" />
-        </Field>
-      </div>
-
-      <Field label="Características incluidas (una por línea)" error={fe('features')}>
-        <textarea name="features" defaultValue={service?.features?.join('\n')} rows={6} className={`${inputClass} resize-none`}
-          placeholder={'Diseño personalizado\nResponsive mobile-first\nSEO básico incluido'} />
-      </Field>
-
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-3">
-          <button type="button" onClick={() => setFeatured(!featured)}
-            className={`relative w-11 h-6 rounded-full transition-colors ${featured ? 'bg-purple-600' : 'bg-white/10'}`}>
-            <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${featured ? 'translate-x-6' : 'translate-x-1'}`} />
-          </button>
-          <span className="text-sm text-gray-300">Destacado en Home</span>
+        <div className="grid sm:grid-cols-2 gap-5">
+          <Field label="Nombre del servicio *" error={fe('name')}>
+            <input name="name" defaultValue={service?.name} required className={inputClass} />
+          </Field>
+          <Field label="Ícono" error={fe('icon')}>
+            <select name="icon" defaultValue={service?.icon ?? 'Code'} className={selectClass}>
+              {ICONS.map((i) => <option key={i} value={i}>{i}</option>)}
+            </select>
+          </Field>
         </div>
-        <div className="flex items-center gap-3">
-          <button type="button" onClick={() => setActive(!active)}
-            className={`relative w-11 h-6 rounded-full transition-colors ${active ? 'bg-green-600' : 'bg-white/10'}`}>
-            <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${active ? 'translate-x-6' : 'translate-x-1'}`} />
-          </button>
-          <span className="text-sm text-gray-300">Activo (visible en el sitio)</span>
+
+        <Field label="Descripción corta *" error={fe('description')}>
+          <textarea name="description" defaultValue={service?.description} required rows={2} className={`${inputClass} resize-none`} />
+        </Field>
+
+        <Field label="Características incluidas (una por línea)" error={fe('features')}>
+          <textarea name="features" defaultValue={service?.features?.join('\n')} rows={6} className={`${inputClass} resize-none`}
+            placeholder={'Diseño personalizado\nResponsive mobile-first\nSEO básico incluido'} />
+        </Field>
+      </section>
+
+      {/* ── English ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          🇺🇸 English <span className="text-gray-600 normal-case font-normal">(opcional — si no se completa, se usa el español)</span>
+        </h2>
+
+        <Field label="Service name" error={fe('name_en')}>
+          <input name="name_en" defaultValue={service?.name_en ?? ''} className={inputClass}
+            placeholder="Service name in English" />
+        </Field>
+
+        <Field label="Short description" error={fe('description_en')}>
+          <textarea name="description_en" defaultValue={service?.description_en ?? ''} rows={2} className={`${inputClass} resize-none`}
+            placeholder="Short description in English..." />
+        </Field>
+
+        <Field label="Features (one per line)" error={fe('features_en')}>
+          <textarea name="features_en" defaultValue={service?.features_en?.join('\n') ?? ''} rows={6} className={`${inputClass} resize-none`}
+            placeholder={'Custom design\nResponsive mobile-first\nBasic SEO included'} />
+        </Field>
+      </section>
+
+      {/* ── Shared fields ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          Datos compartidos
+        </h2>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <Field label="Color" error={fe('color')}>
+            <select name="color" defaultValue={service?.color ?? 'purple'} className={selectClass}>
+              {COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </Field>
+          <Field label="Orden de visualización" error={fe('sort_order')}>
+            <input type="number" name="sort_order" defaultValue={service?.sort_order ?? 0} min={0} className={inputClass} />
+          </Field>
         </div>
-      </div>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <Field label="Precio (número, ej: 500)" error={fe('price')}>
+            <input type="number" name="price" defaultValue={service?.price ?? ''} min={0} step={0.01} className={inputClass}
+              placeholder="500" />
+          </Field>
+          <Field label="Etiqueta de precio (ej: desde $500 USD)" error={fe('price_label')}>
+            <input name="price_label" defaultValue={service?.price_label ?? ''} className={inputClass}
+              placeholder="desde $500 USD" />
+          </Field>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <button type="button" onClick={() => setFeatured(!featured)}
+              className={`relative w-11 h-6 rounded-full transition-colors ${featured ? 'bg-purple-600' : 'bg-white/10'}`}>
+              <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${featured ? 'translate-x-6' : 'translate-x-1'}`} />
+            </button>
+            <span className="text-sm text-gray-300">Destacado en Home</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button type="button" onClick={() => setActive(!active)}
+              className={`relative w-11 h-6 rounded-full transition-colors ${active ? 'bg-green-600' : 'bg-white/10'}`}>
+              <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${active ? 'translate-x-6' : 'translate-x-1'}`} />
+            </button>
+            <span className="text-sm text-gray-300">Activo (visible en el sitio)</span>
+          </div>
+        </div>
+      </section>
 
       {errors._ && <p className="text-red-400 text-sm">{errors._[0]}</p>}
 

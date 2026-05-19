@@ -16,6 +16,9 @@ interface ProjectFormProps {
     url?: string | null;
     image_url?: string | null;
     featured: boolean;
+    name_en?: string | null;
+    description_en?: string | null;
+    full_description_en?: string | null;
   };
 }
 
@@ -50,48 +53,85 @@ export function ProjectForm({ project }: ProjectFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Field label="Nombre del proyecto *" error={fe('name')}>
-          <input name="name" defaultValue={project?.name} required className={inputClass} />
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+
+      {/* ── Español ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          🇦🇷 Español
+        </h2>
+
+        <div className="grid sm:grid-cols-2 gap-5">
+          <Field label="Nombre del proyecto *" error={fe('name')}>
+            <input name="name" defaultValue={project?.name} required className={inputClass} />
+          </Field>
+          <Field label="Categoría *" error={fe('category')}>
+            <select name="category" defaultValue={project?.category ?? 'web'} className={selectClass}>
+              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </Field>
+        </div>
+
+        <Field label="Descripción corta *" error={fe('description')}>
+          <textarea name="description" defaultValue={project?.description} required rows={2} className={`${inputClass} resize-none`} />
         </Field>
-        <Field label="Categoría *" error={fe('category')}>
-          <select name="category" defaultValue={project?.category ?? 'web'} className={selectClass}>
-            {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
+
+        <Field label="Descripción completa" error={fe('full_description')}>
+          <textarea name="full_description" defaultValue={project?.full_description} rows={6} className={`${inputClass} resize-none`}
+            placeholder="Descripción detallada del proyecto..." />
         </Field>
-      </div>
+      </section>
 
-      <Field label="Descripción corta *" error={fe('description')}>
-        <textarea name="description" defaultValue={project?.description} required rows={2} className={`${inputClass} resize-none`} />
-      </Field>
+      {/* ── English ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          🇺🇸 English <span className="text-gray-600 normal-case font-normal">(opcional — si no se completa, se usa el español)</span>
+        </h2>
 
-      <Field label="Descripción completa" error={fe('full_description')}>
-        <textarea name="full_description" defaultValue={project?.full_description} rows={6} className={`${inputClass} resize-none`}
-          placeholder="Descripción detallada del proyecto..." />
-      </Field>
+        <Field label="Project name" error={fe('name_en')}>
+          <input name="name_en" defaultValue={project?.name_en ?? ''} className={inputClass}
+            placeholder="Project name in English" />
+        </Field>
 
-      <Field label="Tecnologías (separadas por coma) *" error={fe('technologies')}>
-        <input name="technologies" defaultValue={project?.technologies?.join(', ')} required className={inputClass}
-          placeholder="Next.js, TypeScript, Supabase, Tailwind CSS" />
-      </Field>
+        <Field label="Short description" error={fe('description_en')}>
+          <textarea name="description_en" defaultValue={project?.description_en ?? ''} rows={2} className={`${inputClass} resize-none`}
+            placeholder="Short description in English..." />
+        </Field>
 
-      <Field label="URL del sitio" error={fe('url')}>
-        <input type="url" name="url" defaultValue={project?.url ?? ''} className={inputClass}
-          placeholder="https://ejemplo.com" />
-      </Field>
+        <Field label="Full description" error={fe('full_description_en')}>
+          <textarea name="full_description_en" defaultValue={project?.full_description_en ?? ''} rows={6} className={`${inputClass} resize-none`}
+            placeholder="Full project description in English..." />
+        </Field>
+      </section>
 
-      <Field label="Imagen del proyecto" error={fe('image_url')}>
-        <ImageUpload name="image_url" defaultValue={project?.image_url} folder="projects" />
-      </Field>
+      {/* ── Shared fields ── */}
+      <section className="space-y-5">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-white/10 pb-2">
+          Datos compartidos
+        </h2>
 
-      <div className="flex items-center gap-3">
-        <button type="button" onClick={() => setFeatured(!featured)}
-          className={`relative w-11 h-6 rounded-full transition-colors ${featured ? 'bg-purple-600' : 'bg-white/10'}`}>
-          <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${featured ? 'translate-x-6' : 'translate-x-1'}`} />
-        </button>
-        <span className="text-sm text-gray-300">Destacado en Home</span>
-      </div>
+        <Field label="Tecnologías (separadas por coma) *" error={fe('technologies')}>
+          <input name="technologies" defaultValue={project?.technologies?.join(', ')} required className={inputClass}
+            placeholder="Next.js, TypeScript, Supabase, Tailwind CSS" />
+        </Field>
+
+        <Field label="URL del sitio" error={fe('url')}>
+          <input type="url" name="url" defaultValue={project?.url ?? ''} className={inputClass}
+            placeholder="https://ejemplo.com" />
+        </Field>
+
+        <Field label="Imagen del proyecto" error={fe('image_url')}>
+          <ImageUpload name="image_url" defaultValue={project?.image_url} folder="projects" />
+        </Field>
+
+        <div className="flex items-center gap-3">
+          <button type="button" onClick={() => setFeatured(!featured)}
+            className={`relative w-11 h-6 rounded-full transition-colors ${featured ? 'bg-purple-600' : 'bg-white/10'}`}>
+            <span className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${featured ? 'translate-x-6' : 'translate-x-1'}`} />
+          </button>
+          <span className="text-sm text-gray-300">Destacado en Home</span>
+        </div>
+      </section>
 
       {errors._ && <p className="text-red-400 text-sm">{errors._[0]}</p>}
 

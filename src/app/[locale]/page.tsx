@@ -13,7 +13,7 @@ export default async function HomePage({ params }: Props) {
 
   const [posts, projects] = await Promise.all([
     getBlogPosts(locale as Locale),
-    getFeaturedProjects(),
+    getFeaturedProjects(locale as Locale),
   ]);
 
   return (

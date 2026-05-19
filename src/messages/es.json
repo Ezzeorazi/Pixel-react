@@ -40,6 +40,12 @@
   "services": {
     "heading": "Nuestros Servicios",
     "subtitle": "Soluciones digitales completas para empresas que quieren crecer. Desde la primera sesión de planificación hasta el mantenimiento a largo plazo.",
+    "backToServices": "Volver a servicios",
+    "askPrice": "Consultar precio",
+    "whatsIncluded": "¿Qué incluye?",
+    "readyToStart": "¿Listo para empezar?",
+    "contactUs": "Contactarnos",
+    "contactDesc": "Contanos tu proyecto y te respondemos en menos de 24 horas.",
     "items": {
       "web-development": {
         "name": "Desarrollo Web",

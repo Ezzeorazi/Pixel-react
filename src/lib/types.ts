@@ -25,6 +25,10 @@ export interface Project {
   url?: string;
   image_url?: string;
   featured: boolean;
+  // bilingual fields (admin only — queries normalize these into name/description/full_description)
+  name_en?: string | null;
+  description_en?: string | null;
+  full_description_en?: string | null;
 }
 
 export interface ContactMessage {
@@ -65,4 +69,8 @@ export interface Service {
   active: boolean;
   sort_order: number;
   created_at?: string;
+  // bilingual fields (admin only)
+  name_en?: string | null;
+  description_en?: string | null;
+  features_en?: string[] | null;
 }

@@ -23,6 +23,9 @@ export const ProjectSchema = z.object({
   url:       z.string().url('URL inválida').optional().nullable(),
   image_url: z.string().url('URL de imagen inválida').optional().nullable(),
   featured:  z.boolean().default(false),
+  name_en:             z.string().max(100).optional().nullable().transform(v => v || null),
+  description_en:      z.string().max(300).optional().nullable().transform(v => v || null),
+  full_description_en: z.string().optional().nullable().transform(v => v || null),
 });
 
 export const ServiceSchema = z.object({
@@ -38,6 +41,11 @@ export const ServiceSchema = z.object({
   featured:   z.boolean().default(false),
   active:     z.boolean().default(true),
   sort_order: z.coerce.number().int().min(0).default(0),
+  name_en:        z.string().max(100).optional().nullable().transform(v => v || null),
+  description_en: z.string().max(300).optional().nullable().transform(v => v || null),
+  features_en:    z.string().optional().nullable().transform(v =>
+    v ? v.split('\n').map((f) => f.trim()).filter(Boolean) : null
+  ),
 });
 
 export const ContactSchema = z.object({

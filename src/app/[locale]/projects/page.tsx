@@ -3,6 +3,7 @@ import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { ProjectsFilter } from '@/components/projects/ProjectsFilter';
 import { getProjects } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
+import type { Locale } from '@/lib/types';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectsPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'projects' });
-  const projects = await getProjects();
+  const projects = await getProjects(locale as Locale);
 
   return (
     <Section className="pt-36 md:pt-40">

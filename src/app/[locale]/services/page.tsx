@@ -1,8 +1,10 @@
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { getServices } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
+import type { Locale } from '@/lib/types';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -25,16 +27,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ServicesPage() {
-  const services = await getServices();
+export default async function ServicesPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'services' });
+  const services = await getServices(locale as Locale);
 
   return (
     <Section className="pt-36 md:pt-40">
       <Container>
         <SectionHeader
           eyebrow="Services"
-          heading="Nuestros servicios"
-          subtitle="Todo lo que necesitás para crecer en el mundo digital, con resultados medibles."
+          heading={t('heading')}
+          subtitle={t('subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

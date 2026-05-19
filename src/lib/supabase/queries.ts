@@ -2,6 +2,28 @@ import { createClient } from './server';
 import { SAMPLE_POSTS, SAMPLE_POSTS_EN, SAMPLE_PROJECTS } from '@/lib/data';
 import type { BlogPost, Project, ContactMessage, Locale, Service, SiteSettings } from '@/lib/types';
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function localizeProject(p: Project, locale: Locale): Project {
+  if (locale !== 'en') return p;
+  return {
+    ...p,
+    name:             p.name_en             || p.name,
+    description:      p.description_en      || p.description,
+    full_description: p.full_description_en || p.full_description,
+  };
+}
+
+function localizeService(s: Service, locale: Locale): Service {
+  if (locale !== 'en') return s;
+  return {
+    ...s,
+    name:        s.name_en        || s.name,
+    description: s.description_en || s.description,
+    features:    s.features_en    || s.features,
+  };
+}
+
 // ── Blog ──────────────────────────────────────────────────────────────────────
 
 export async function getBlogPosts(locale: Locale): Promise<BlogPost[]> {
@@ -47,7 +69,7 @@ export async function getBlogPost(slug: string, locale: Locale): Promise<BlogPos
 
 // ── Projects ──────────────────────────────────────────────────────────────────
 
-export async function getProjects(): Promise<Project[]> {
+export async function getProjects(locale: Locale = 'es'): Promise<Project[]> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -56,13 +78,13 @@ export async function getProjects(): Promise<Project[]> {
       .order('created_at', { ascending: false });
 
     if (error || !data?.length) return SAMPLE_PROJECTS;
-    return data as Project[];
+    return (data as Project[]).map((p) => localizeProject(p, locale));
   } catch {
     return SAMPLE_PROJECTS;
   }
 }
 
-export async function getProject(slug: string): Promise<Project | null> {
+export async function getProject(slug: string, locale: Locale = 'es'): Promise<Project | null> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -74,13 +96,13 @@ export async function getProject(slug: string): Promise<Project | null> {
     if (error || !data) {
       return SAMPLE_PROJECTS.find((p) => p.slug === slug) ?? null;
     }
-    return data as Project;
+    return localizeProject(data as Project, locale);
   } catch {
     return SAMPLE_PROJECTS.find((p) => p.slug === slug) ?? null;
   }
 }
 
-export async function getFeaturedProjects(): Promise<Project[]> {
+export async function getFeaturedProjects(locale: Locale = 'es'): Promise<Project[]> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -91,7 +113,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       .limit(3);
 
     if (error || !data?.length) return SAMPLE_PROJECTS.filter((p) => p.featured);
-    return data as Project[];
+    return (data as Project[]).map((p) => localizeProject(p, locale));
   } catch {
     return SAMPLE_PROJECTS.filter((p) => p.featured);
   }
@@ -99,7 +121,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
 // ── Services ──────────────────────────────────────────────────────────────────
 
-export async function getServices(): Promise<Service[]> {
+export async function getServices(locale: Locale = 'es'): Promise<Service[]> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -109,13 +131,13 @@ export async function getServices(): Promise<Service[]> {
       .order('sort_order', { ascending: true });
 
     if (error || !data?.length) return [];
-    return data as Service[];
+    return (data as Service[]).map((s) => localizeService(s, locale));
   } catch {
     return [];
   }
 }
 
-export async function getService(slug: string): Promise<Service | null> {
+export async function getService(slug: string, locale: Locale = 'es'): Promise<Service | null> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -126,13 +148,13 @@ export async function getService(slug: string): Promise<Service | null> {
       .single();
 
     if (error || !data) return null;
-    return data as Service;
+    return localizeService(data as Service, locale);
   } catch {
     return null;
   }
 }
 
-export async function getFeaturedServices(): Promise<Service[]> {
+export async function getFeaturedServices(locale: Locale = 'es'): Promise<Service[]> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -144,7 +166,7 @@ export async function getFeaturedServices(): Promise<Service[]> {
       .limit(6);
 
     if (error || !data?.length) return [];
-    return data as Service[];
+    return (data as Service[]).map((s) => localizeService(s, locale));
   } catch {
     return [];
   }

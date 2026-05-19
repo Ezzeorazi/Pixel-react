@@ -40,6 +40,12 @@
   "services": {
     "heading": "Our Services",
     "subtitle": "End-to-end digital solutions for businesses that want to grow. From the first planning session to long-term maintenance.",
+    "backToServices": "Back to services",
+    "askPrice": "Ask about pricing",
+    "whatsIncluded": "What's included?",
+    "readyToStart": "Ready to start?",
+    "contactUs": "Contact us",
+    "contactDesc": "Tell us about your project and we'll get back to you within 24 hours.",
     "items": {
       "web-development": {
         "name": "Web Development",

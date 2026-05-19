@@ -103,14 +103,17 @@ export async function togglePublished(id: string, current: boolean) {
 
 export async function createProject(data: FormData) {
   const result = ProjectSchema.safeParse({
-    name:             data.get('name'),
-    description:      data.get('description'),
-    full_description: data.get('full_description'),
-    category:         data.get('category'),
-    technologies:     data.get('technologies'),
-    url:              data.get('url') || null,
-    image_url:        data.get('image_url') || null,
-    featured:         data.get('featured') === 'true',
+    name:                data.get('name'),
+    description:         data.get('description'),
+    full_description:    data.get('full_description'),
+    category:            data.get('category'),
+    technologies:        data.get('technologies'),
+    url:                 data.get('url') || null,
+    image_url:           data.get('image_url') || null,
+    featured:            data.get('featured') === 'true',
+    name_en:             data.get('name_en') || null,
+    description_en:      data.get('description_en') || null,
+    full_description_en: data.get('full_description_en') || null,
   });
 
   if (!result.success) {
@@ -141,14 +144,17 @@ export async function createProject(data: FormData) {
 
 export async function updateProject(id: string, data: FormData) {
   const result = ProjectSchema.safeParse({
-    name:             data.get('name'),
-    description:      data.get('description'),
-    full_description: data.get('full_description'),
-    category:         data.get('category'),
-    technologies:     data.get('technologies'),
-    url:              data.get('url') || null,
-    image_url:        data.get('image_url') || null,
-    featured:         data.get('featured') === 'true',
+    name:                data.get('name'),
+    description:         data.get('description'),
+    full_description:    data.get('full_description'),
+    category:            data.get('category'),
+    technologies:        data.get('technologies'),
+    url:                 data.get('url') || null,
+    image_url:           data.get('image_url') || null,
+    featured:            data.get('featured') === 'true',
+    name_en:             data.get('name_en') || null,
+    description_en:      data.get('description_en') || null,
+    full_description_en: data.get('full_description_en') || null,
   });
 
   if (!result.success) {
@@ -178,16 +184,19 @@ export async function deleteProject(id: string) {
 
 export async function createService(data: FormData) {
   const result = ServiceSchema.safeParse({
-    name:        data.get('name'),
-    description: data.get('description'),
-    icon:        data.get('icon'),
-    color:       data.get('color'),
-    price:       data.get('price') || null,
-    price_label: data.get('price_label') || null,
-    features:    data.get('features'),
-    featured:    data.get('featured') === 'true',
-    active:      data.get('active') === 'true',
-    sort_order:  data.get('sort_order') ?? 0,
+    name:           data.get('name'),
+    description:    data.get('description'),
+    icon:           data.get('icon'),
+    color:          data.get('color'),
+    price:          data.get('price') || null,
+    price_label:    data.get('price_label') || null,
+    features:       data.get('features'),
+    featured:       data.get('featured') === 'true',
+    active:         data.get('active') === 'true',
+    sort_order:     data.get('sort_order') ?? 0,
+    name_en:        data.get('name_en') || null,
+    description_en: data.get('description_en') || null,
+    features_en:    data.get('features_en') || null,
   });
 
   if (!result.success) {
@@ -207,16 +216,19 @@ export async function createService(data: FormData) {
 
 export async function updateService(id: string, data: FormData) {
   const result = ServiceSchema.safeParse({
-    name:        data.get('name'),
-    description: data.get('description'),
-    icon:        data.get('icon'),
-    color:       data.get('color'),
-    price:       data.get('price') || null,
-    price_label: data.get('price_label') || null,
-    features:    data.get('features'),
-    featured:    data.get('featured') === 'true',
-    active:      data.get('active') === 'true',
-    sort_order:  data.get('sort_order') ?? 0,
+    name:           data.get('name'),
+    description:    data.get('description'),
+    icon:           data.get('icon'),
+    color:          data.get('color'),
+    price:          data.get('price') || null,
+    price_label:    data.get('price_label') || null,
+    features:       data.get('features'),
+    featured:       data.get('featured') === 'true',
+    active:         data.get('active') === 'true',
+    sort_order:     data.get('sort_order') ?? 0,
+    name_en:        data.get('name_en') || null,
+    description_en: data.get('description_en') || null,
+    features_en:    data.get('features_en') || null,
   });
 
   if (!result.success) {
