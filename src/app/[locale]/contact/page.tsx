@@ -20,11 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? 'Contactanos para hablar sobre tu proyecto. Respondemos en menos de 24 horas.'
       : 'Contact us to discuss your project. We respond in less than 24 hours.',
     alternates: {
-      canonical: `${siteUrl}/${locale}/contact`,
+      canonical: `${siteUrl}/${locale}/${isEs ? 'contacto' : 'contact'}`,
       languages: {
-        es: `${siteUrl}/es/contact`,
+        es: `${siteUrl}/es/contacto`,
         en: `${siteUrl}/en/contact`,
-        'x-default': `${siteUrl}/es/contact`,
+        'x-default': `${siteUrl}/es/contacto`,
       },
     },
   };

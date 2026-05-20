@@ -76,7 +76,7 @@ export async function Footer() {
                 { label: t('services'), href: `/${locale}/services` },
                 { label: t('blog'),     href: `/${locale}/blog` },
                 { label: t('projects'), href: `/${locale}/projects` },
-                { label: t('contact'),  href: `/${locale}/contact` },
+                { label: t('contact'),  href: `/${locale}/${locale === 'es' ? 'contacto' : 'contact'}` },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">

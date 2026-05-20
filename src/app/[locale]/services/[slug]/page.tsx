@@ -77,7 +77,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </p>
             )}
             <Link
-              href={`/${locale}/contact`}
+              href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] transition-all hover:-translate-y-0.5"
             >
               {t('askPrice')} <ArrowRight className="w-4 h-4" />
@@ -117,7 +117,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                 )}
                 <Link
-                  href={`/${locale}/contact`}
+                  href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
                   className="block w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all"
                 >
                   {t('contactUs')}

@@ -20,11 +20,12 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const contactSlug = locale === 'es' ? 'contacto' : 'contact';
   const links = [
     { label: t('services'), href: `/${locale}/services` },
     { label: t('blog'), href: `/${locale}/blog` },
     { label: t('projects'), href: `/${locale}/projects` },
-    { label: t('contact'), href: `/${locale}/contact` },
+    { label: t('contact'), href: `/${locale}/${contactSlug}` },
   ];
 
   return (
@@ -54,7 +55,7 @@ export function Navbar() {
           <LanguageToggle />
           <ThemeToggle />
           <Link
-            href={`/${locale}/contact`}
+            href={`/${locale}/${contactSlug}`}
             className="ml-2 px-5 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.25)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all hover:-translate-y-0.5 flex items-center gap-1.5"
           >
             {t('getQuote')} <ArrowRight className="w-3.5 h-3.5" />
@@ -87,7 +88,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href={`/${locale}/contact`}
+            href={`/${locale}/${contactSlug}`}
             onClick={() => setIsOpen(false)}
             className="mt-2 px-5 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center"
           >

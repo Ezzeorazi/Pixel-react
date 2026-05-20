@@ -36,7 +36,7 @@ export function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href={`/${locale}/contact`}
+              href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
               className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_25px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5"
             >
               {t('hero.ctaPrimary')} <ArrowRight className="w-4 h-4" />
