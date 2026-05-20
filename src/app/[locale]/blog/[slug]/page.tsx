@@ -6,6 +6,7 @@ import { ArrowLeft, Clock } from 'lucide-react';
 import { Container } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { CTASection } from '@/components/home/CTASection';
+import { MarkdownContent } from '@/components/blog/MarkdownContent';
 import { getBlogPost } from '@/lib/supabase/queries';
 import type { Locale } from '@/lib/types';
 import type { Metadata } from 'next';
@@ -29,7 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
       siteName: 'Pixel Maker',
       type: 'article',
-      ...(post.image_url ? { images: [{ url: post.image_url }] } : {}),
+      publishedTime: post.date,
+      authors: ['Pixel Maker'],
+      ...(post.image_url ? { images: [{ url: post.image_url, alt: post.title }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
@@ -47,8 +50,28 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getBlogPost(slug, locale as Locale);
   if (!post) notFound();
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const postUrl = `${siteUrl}/${locale}/blog/${slug}`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
+    publisher: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+    ...(post.image_url ? { image: post.image_url } : {}),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="pt-36 pb-10 md:pt-44">
         <Container>
           <div className="max-w-3xl mx-auto">
@@ -91,12 +114,10 @@ export default async function BlogPostPage({ params }: Props) {
                 <div className="h-full bg-linear-to-br from-purple-900/20 to-pink-900/20" />
               )}
             </div>
-            <article className="prose prose-gray dark:prose-invert max-w-none">
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{post.excerpt}</p>
+            <article className="max-w-none">
+              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">{post.excerpt}</p>
               {post.content ? (
-                <div className="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
-                  {post.content}
-                </div>
+                <MarkdownContent content={post.content} />
               ) : (
                 <p className="mt-6 text-gray-500 dark:text-gray-400">
                   {locale === 'es'
