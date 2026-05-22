@@ -3,7 +3,7 @@ import { getBlogPosts, getProjects, getServices } from '@/lib/supabase/queries';
 
 export const revalidate = 3600;
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.dev';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
 const LOCALES = ['es', 'en'] as const;
 const STATIC_PAGES = ['services', 'blog', 'projects', 'contact'] as const;
 const SITE_LAUNCH = '2026-05-01';
