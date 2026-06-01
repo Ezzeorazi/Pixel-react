@@ -33,6 +33,7 @@ export async function createPost(data: FormData) {
     read_time: data.get('read_time'),
     image_url: data.get('image_url') || null,
     published: data.get('published') === 'true',
+    keywords:  data.get('keywords') || null,
   });
 
   if (!result.success) {
@@ -63,6 +64,7 @@ export async function updatePost(id: string, data: FormData) {
     read_time: data.get('read_time'),
     image_url: data.get('image_url') || null,
     published: data.get('published') === 'true',
+    keywords:  data.get('keywords') || null,
   });
 
   if (!result.success) {

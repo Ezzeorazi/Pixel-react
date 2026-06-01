@@ -18,6 +18,7 @@ interface PostFormProps {
     read_time: number;
     image_url?: string | null;
     published: boolean;
+    keywords?: string | null;
   };
 }
 
@@ -83,6 +84,16 @@ export function PostForm({ post }: PostFormProps) {
         <MarkdownEditor name="content" defaultValue={post?.content} error={fe('content')} />
       </Field>
 
+      <Field label="Keywords SEO (separadas por coma)" error={fe('keywords')}>
+        <input
+          name="keywords"
+          defaultValue={post?.keywords ?? ''}
+          placeholder="automatizar whatsapp pyme, bot whatsapp argentina, whatsapp business api"
+          className={inputClass}
+        />
+        <p className="text-gray-500 text-xs mt-1">Palabras clave específicas de este post. No usar las genéricas del sitio.</p>
+      </Field>
+
       <div className="grid sm:grid-cols-2 gap-5">
         <Field label="Fecha *" error={fe('date')}>
           <input type="date" name="date" defaultValue={post?.date ?? new Date().toISOString().slice(0, 10)} required className={inputClass} />
@@ -104,7 +115,7 @@ export function PostForm({ post }: PostFormProps) {
 
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={isPending}
-          className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all disabled:opacity-60">
+          className="px-6 py-2.5 bg-linear-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-lg hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all disabled:opacity-60">
           {isPending ? 'Guardando...' : post ? 'Actualizar' : 'Crear artículo'}
         </button>
         <button type="button" onClick={() => router.back()}

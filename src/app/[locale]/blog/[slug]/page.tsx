@@ -7,11 +7,44 @@ import { Container } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { CTASection } from '@/components/home/CTASection';
 import { MarkdownContent } from '@/components/blog/MarkdownContent';
+import { AuthorBio } from '@/components/blog/AuthorBio';
 import { getBlogPost } from '@/lib/supabase/queries';
 import type { Locale } from '@/lib/types';
 import type { Metadata } from 'next';
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
+
+const CATEGORY_KEYWORDS: Record<string, string[]> = {
+  development: ['desarrollo web argentina', 'software a medida pyme', 'agencia desarrollo web latam'],
+  seo:         ['seo argentina', 'posicionamiento web pyme', 'seo para empresas'],
+  marketing:   ['marketing digital argentina', 'marketing pyme latam', 'agencia marketing digital'],
+  business:    ['negocios digitales argentina', 'transformación digital pyme', 'consultoría digital'],
+  general:     ['agencia digital argentina', 'pixel maker', 'desarrollo digital latam'],
+};
+
+function resolveKeywords(post: { keywords?: string | null; category: string }): string[] {
+  if (post.keywords) return post.keywords.split(',').map((k) => k.trim()).filter(Boolean);
+  return CATEGORY_KEYWORDS[post.category] ?? CATEGORY_KEYWORDS.general;
+}
+
+function extractFAQ(markdown: string): Array<{ q: string; a: string }> {
+  const sectionMatch = markdown.match(
+    /##\s+(?:Preguntas\s+frecuentes|FAQ|Frequently\s+Asked\s+Questions)([\s\S]*?)(?=\n##\s|\n---\s*\n|$)/i
+  );
+  if (!sectionMatch) return [];
+
+  const section = sectionMatch[1];
+  const items: Array<{ q: string; a: string }> = [];
+  const re = /\*\*([^*\n]+)\*\*\n([\s\S]*?)(?=\n\*\*[^*]|\n##|\n---\s*\n|$)/g;
+
+  let m;
+  while ((m = re.exec(section)) !== null) {
+    const q = m[1].trim();
+    const a = m[2].trim().replace(/\n+/g, ' ');
+    if (q && a) items.push({ q, a });
+  }
+  return items;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
@@ -22,8 +55,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `${siteUrl}/${locale}/blog/${slug}`;
 
   return {
-    title: `${post.title} | Pixel Maker`,
+    title: post.title,
     description: post.excerpt,
+    keywords: resolveKeywords(post),
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -52,26 +86,45 @@ export default async function BlogPostPage({ params }: Props) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
   const postUrl = `${siteUrl}/${locale}/blog/${slug}`;
+  const faqItems = extractFAQ(post.content ?? '');
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
-    publisher: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
-    ...(post.image_url ? { image: post.image_url } : {}),
-  };
+  const jsonLd: Record<string, unknown>[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      dateModified: post.date,
+      author: { '@type': 'Person', name: 'Ezequiel Orazi', url: siteUrl },
+      publisher: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+      ...(post.image_url ? { image: post.image_url } : {}),
+    },
+  ];
+
+  if (faqItems.length > 0) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    });
+  }
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+
       <section className="pt-36 pb-10 md:pt-44">
         <Container>
           <div className="max-w-3xl mx-auto">
@@ -117,15 +170,15 @@ export default async function BlogPostPage({ params }: Props) {
             <article className="max-w-none">
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">{post.excerpt}</p>
               {post.content ? (
-                <MarkdownContent content={post.content} />
+                <MarkdownContent content={post.content} locale={locale} />
               ) : (
                 <p className="mt-6 text-gray-500 dark:text-gray-400">
-                  {locale === 'es'
-                    ? 'Contenido completo próximamente.'
-                    : 'Full content coming soon.'}
+                  {locale === 'es' ? 'Contenido completo próximamente.' : 'Full content coming soon.'}
                 </p>
               )}
             </article>
+
+            <AuthorBio locale={locale} />
           </div>
         </Container>
       </section>

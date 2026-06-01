@@ -3,7 +3,21 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-export function MarkdownContent({ content }: { content: string }) {
+interface MarkdownContentProps {
+  content: string;
+  locale?: string;
+}
+
+export function MarkdownContent({ content, locale = 'es' }: MarkdownContentProps) {
+  function resolveHref(href: string | undefined): string | undefined {
+    if (!href) return href;
+    // Rewrite bare internal paths like /contacto → /es/contacto
+    if (href.startsWith('/') && !href.match(/^\/(es|en)\//)) {
+      return `/${locale}${href}`;
+    }
+    return href;
+  }
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -28,7 +42,7 @@ export function MarkdownContent({ content }: { content: string }) {
         ),
         li: ({ children }) => <li className="leading-relaxed">{children}</li>,
         blockquote: ({ children }) => (
-          <blockquote className="border-l-4 border-purple-500 pl-4 my-4 text-gray-500 dark:text-gray-400 italic">
+          <blockquote className="border-l-4 border-purple-500 pl-4 my-6 bg-purple-50 dark:bg-purple-950/20 py-3 pr-3 rounded-r-lg text-gray-600 dark:text-gray-400 italic text-sm">
             {children}
           </blockquote>
         ),
@@ -47,7 +61,7 @@ export function MarkdownContent({ content }: { content: string }) {
           <td className="px-4 py-3 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400">{children}</td>
         ),
         tr: ({ children }) => (
-          <tr className="even:bg-gray-50 dark:even:bg-white/[0.02]">{children}</tr>
+          <tr className="even:bg-gray-50 dark:even:bg-white/2">{children}</tr>
         ),
         code: ({ children }) => (
           <code className="bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono text-purple-600 dark:text-purple-400">
@@ -58,11 +72,20 @@ export function MarkdownContent({ content }: { content: string }) {
           <pre className="bg-gray-100 dark:bg-white/5 rounded-lg p-4 overflow-x-auto my-4 text-sm">{children}</pre>
         ),
         hr: () => <hr className="border-gray-200 dark:border-white/10 my-8" />,
-        a: ({ href, children }) => (
-          <a href={href} className="text-purple-600 dark:text-purple-400 hover:underline" target={href?.startsWith('http') ? '_blank' : undefined} rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}>
-            {children}
-          </a>
-        ),
+        a: ({ href, children }) => {
+          const resolved = resolveHref(href);
+          const isExternal = resolved?.startsWith('http');
+          return (
+            <a
+              href={resolved}
+              className="text-purple-600 dark:text-purple-400 hover:underline"
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+            >
+              {children}
+            </a>
+          );
+        },
       }}
     >
       {content}

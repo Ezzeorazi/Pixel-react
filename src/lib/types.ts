@@ -12,6 +12,7 @@ export interface BlogPost {
   locale: Locale;
   image_url?: string;
   published: boolean;
+  keywords?: string | null;
 }
 
 export interface Project {

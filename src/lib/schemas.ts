@@ -10,6 +10,7 @@ export const BlogPostSchema = z.object({
   read_time: z.coerce.number().int().min(1, 'Mínimo 1 minuto').max(60, 'Máximo 60 minutos'),
   image_url: z.string().url('URL de imagen inválida').optional().nullable(),
   published: z.boolean().default(false),
+  keywords:  z.string().max(500).optional().nullable().transform(v => v?.trim() || null),
 });
 
 export const ProjectSchema = z.object({
