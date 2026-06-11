@@ -271,5 +271,17 @@
     "projects": "Projects",
     "contact": "Contact",
     "copyright": "© {year} Pixel Maker. All rights reserved."
+  },
+  "chat": {
+    "title": "Pixi · Pixel Maker",
+    "subtitle": "Online · replies instantly",
+    "welcome": "Hi there! 👋 I'm Pixi, the Pixel Maker assistant. Tell me what you need for your project and I'll help you find the best solution.",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "open": "Open chat",
+    "close": "Close chat",
+    "error": "Oops, something went wrong.",
+    "whatsappFallback": "Message us on WhatsApp",
+    "preferHuman": "Prefer to talk to a person? Message us on WhatsApp"
   }
 }

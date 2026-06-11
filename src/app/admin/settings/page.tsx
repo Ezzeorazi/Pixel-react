@@ -1,9 +1,9 @@
 import { AdminGuard } from '@/components/admin/AdminGuard';
 import { SettingsForm } from '@/components/admin/SettingsForm';
-import { getSettings } from '@/app/actions/admin';
+import { getSettings, getSecretsStatus } from '@/app/actions/admin';
 
 export default async function AdminSettingsPage() {
-  const settings = await getSettings();
+  const [settings, secrets] = await Promise.all([getSettings(), getSecretsStatus()]);
 
   return (
     <AdminGuard>
@@ -15,7 +15,7 @@ export default async function AdminSettingsPage() {
           </p>
         </div>
         <div className="bg-[#18181c] rounded-2xl border border-white/5 p-8">
-          <SettingsForm settings={settings} />
+          <SettingsForm settings={settings} secrets={secrets} />
         </div>
       </div>
     </AdminGuard>

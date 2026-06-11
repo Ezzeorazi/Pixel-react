@@ -41,6 +41,7 @@ export interface ContactMessage {
   budget?: string;
   timeline?: string;
   message: string;
+  source?: 'form' | 'chatbot';
 }
 
 export interface SiteSettings {
@@ -50,6 +51,9 @@ export interface SiteSettings {
   facebook?: string | null;
   instagram?: string | null;
   email?: string | null;
+  chat_enabled?: boolean | null;
+  chat_instructions?: string | null;
+  notification_email?: string | null;
 }
 
 export interface ServiceSlug {

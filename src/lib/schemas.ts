@@ -66,4 +66,12 @@ export const SiteSettingsSchema = z.object({
   facebook:  z.string().url('URL de Facebook inválida').optional().nullable(),
   instagram: z.string().url('URL de Instagram inválida').optional().nullable(),
   email:     z.string().email('Email inválido').optional().nullable(),
+  chat_enabled:       z.boolean().default(true),
+  chat_instructions:  z.string().max(4000).optional().nullable(),
+  notification_email: z.string().email('Email de notificación inválido').optional().nullable(),
+});
+
+export const ChatSecretsSchema = z.object({
+  groq_api_key:   z.string().max(300).optional().nullable(),
+  resend_api_key: z.string().max(300).optional().nullable(),
 });

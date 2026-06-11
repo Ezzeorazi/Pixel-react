@@ -177,7 +177,13 @@ export async function getFeaturedServices(locale: Locale = 'es'): Promise<Servic
 export async function getPublicSettings(): Promise<SiteSettings | null> {
   try {
     const supabase = await createClient();
-    const { data } = await supabase.from('site_settings').select('*').limit(1).single();
+    // Solo columnas públicas — nunca notification_email ni chat_instructions,
+    // que se leen server-side para no exponerlas al navegador.
+    const { data } = await supabase
+      .from('site_settings')
+      .select('whatsapp1, whatsapp2, facebook, instagram, email, chat_enabled')
+      .limit(1)
+      .single();
     return data ?? null;
   } catch {
     return null;

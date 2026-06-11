@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition, useState } from 'react';
-import { upsertSettings } from '@/app/actions/admin';
+import { upsertSettings, upsertSecrets } from '@/app/actions/admin';
 
 interface SettingsFormProps {
   settings: {
@@ -10,19 +10,25 @@ interface SettingsFormProps {
     facebook?: string | null;
     instagram?: string | null;
     email?: string | null;
+    chat_enabled?: boolean | null;
+    chat_instructions?: string | null;
+    notification_email?: string | null;
   } | null;
+  secrets: { groqSet: boolean; resendSet: boolean };
 }
 
-export function SettingsForm({ settings }: SettingsFormProps) {
+export function SettingsForm({ settings, secrets }: SettingsFormProps) {
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
+  const [chatEnabled, setChatEnabled] = useState(settings?.chat_enabled ?? true);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    data.set('chat_enabled', chatEnabled ? 'true' : 'false');
     setSaved(false);
     startTransition(async () => {
-      await upsertSettings(data);
+      await Promise.all([upsertSettings(data), upsertSecrets(data)]);
       setSaved(true);
     });
   };
@@ -88,6 +94,87 @@ export function SettingsForm({ settings }: SettingsFormProps) {
             placeholder="hola@pixelmaker.dev"
             className={inputClass}
           />
+        </Field>
+      </fieldset>
+
+      {/* ── Chatbot IA ─────────────────────────────────────────────────────── */}
+      <fieldset className="space-y-4 border-t border-white/5 pt-8">
+        <legend className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 block">
+          Chatbot IA (asistente / vendedor)
+        </legend>
+
+        <label className="flex items-center gap-3 cursor-pointer select-none">
+          <button
+            type="button"
+            role="switch"
+            aria-checked={chatEnabled}
+            onClick={() => setChatEnabled((v) => !v)}
+            className={`relative h-6 w-11 rounded-full transition-colors ${
+              chatEnabled ? 'bg-purple-600' : 'bg-white/10'
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                chatEnabled ? 'translate-x-[22px]' : 'translate-x-0.5'
+              }`}
+            />
+          </button>
+          <span className="text-sm text-gray-300">
+            Mostrar el chatbot en el sitio
+          </span>
+        </label>
+
+        <Field label={`API Key de Groq ${secrets.groqSet ? '— ya configurada (dejá vacío para mantenerla)' : '— requerida para activar el chat'}`}>
+          <input
+            name="groq_api_key"
+            type="password"
+            autoComplete="off"
+            placeholder={secrets.groqSet ? '•••••••••••• (sin cambios)' : 'gsk_...'}
+            className={inputClass}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Gratis en console.groq.com → API Keys. Se guarda cifrada del lado del servidor; nunca se expone al navegador.
+          </p>
+        </Field>
+
+        <Field label="Instrucciones extra para el bot (tono, promociones, qué resaltar...)">
+          <textarea
+            name="chat_instructions"
+            rows={4}
+            defaultValue={settings?.chat_instructions ?? ''}
+            placeholder="Ej: Resaltá que damos soporte post-lanzamiento. Ofrecé una reunión gratis de 15 min. Sé cercano y tuteá al visitante."
+            className={inputClass}
+          />
+        </Field>
+      </fieldset>
+
+      {/* ── Notificaciones por email ───────────────────────────────────────── */}
+      <fieldset className="space-y-4 border-t border-white/5 pt-8">
+        <legend className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3 block">
+          Avisos por email (nuevos leads)
+        </legend>
+
+        <Field label="Email donde recibir los avisos de nuevas consultas">
+          <input
+            name="notification_email"
+            type="email"
+            defaultValue={settings?.notification_email ?? ''}
+            placeholder="ventas@pixelmaker.com.ar"
+            className={inputClass}
+          />
+        </Field>
+
+        <Field label={`API Key de Resend ${secrets.resendSet ? '— ya configurada (dejá vacío para mantenerla)' : '— requerida para enviar los avisos'}`}>
+          <input
+            name="resend_api_key"
+            type="password"
+            autoComplete="off"
+            placeholder={secrets.resendSet ? '•••••••••••• (sin cambios)' : 're_...'}
+            className={inputClass}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Gratis en resend.com (100 emails/día). Sin verificar dominio podés enviarte avisos a vos mismo.
+          </p>
         </Field>
       </fieldset>
 

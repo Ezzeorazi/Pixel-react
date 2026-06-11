@@ -2,8 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { createAdminClient } from '@/lib/supabase/admin';
-import { BlogPostSchema, ProjectSchema, ServiceSchema, SiteSettingsSchema } from '@/lib/schemas';
+import { createAdminClient, getSession } from '@/lib/supabase/admin';
+import { createServiceClient } from '@/lib/supabase/service';
+import { BlogPostSchema, ProjectSchema, ServiceSchema, SiteSettingsSchema, ChatSecretsSchema } from '@/lib/schemas';
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
@@ -283,6 +284,9 @@ export async function upsertSettings(formData: FormData) {
     facebook:  formData.get('facebook') || null,
     instagram: formData.get('instagram') || null,
     email:     formData.get('email') || null,
+    chat_enabled:       formData.get('chat_enabled') === 'true',
+    chat_instructions:  formData.get('chat_instructions') || null,
+    notification_email: formData.get('notification_email') || null,
   });
 
   if (!result.success) {
@@ -297,6 +301,62 @@ export async function upsertSettings(formData: FormData) {
     await supabase.from('site_settings').update(payload).eq('id', existing.id);
   } else {
     await supabase.from('site_settings').insert([payload]);
+  }
+
+  revalidatePath('/admin/settings');
+  return { ok: true };
+}
+
+// ── Chatbot secrets (API keys) ──────────────────────────────────────────────
+// Se guardan en app_secrets, una tabla con RLS bloqueada para anon. El acceso
+// pasa por el cliente service-role, por lo que SIEMPRE validamos la sesión admin
+// antes de leer o escribir.
+
+/** Devuelve solo si cada key está configurada — nunca el valor en claro. */
+export async function getSecretsStatus() {
+  const session = await getSession();
+  if (!session) return { groqSet: false, resendSet: false };
+
+  const svc = createServiceClient();
+  const { data } = await svc
+    .from('app_secrets')
+    .select('groq_api_key, resend_api_key')
+    .limit(1)
+    .single();
+
+  return {
+    groqSet:   Boolean(data?.groq_api_key),
+    resendSet: Boolean(data?.resend_api_key),
+  };
+}
+
+export async function upsertSecrets(formData: FormData) {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'No autorizado' };
+
+  // Campos vacíos => no se tocan (para no borrar una key ya guardada al editar).
+  const groqRaw   = (formData.get('groq_api_key') as string | null)?.trim() || null;
+  const resendRaw = (formData.get('resend_api_key') as string | null)?.trim() || null;
+
+  const result = ChatSecretsSchema.safeParse({
+    groq_api_key:   groqRaw,
+    resend_api_key: resendRaw,
+  });
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const patch: Record<string, string> = { updated_at: new Date().toISOString() };
+  if (result.data.groq_api_key)   patch.groq_api_key   = result.data.groq_api_key;
+  if (result.data.resend_api_key) patch.resend_api_key = result.data.resend_api_key;
+
+  const svc = createServiceClient();
+  const { data: existing } = await svc.from('app_secrets').select('id').limit(1).single();
+
+  if (existing?.id) {
+    await svc.from('app_secrets').update(patch).eq('id', existing.id);
+  } else {
+    await svc.from('app_secrets').insert([patch]);
   }
 
   revalidatePath('/admin/settings');

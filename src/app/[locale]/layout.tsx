@@ -5,6 +5,7 @@ import { routing } from '@/i18n/routing';
 import { Providers } from '@/components/Providers';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { ChatWidgetMount } from '@/components/chat/ChatWidgetMount';
 
 type Props = {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ChatWidgetMount />
       </Providers>
     </NextIntlClientProvider>
   );
