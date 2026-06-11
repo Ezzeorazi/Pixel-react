@@ -36,7 +36,10 @@ export interface ContactMessage {
   name: string;
   email: string;
   company?: string;
+  phone?: string;
   service?: string;
+  budget?: string;
+  timeline?: string;
   message: string;
 }
 

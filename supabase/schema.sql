@@ -57,7 +57,10 @@ create table if not exists contact_messages (
   name       text not null,
   email      text not null,
   company    text,
+  phone      text,
   service    text,
+  budget     text,
+  timeline   text,
   message    text not null,
   read       boolean not null default false,
   created_at timestamptz not null default now()

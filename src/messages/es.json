@@ -86,6 +86,32 @@
           "Checkout optimizado para móvil"
         ]
       },
+      "web-bots": {
+        "name": "Bots para tu Web",
+        "shortDesc": "Chatbots que atienden, califican y derivan consultas 24/7.",
+        "description": "Desarrollamos chatbots integrados a tu sitio web que responden preguntas frecuentes, capturan datos de contacto y derivan cada consulta al área correcta. Atención inmediata las 24 horas, sin sumar personal.",
+        "features": [
+          "Respuestas automáticas a preguntas frecuentes",
+          "Calificación inicial del cliente",
+          "Captura de datos fuera de horario",
+          "Derivación a agente humano cuando hace falta",
+          "Integración con tu CRM o sistema de gestión",
+          "Reportes de conversaciones"
+        ]
+      },
+      "whatsapp-integration": {
+        "name": "Integración de WhatsApp",
+        "shortDesc": "Automatizá tu canal de ventas más usado con flujos a medida.",
+        "description": "Bots de WhatsApp integrados a tu operación — no herramientas genéricas, sino flujos diseñados para tu proceso de negocio específico. Respuesta inmediata, calificación de clientes, recordatorios de turnos y conexión con tu sistema de gestión.",
+        "features": [
+          "WhatsApp Business API",
+          "Bot de bienvenida y calificación de consultas",
+          "Confirmación y recordatorio de turnos o pedidos",
+          "Envío automático de presupuestos y catálogos",
+          "Integración con tu CRM o inventario",
+          "Recontacto de clientes inactivos"
+        ]
+      },
       "digital-marketing": {
         "name": "Marketing Digital",
         "shortDesc": "Campañas y estrategias para hacer crecer tu presencia online.",
@@ -205,12 +231,34 @@
       "response": "Respondemos en menos de 24 horas"
     },
     "form": {
-      "name": "Tu nombre",
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
       "email": "Email",
-      "company": "Empresa (opcional)",
-      "service": "Servicio de interés",
-      "message": "Contanos sobre tu proyecto",
-      "submit": "Enviar mensaje",
+      "emailPlaceholder": "tu@email.com",
+      "company": "Empresa",
+      "companyPlaceholder": "Nombre de tu empresa",
+      "phone": "Teléfono / WhatsApp",
+      "phonePlaceholder": "+54 9 11 2345 6789",
+      "projectType": "Tipo de Proyecto",
+      "budget": "Presupuesto Estimado",
+      "timeline": "Tiempo Estimado",
+      "select": "Seleccionar...",
+      "budgetOptions": {
+        "b1": "Menos de USD 500",
+        "b2": "USD 500 – 1.500",
+        "b3": "USD 1.500 – 3.500",
+        "b4": "Más de USD 3.500",
+        "b5": "A definir"
+      },
+      "timelineOptions": {
+        "t1": "Lo antes posible",
+        "t2": "Menos de 1 mes",
+        "t3": "1 a 3 meses",
+        "t4": "Flexible"
+      },
+      "message": "Mensaje",
+      "messagePlaceholder": "Contanos sobre tu proyecto...",
+      "submit": "Enviar Mensaje",
       "submitting": "Enviando...",
       "success": "¡Mensaje enviado! Te respondemos en menos de 24 horas.",
       "error": "Algo salió mal. Por favor intentá de nuevo."

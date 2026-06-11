@@ -58,10 +58,26 @@ export default async function AdminMessagesPage() {
                   {msg.company && (
                     <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-400">{msg.company}</span>
                   )}
+                  {msg.phone && (
+                    <a
+                      href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-colors"
+                    >
+                      {msg.phone}
+                    </a>
+                  )}
                 </div>
 
-                {msg.service && (
-                  <p className="text-xs text-gray-500 mb-2">Servicio: <span className="text-gray-400">{msg.service}</span></p>
+                {(msg.service || msg.budget || msg.timeline) && (
+                  <p className="text-xs text-gray-500 mb-2">
+                    {msg.service && <>Proyecto: <span className="text-gray-400">{msg.service}</span></>}
+                    {msg.service && (msg.budget || msg.timeline) && ' · '}
+                    {msg.budget && <>Presupuesto: <span className="text-gray-400">{msg.budget}</span></>}
+                    {msg.budget && msg.timeline && ' · '}
+                    {msg.timeline && <>Tiempo: <span className="text-gray-400">{msg.timeline}</span></>}
+                  </p>
                 )}
 
                 <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{msg.message}</p>

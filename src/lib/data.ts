@@ -4,6 +4,8 @@ export const SERVICES: ServiceSlug[] = [
   { slug: 'web-development',   icon: 'Code',          color: 'purple',  featured: true },
   { slug: 'custom-software',   icon: 'Layers',        color: 'fuchsia', featured: true },
   { slug: 'ecommerce',         icon: 'ShoppingBag',   color: 'pink',    featured: true },
+  { slug: 'web-bots',          icon: 'Bot',           color: 'fuchsia', featured: false },
+  { slug: 'whatsapp-integration', icon: 'MessageCircle', color: 'purple', featured: false },
   { slug: 'digital-marketing', icon: 'Megaphone',     color: 'purple',  featured: false },
   { slug: 'seo',               icon: 'Search',        color: 'pink',    featured: false },
   { slug: 'marketing-reports', icon: 'BarChart2',     color: 'fuchsia', featured: true },

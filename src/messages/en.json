@@ -86,6 +86,32 @@
           "Mobile-first checkout"
         ]
       },
+      "web-bots": {
+        "name": "Bots for Your Website",
+        "shortDesc": "Chatbots that answer, qualify and route inquiries 24/7.",
+        "description": "We build chatbots integrated into your website that answer frequently asked questions, capture contact details and route every inquiry to the right team. Instant attention around the clock, without adding headcount.",
+        "features": [
+          "Automatic answers to frequently asked questions",
+          "Initial customer qualification",
+          "After-hours lead capture",
+          "Handoff to a human agent when needed",
+          "Integration with your CRM or management system",
+          "Conversation reports"
+        ]
+      },
+      "whatsapp-integration": {
+        "name": "WhatsApp Integration",
+        "shortDesc": "Automate your most-used sales channel with custom flows.",
+        "description": "WhatsApp bots integrated into your operation — not generic tools, but flows designed for your specific business process. Instant responses, customer qualification, appointment reminders and connection to your management system.",
+        "features": [
+          "WhatsApp Business API",
+          "Welcome bot and inquiry qualification",
+          "Appointment and order confirmations and reminders",
+          "Automatic quotes and catalog delivery",
+          "Integration with your CRM or inventory",
+          "Inactive customer re-engagement"
+        ]
+      },
       "digital-marketing": {
         "name": "Digital Marketing",
         "shortDesc": "Campaigns and strategies to grow your online presence.",
@@ -205,12 +231,34 @@
       "response": "We respond within 24 hours"
     },
     "form": {
-      "name": "Your name",
-      "email": "Email address",
-      "company": "Company (optional)",
-      "service": "Service you're interested in",
-      "message": "Tell us about your project",
-      "submit": "Send message",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "company": "Company",
+      "companyPlaceholder": "Your company name",
+      "phone": "Phone / WhatsApp",
+      "phonePlaceholder": "+1 234 567 890",
+      "projectType": "Project Type",
+      "budget": "Estimated Budget",
+      "timeline": "Estimated Timeline",
+      "select": "Select...",
+      "budgetOptions": {
+        "b1": "Under USD 500",
+        "b2": "USD 500 – 1,500",
+        "b3": "USD 1,500 – 3,500",
+        "b4": "Over USD 3,500",
+        "b5": "Not sure yet"
+      },
+      "timelineOptions": {
+        "t1": "As soon as possible",
+        "t2": "Under 1 month",
+        "t3": "1 to 3 months",
+        "t4": "Flexible"
+      },
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your project...",
+      "submit": "Send Message",
       "submitting": "Sending...",
       "success": "Message sent! We'll be in touch within 24 hours.",
       "error": "Something went wrong. Please try again."

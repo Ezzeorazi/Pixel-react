@@ -50,11 +50,14 @@ export const ServiceSchema = z.object({
 });
 
 export const ContactSchema = z.object({
-  name:    z.string().min(2, 'El nombre es muy corto').max(100),
-  email:   z.string().email('Email inválido').max(200),
-  company: z.string().max(100).optional(),
-  service: z.string().max(100).optional(),
-  message: z.string().min(10, 'El mensaje es muy corto').max(5000, 'El mensaje es muy largo'),
+  name:     z.string().min(2, 'El nombre es muy corto').max(100),
+  email:    z.string().email('Email inválido').max(200),
+  company:  z.string().max(100).optional(),
+  phone:    z.string().max(30).optional(),
+  service:  z.string().max(100).optional(),
+  budget:   z.string().max(50).optional(),
+  timeline: z.string().max(50).optional(),
+  message:  z.string().min(10, 'El mensaje es muy corto').max(5000, 'El mensaje es muy largo'),
 });
 
 export const SiteSettingsSchema = z.object({
