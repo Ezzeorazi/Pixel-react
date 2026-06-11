@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowRight, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star } from 'lucide-react';
+import { ArrowRight, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle } from 'lucide-react';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { getFeaturedServices } from '@/lib/supabase/queries';
 
 const ICONS: Record<string, React.ElementType> = {
-  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star,
+  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle,
 };
 
 const COLOR_CLASSES: Record<string, { icon: string; glow: string; border: string }> = {

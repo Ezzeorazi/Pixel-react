@@ -9,7 +9,7 @@ interface ServiceFormProps {
   service?: Service;
 }
 
-const ICONS = ['Code', 'Layers', 'ShoppingBag', 'BarChart2', 'Megaphone', 'Search', 'Wrench', 'Lightbulb', 'Globe', 'Zap', 'Shield', 'Star'];
+const ICONS = ['Code', 'Layers', 'ShoppingBag', 'BarChart2', 'Megaphone', 'Search', 'Wrench', 'Lightbulb', 'Globe', 'Zap', 'Shield', 'Star', 'Bot', 'MessageCircle'];
 const COLORS = ['purple', 'pink', 'fuchsia'] as const;
 
 export function ServiceForm({ service }: ServiceFormProps) {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ArrowLeft, Check, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Check, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Section';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
@@ -10,7 +10,7 @@ import type { Metadata } from 'next';
 import type { Locale } from '@/lib/types';
 
 const ICONS: Record<string, React.ElementType> = {
-  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star,
+  Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle,
 };
 
 type Props = { params: Promise<{ slug: string; locale: string }> };
