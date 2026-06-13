@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { Hero } from '@/components/home/Hero';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
+import { TechSlider } from '@/components/home/TechSlider';
 import { BlogPreviewServer } from '@/components/home/BlogPreview';
 import { ProjectsPreviewServer } from '@/components/home/ProjectsPreview';
+import { Team } from '@/components/home/Team';
 import { CTASection } from '@/components/home/CTASection';
 import { getBlogPosts, getFeaturedProjects } from '@/lib/supabase/queries';
 import type { Locale } from '@/lib/types';
@@ -42,8 +44,10 @@ export default async function HomePage({ params }: Props) {
     <>
       <Hero />
       <ServicesPreview />
+      <TechSlider />
       <BlogPreviewServer posts={posts.slice(0, 3)} />
       <ProjectsPreviewServer projects={projects} />
+      <Team />
       <CTASection />
     </>
   );

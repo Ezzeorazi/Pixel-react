@@ -21,6 +21,25 @@
       "subtitle": "Desde la planificación hasta el mantenimiento, cubrimos cada etapa de tu proyecto digital.",
       "cta": "Ver todos los servicios"
     },
+    "tech": {
+      "heading": "Tecnologías que usamos",
+      "subtitle": "El stack moderno con el que construimos productos rápidos, escalables y mantenibles."
+    },
+    "team": {
+      "heading": "El equipo",
+      "subtitle": "Las personas detrás de Pixel Maker.",
+      "githubLabel": "Ver GitHub",
+      "members": {
+        "ezequiel": {
+          "role": "Desarrollador Full Stack & Fundador",
+          "bio": "Construye plataformas web y software a medida de principio a fin, desde la arquitectura hasta el despliegue. Obsesionado con el código limpio y las buenas experiencias de usuario."
+        },
+        "gonzalo": {
+          "role": "Desarrollador Full Stack",
+          "bio": "Enfocado en interfaces frontend e integraciones, convirtiendo diseños en productos rápidos, responsive y accesibles."
+        }
+      }
+    },
     "blog": {
       "heading": "Blog",
       "subtitle": "Artículos, tutoriales y novedades del sector para mantenerte adelante.",
