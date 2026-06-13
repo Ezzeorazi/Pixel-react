@@ -1,6 +1,6 @@
 import { createClient } from './server';
-import { SAMPLE_POSTS, SAMPLE_POSTS_EN, SAMPLE_PROJECTS } from '@/lib/data';
-import type { BlogPost, Project, ContactMessage, Locale, Service, SiteSettings } from '@/lib/types';
+import { SAMPLE_POSTS, SAMPLE_POSTS_EN, SAMPLE_PROJECTS, FALLBACK_TEAM } from '@/lib/data';
+import type { BlogPost, Project, ContactMessage, Locale, Service, SiteSettings, TeamMember } from '@/lib/types';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -21,6 +21,15 @@ function localizeService(s: Service, locale: Locale): Service {
     name:        s.name_en        || s.name,
     description: s.description_en || s.description,
     features:    s.features_en    || s.features,
+  };
+}
+
+function localizeTeamMember(m: TeamMember, locale: Locale): TeamMember {
+  if (locale !== 'en') return m;
+  return {
+    ...m,
+    role: m.role_en || m.role,
+    bio:  m.bio_en  || m.bio,
   };
 }
 
@@ -169,6 +178,24 @@ export async function getFeaturedServices(locale: Locale = 'es'): Promise<Servic
     return (data as Service[]).map((s) => localizeService(s, locale));
   } catch {
     return [];
+  }
+}
+
+// ── Team ──────────────────────────────────────────────────────────────────────
+
+export async function getTeamMembers(locale: Locale = 'es'): Promise<TeamMember[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('team_members')
+      .select('*')
+      .eq('active', true)
+      .order('sort_order', { ascending: true });
+
+    if (error || !data?.length) return FALLBACK_TEAM.map((m) => localizeTeamMember(m, locale));
+    return (data as TeamMember[]).map((m) => localizeTeamMember(m, locale));
+  } catch {
+    return FALLBACK_TEAM.map((m) => localizeTeamMember(m, locale));
   }
 }
 

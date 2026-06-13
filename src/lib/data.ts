@@ -1,4 +1,4 @@
-import type { ServiceSlug, BlogPost, Project } from './types';
+import type { ServiceSlug, BlogPost, Project, TeamMember } from './types';
 
 export const SERVICES: ServiceSlug[] = [
   { slug: 'web-development',   icon: 'Code',          color: 'purple',  featured: true },
@@ -126,5 +126,33 @@ export const SAMPLE_PROJECTS: Project[] = [
     technologies: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS'],
     url: 'https://unavida.tech',
     featured: true,
+  },
+];
+
+// Fallback team — used when the team_members table is empty or unavailable.
+export const FALLBACK_TEAM: TeamMember[] = [
+  {
+    id: 'fallback-ezequiel',
+    name: 'Ezequiel Orazi',
+    role: 'Desarrollador Full Stack & Fundador',
+    bio: 'Construye plataformas web y software a medida de principio a fin, desde la arquitectura hasta el despliegue. Obsesionado con el código limpio y las buenas experiencias de usuario.',
+    github_url: 'https://github.com/Ezzeorazi',
+    photo_url: null,
+    active: true,
+    sort_order: 0,
+    role_en: 'Full Stack Developer & Founder',
+    bio_en: 'Builds web platforms and custom software end-to-end, from architecture to deployment. Obsessed with clean code and great user experiences.',
+  },
+  {
+    id: 'fallback-gonzalo',
+    name: 'Gonzalo',
+    role: 'Desarrollador Full Stack',
+    bio: 'Enfocado en interfaces frontend e integraciones, convirtiendo diseños en productos rápidos, responsive y accesibles.',
+    github_url: 'https://github.com/gonzalo',
+    photo_url: null,
+    active: true,
+    sort_order: 1,
+    role_en: 'Full Stack Developer',
+    bio_en: 'Focused on frontend interfaces and integrations, turning designs into fast, responsive and accessible products.',
   },
 ];

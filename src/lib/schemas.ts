@@ -49,6 +49,18 @@ export const ServiceSchema = z.object({
   ),
 });
 
+export const TeamMemberSchema = z.object({
+  name:       z.string().min(2, 'El nombre es muy corto').max(100),
+  role:       z.string().min(2, 'La ocupación es muy corta').max(120),
+  bio:        z.string().min(5, 'La descripción es muy corta').max(600),
+  github_url: z.string().url('URL de GitHub inválida').optional().nullable().transform(v => v || null),
+  photo_url:  z.string().url('URL de imagen inválida').optional().nullable().transform(v => v || null),
+  active:     z.boolean().default(true),
+  sort_order: z.coerce.number().int().min(0).default(0),
+  role_en:    z.string().max(120).optional().nullable().transform(v => v || null),
+  bio_en:     z.string().max(600).optional().nullable().transform(v => v || null),
+});
+
 export const ContactSchema = z.object({
   name:     z.string().min(2, 'El nombre es muy corto').max(100),
   email:    z.string().email('Email inválido').max(200),

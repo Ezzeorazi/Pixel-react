@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createAdminClient, getSession } from '@/lib/supabase/admin';
 import { createServiceClient } from '@/lib/supabase/service';
-import { BlogPostSchema, ProjectSchema, ServiceSchema, SiteSettingsSchema, ChatSecretsSchema } from '@/lib/schemas';
+import { BlogPostSchema, ProjectSchema, ServiceSchema, TeamMemberSchema, SiteSettingsSchema, ChatSecretsSchema } from '@/lib/schemas';
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
@@ -250,6 +250,63 @@ export async function deleteService(id: string) {
   const { error } = await supabase.from('services').delete().eq('id', id);
   if (error) return { ok: false, error: error.message };
   revalidatePath('/admin/services');
+  return { ok: true };
+}
+
+// ── Team ──────────────────────────────────────────────────────────────────────
+
+function parseTeamMember(data: FormData) {
+  return TeamMemberSchema.safeParse({
+    name:       data.get('name'),
+    role:       data.get('role'),
+    bio:        data.get('bio'),
+    github_url: data.get('github_url') || null,
+    photo_url:  data.get('photo_url') || null,
+    active:     data.get('active') === 'true',
+    sort_order: data.get('sort_order') ?? 0,
+    role_en:    data.get('role_en') || null,
+    bio_en:     data.get('bio_en') || null,
+  });
+}
+
+export async function createTeamMember(data: FormData) {
+  const result = parseTeamMember(data);
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('team_members').insert([result.data]);
+
+  if (error) return { ok: false, errors: { _: [error.message] } };
+  revalidatePath('/admin/team');
+  revalidatePath('/es');
+  revalidatePath('/en');
+  return { ok: true };
+}
+
+export async function updateTeamMember(id: string, data: FormData) {
+  const result = parseTeamMember(data);
+  if (!result.success) {
+    return { ok: false, errors: result.error.flatten().fieldErrors };
+  }
+
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('team_members').update(result.data).eq('id', id);
+  if (error) return { ok: false, errors: { _: [error.message] } };
+  revalidatePath('/admin/team');
+  revalidatePath('/es');
+  revalidatePath('/en');
+  return { ok: true };
+}
+
+export async function deleteTeamMember(id: string) {
+  const supabase = await createAdminClient();
+  const { error } = await supabase.from('team_members').delete().eq('id', id);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath('/admin/team');
+  revalidatePath('/es');
+  revalidatePath('/en');
   return { ok: true };
 }
 

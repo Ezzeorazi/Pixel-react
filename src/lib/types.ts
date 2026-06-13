@@ -82,3 +82,18 @@ export interface Service {
   description_en?: string | null;
   features_en?: string[] | null;
 }
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  github_url: string | null;
+  photo_url: string | null;
+  active: boolean;
+  sort_order: number;
+  created_at?: string;
+  // bilingual fields (admin only — queries normalize these into role/bio)
+  role_en?: string | null;
+  bio_en?: string | null;
+}
