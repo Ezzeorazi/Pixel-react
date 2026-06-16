@@ -49,8 +49,39 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const Icon = ICONS[service.icon] ?? Code;
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const serviceUrl = `${siteUrl}/${locale}/services/${slug}`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.name,
+    description: service.description,
+    serviceType: service.name,
+    url: serviceUrl,
+    provider: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
+    areaServed: ['AR', 'MX', 'Latin America'],
+    ...(service.features?.length
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: service.name,
+            itemListElement: service.features.map((feature: string) => ({
+              '@type': 'Offer',
+              itemOffered: { '@type': 'Service', name: feature },
+            })),
+          },
+        }
+      : {}),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <section className="pt-36 pb-16 md:pt-44 md:pb-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full filter blur-[100px] pointer-events-none" />
         <Container>

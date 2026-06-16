@@ -63,8 +63,28 @@ export default async function ProjectDetailPage({ params }: Props) {
     .filter((p) => p.slug !== slug && p.category === project.category)
     .slice(0, 3);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pixelmaker.com.ar';
+  const projectUrl = `${siteUrl}/${locale}/projects/${slug}`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.name,
+    description: project.description,
+    url: projectUrl,
+    inLanguage: locale,
+    ...(project.image_url ? { image: project.image_url } : {}),
+    ...(project.technologies?.length ? { keywords: project.technologies.join(', ') } : {}),
+    creator: { '@type': 'Organization', name: 'Pixel Maker', url: siteUrl },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <section className="pt-36 pb-10 md:pt-44 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full filter blur-[100px] pointer-events-none" />
         <Container>
