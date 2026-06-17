@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { SiGithub } from 'react-icons/si';
+import { FaLinkedin } from 'react-icons/fa6';
 import { Section, Container, SectionHeader } from '@/components/ui/Section';
 import { getTeamMembers } from '@/lib/supabase/queries';
 import type { Locale, TeamMember } from '@/lib/types';
@@ -46,6 +47,7 @@ export async function Team() {
               member={member}
               gradient={GRADIENTS[i % GRADIENTS.length]}
               githubLabel={t('githubLabel')}
+              linkedinLabel={t('linkedinLabel')}
             />
           ))}
         </div>
@@ -58,11 +60,15 @@ function MemberCard({
   member,
   gradient,
   githubLabel,
+  linkedinLabel,
 }: {
   member: TeamMember;
   gradient: string;
   githubLabel: string;
+  linkedinLabel: string;
 }) {
+  const linkClass =
+    'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gray-100 dark:bg-[#0a0a0c] text-gray-900 dark:text-white font-semibold text-sm border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/5 hover:-translate-y-0.5 transition-all';
   return (
     <article className="group flex flex-col items-center text-center bg-gray-50 dark:bg-[#18181c] p-8 rounded-2xl border border-gray-200 dark:border-white/5 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] hover:-translate-y-1 transition-all duration-300">
       {member.photo_url ? (
@@ -91,17 +97,33 @@ function MemberCard({
         {member.bio}
       </p>
 
-      {member.github_url && (
-        <a
-          href={member.github_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gray-100 dark:bg-[#0a0a0c] text-gray-900 dark:text-white font-semibold text-sm border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/5 hover:-translate-y-0.5 transition-all"
-          aria-label={`${githubLabel} — ${member.name}`}
-        >
-          <SiGithub className="w-4 h-4" />
-          {githubLabel}
-        </a>
+      {(member.github_url || member.linkedin_url) && (
+        <div className="mt-auto flex flex-wrap justify-center gap-2.5">
+          {member.github_url && (
+            <a
+              href={member.github_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClass}
+              aria-label={`${githubLabel} — ${member.name}`}
+            >
+              <SiGithub className="w-4 h-4" />
+              {githubLabel}
+            </a>
+          )}
+          {member.linkedin_url && (
+            <a
+              href={member.linkedin_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClass}
+              aria-label={`${linkedinLabel} — ${member.name}`}
+            >
+              <FaLinkedin className="w-4 h-4" />
+              {linkedinLabel}
+            </a>
+          )}
+        </div>
       )}
     </article>
   );

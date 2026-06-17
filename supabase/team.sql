@@ -6,8 +6,9 @@ create table if not exists team_members (
   name        text not null,
   role        text not null,
   bio         text not null default '',
-  github_url  text,
-  photo_url   text,
+  github_url   text,
+  linkedin_url text,
+  photo_url    text,
   active      boolean not null default true,
   sort_order  integer not null default 0,
   -- bilingual fields (optional — fall back to ES when empty)

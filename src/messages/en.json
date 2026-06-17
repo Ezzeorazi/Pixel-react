@@ -29,6 +29,7 @@
       "heading": "The team",
       "subtitle": "The people behind Pixel Maker.",
       "githubLabel": "View GitHub",
+      "linkedinLabel": "View LinkedIn",
       "members": {
         "ezequiel": {
           "role": "Full Stack Developer & Founder",

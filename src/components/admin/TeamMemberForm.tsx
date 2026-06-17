@@ -89,10 +89,15 @@ export function TeamMemberForm({ member }: TeamMemberFormProps) {
             <input name="github_url" defaultValue={member?.github_url ?? ''} className={inputClass}
               placeholder="https://github.com/usuario" />
           </Field>
-          <Field label="Orden de visualización" error={fe('sort_order')}>
-            <input type="number" name="sort_order" defaultValue={member?.sort_order ?? 0} min={0} className={inputClass} />
+          <Field label="Enlace a LinkedIn" error={fe('linkedin_url')}>
+            <input name="linkedin_url" defaultValue={member?.linkedin_url ?? ''} className={inputClass}
+              placeholder="https://www.linkedin.com/in/usuario" />
           </Field>
         </div>
+
+        <Field label="Orden de visualización" error={fe('sort_order')}>
+          <input type="number" name="sort_order" defaultValue={member?.sort_order ?? 0} min={0} className={`${inputClass} sm:max-w-48`} />
+        </Field>
 
         <Field label="Foto (opcional — si no se sube, se muestran las iniciales)" error={fe('photo_url')}>
           <ImageUpload name="photo_url" defaultValue={member?.photo_url} folder="team" />

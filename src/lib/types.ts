@@ -89,6 +89,7 @@ export interface TeamMember {
   role: string;
   bio: string;
   github_url: string | null;
+  linkedin_url: string | null;
   photo_url: string | null;
   active: boolean;
   sort_order: number;
