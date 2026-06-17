@@ -87,3 +87,16 @@ export const ChatSecretsSchema = z.object({
   groq_api_key:   z.string().max(300).optional().nullable(),
   resend_api_key: z.string().max(300).optional().nullable(),
 });
+
+// Valida los datos que el modelo extrae al llamar a la tool `capturar_lead`,
+// antes de persistirlos en contact_messages / enviarlos por email.
+export const ChatLeadSchema = z
+  .object({
+    nombre:   z.string().trim().min(1, 'Falta el nombre').max(120),
+    email:    z.string().trim().email('Email inválido').max(200).optional().nullable(),
+    telefono: z.string().trim().min(6, 'Teléfono inválido').max(40).optional().nullable(),
+    interes:  z.string().trim().max(1000).optional().nullable().transform(v => v || null),
+  })
+  .refine((d) => !!d.email || !!d.telefono, {
+    message: 'Se necesita al menos un medio de contacto (email o teléfono).',
+  });

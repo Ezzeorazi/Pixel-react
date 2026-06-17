@@ -200,11 +200,26 @@
     "process": {
       "heading": "Cómo trabajamos",
       "steps": [
-        { "title": "Descubrimiento", "desc": "Entendemos tus objetivos, usuarios y restricciones." },
-        { "title": "Planificación", "desc": "Definimos alcance, tiempos y entregables juntos." },
-        { "title": "Ejecución", "desc": "Construimos con calidad y comunicación clara." },
-        { "title": "Lanzamiento", "desc": "Desplegamos, testeamos y nos aseguramos de que todo funcione." },
-        { "title": "Soporte", "desc": "Nos quedamos con vos después del lanzamiento para mantener y mejorar." }
+        {
+          "title": "Descubrimiento",
+          "desc": "Entendemos tus objetivos, usuarios y restricciones."
+        },
+        {
+          "title": "Planificación",
+          "desc": "Definimos alcance, tiempos y entregables juntos."
+        },
+        {
+          "title": "Ejecución",
+          "desc": "Construimos con calidad y comunicación clara."
+        },
+        {
+          "title": "Lanzamiento",
+          "desc": "Desplegamos, testeamos y nos aseguramos de que todo funcione."
+        },
+        {
+          "title": "Soporte",
+          "desc": "Nos quedamos con vos después del lanzamiento para mantener y mejorar."
+        }
       ]
     }
   },
@@ -301,6 +316,7 @@
     "close": "Cerrar chat",
     "error": "Ups, hubo un problema.",
     "whatsappFallback": "Escribinos por WhatsApp",
-    "preferHuman": "¿Preferís hablar con una persona? Escribinos por WhatsApp"
+    "preferHuman": "¿Preferís hablar con una persona? Escribinos por WhatsApp",
+    "verifying": "Verificando…"
   }
 }

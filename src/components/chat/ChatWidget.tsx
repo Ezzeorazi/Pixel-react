@@ -15,6 +15,36 @@ interface ChatWidgetProps {
 
 const STORAGE_KEY = 'pixi-chat-history';
 
+// Anti-bot opcional con Cloudflare Turnstile. Si no hay site key, se omite.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+      remove: (id: string) => void;
+      reset: (id?: string) => void;
+    };
+  }
+}
+
+let turnstileScriptPromise: Promise<void> | null = null;
+function loadTurnstile(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.resolve();
+  if (window.turnstile) return Promise.resolve();
+  if (turnstileScriptPromise) return turnstileScriptPromise;
+  turnstileScriptPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    s.async = true;
+    s.defer = true;
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error('turnstile load failed'));
+    document.head.appendChild(s);
+  });
+  return turnstileScriptPromise;
+}
+
 export function ChatWidget({ whatsapp }: ChatWidgetProps) {
   const t = useTranslations('chat');
   const locale = useLocale();
@@ -23,7 +53,9 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [verified, setVerified] = useState(!TURNSTILE_SITE_KEY);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const turnstileRef = useRef<HTMLDivElement>(null);
 
   // Restaurar historial de la sesión (solo al montar en el cliente).
   useEffect(() => {
@@ -44,9 +76,46 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, loading]);
 
+  // Resolver el challenge anti-bot cuando el chat está abierto y aún sin verificar.
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || verified || !open) return;
+    let cancelled = false;
+    let widgetId: string | undefined;
+    loadTurnstile()
+      .then(() => {
+        if (cancelled || !turnstileRef.current || !window.turnstile) return;
+        widgetId = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: async (token: string) => {
+            try {
+              const res = await fetch('/api/chat/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token }),
+              });
+              if (res.ok && !cancelled) setVerified(true);
+            } catch {
+              /* ignore */
+            }
+          },
+        });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+      if (widgetId && window.turnstile) {
+        try {
+          window.turnstile.remove(widgetId);
+        } catch {
+          /* ignore */
+        }
+      }
+    };
+  }, [open, verified]);
+
   const send = useCallback(async () => {
     const text = input.trim();
-    if (!text || loading) return;
+    if (!text || loading || !verified) return;
     setError(false);
     setInput('');
 
@@ -61,6 +130,11 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
         body: JSON.stringify({ messages: next.slice(-24), locale }),
       });
       const data = await res.json();
+      // El pase venció: volver a pedir verificación anti-bot.
+      if (res.status === 401 && data.needVerification) {
+        setVerified(false);
+        throw new Error('need-verification');
+      }
       if (!res.ok || !data.message) throw new Error(data.error || 'error');
       setMessages((m) => [...m, { role: 'assistant', content: data.message }]);
     } catch {
@@ -68,7 +142,7 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
     } finally {
       setLoading(false);
     }
-  }, [input, loading, messages, locale]);
+  }, [input, loading, verified, messages, locale]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -134,6 +208,14 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
             )}
           </div>
 
+          {/* Verificación anti-bot (Turnstile). Solo si está configurado y sin pase. */}
+          {TURNSTILE_SITE_KEY && !verified && (
+            <div className="flex flex-col items-center gap-2 border-t border-white/10 px-4 py-3">
+              <span className="text-xs text-gray-400">{t('verifying')}</span>
+              <div ref={turnstileRef} />
+            </div>
+          )}
+
           {/* Input */}
           <div className="border-t border-white/10 p-3">
             <div className="flex items-end gap-2">
@@ -147,7 +229,7 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
               />
               <button
                 onClick={send}
-                disabled={loading || !input.trim()}
+                disabled={loading || !input.trim() || !verified}
                 aria-label={t('send')}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white transition-opacity disabled:opacity-40"
               >

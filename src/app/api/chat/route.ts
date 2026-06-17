@@ -1,31 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase/service';
-import { getServices } from '@/lib/supabase/queries';
+import { getServices, getProjects, getTeamMembers } from '@/lib/supabase/queries';
 import { buildSystemPrompt } from '@/lib/chat/system-prompt';
 import { groqChat, CAPTURE_LEAD_TOOL, type ChatMessage } from '@/lib/chat/groq';
+import { ChatLeadSchema } from '@/lib/schemas';
+import { verifyPass, turnstileEnabled, PASS_COOKIE } from '@/lib/chat/turnstile';
 import { sendLeadEmail } from '@/lib/email';
 import type { Locale, SiteSettings } from '@/lib/types';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
 // Límites anti-abuso.
 const MAX_MESSAGES = 24;
 const MAX_CHARS = 2000;
-
-// Rate limit best-effort en memoria (por instancia de función).
-const RATE = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 20; // requests
-const RATE_WINDOW = 60_000; // por minuto
+const RATE_WINDOW = 60; // segundos
 
-function rateLimited(ip: string): boolean {
+// Capa 1: rate limit en memoria (por instancia). Cheap, frena ráfagas locales.
+const RATE = new Map<string, { count: number; resetAt: number }>();
+
+function localRateLimited(ip: string): boolean {
   const now = Date.now();
   const entry = RATE.get(ip);
   if (!entry || now > entry.resetAt) {
-    RATE.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
+    RATE.set(ip, { count: 1, resetAt: now + RATE_WINDOW * 1000 });
     return false;
   }
   entry.count += 1;
   return entry.count > RATE_LIMIT;
+}
+
+// Capa 2: rate limit compartido en Supabase (global a todas las instancias).
+// Fail-open: si la RPC falla, no bloqueamos (la capa local sigue activa).
+async function sharedRateLimited(svc: SupabaseClient, ip: string): Promise<boolean> {
+  try {
+    const { data, error } = await svc.rpc('check_chat_rate_limit', {
+      p_ip: ip,
+      p_limit: RATE_LIMIT,
+      p_window_seconds: RATE_WINDOW,
+    });
+    if (error) return false;
+    return data === true;
+  } catch {
+    return false;
+  }
 }
 
 interface ClientMessage {
@@ -35,8 +54,13 @@ interface ClientMessage {
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  if (rateLimited(ip)) {
+  if (localRateLimited(ip)) {
     return NextResponse.json({ error: 'Demasiadas solicitudes, esperá un momento.' }, { status: 429 });
+  }
+
+  // Anti-bot: exigir un pase válido de Turnstile (si la feature está activada).
+  if (turnstileEnabled() && !verifyPass(req.cookies.get(PASS_COOKIE)?.value)) {
+    return NextResponse.json({ error: 'Verificación requerida.', needVerification: true }, { status: 401 });
   }
 
   let body: { messages?: ClientMessage[]; locale?: string };
@@ -63,6 +87,12 @@ export async function POST(req: NextRequest) {
   let resendKey: string | null = null;
   try {
     const svc = createServiceClient();
+
+    // Rate limit compartido (global). Si lo supera, cortamos antes de gastar tokens.
+    if (await sharedRateLimited(svc, ip)) {
+      return NextResponse.json({ error: 'Demasiadas solicitudes, esperá un momento.' }, { status: 429 });
+    }
+
     const [settingsRes, secretsRes] = await Promise.all([
       svc.from('site_settings').select('*').limit(1).single(),
       svc.from('app_secrets').select('groq_api_key, resend_api_key').limit(1).single(),
@@ -78,8 +108,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'El chat no está configurado.' }, { status: 503 });
   }
 
-  const services = await getServices(locale);
-  const systemPrompt = buildSystemPrompt({ locale, services, settings });
+  // Contexto fresco en cada request: refleja altas/bajas en /admin sin caché.
+  const [services, projects, team] = await Promise.all([
+    getServices(locale),
+    getProjects(locale),
+    getTeamMembers(locale),
+  ]);
+  const systemPrompt = buildSystemPrompt({ locale, services, projects, team, settings });
 
   const messages: ChatMessage[] = [
     { role: 'system', content: systemPrompt },
@@ -92,6 +127,7 @@ export async function POST(req: NextRequest) {
       apiKey: groqKey,
       messages,
       tools: [CAPTURE_LEAD_TOOL],
+      temperature: 0.4,
     });
 
     const toolCalls = first.tool_calls ?? [];
@@ -131,7 +167,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Segunda llamada: respuesta final al visitante.
-    const second = await groqChat({ apiKey: groqKey, messages });
+    const second = await groqChat({ apiKey: groqKey, messages, temperature: 0.4 });
     return NextResponse.json({ message: second.content ?? '', leadCaptured });
   } catch (e) {
     console.error('[chat] error:', e);
@@ -155,16 +191,21 @@ async function saveLead({
   resendKey: string | null;
   locale: Locale;
 }): Promise<boolean> {
-  const nombre = args.nombre?.trim();
-  const email = args.email?.trim();
-  const telefono = args.telefono?.trim();
-  if (!nombre || (!email && !telefono)) return false;
+  // Validar/sanitizar lo que extrajo el modelo antes de persistir.
+  const parsed = ChatLeadSchema.safeParse(args);
+  if (!parsed.success) {
+    console.warn('[chat] lead inválido, no se guarda:', parsed.error.issues.map((i) => i.message).join('; '));
+    return false;
+  }
+  const nombre = parsed.data.nombre;
+  const email = parsed.data.email ?? undefined;
+  const telefono = parsed.data.telefono ?? undefined;
 
   const transcript = clean
     .map((m) => `${m.role === 'user' ? 'Visitante' : 'Pixi'}: ${m.content}`)
     .join('\n');
 
-  const interes = args.interes?.trim() || 'Consulta desde el chatbot';
+  const interes = parsed.data.interes || 'Consulta desde el chatbot';
 
   // Guardar en contact_messages.
   try {
