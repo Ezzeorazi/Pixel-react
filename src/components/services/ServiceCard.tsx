@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { ArrowRight, Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle } from 'lucide-react';
 import type { Service } from '@/lib/types';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 
 const ICONS: Record<string, React.ElementType> = {
   Code, Layers, ShoppingBag, BarChart2, Megaphone, Search, Wrench, Lightbulb, Globe, Zap, Shield, Star, Bot, MessageCircle,
@@ -31,7 +31,9 @@ export function ServiceCard({ service }: { service: Service }) {
   const colors = COLOR_CLASSES[service.color] ?? COLOR_CLASSES.purple;
 
   return (
-    <Link
+    <TrackedLink
+      event="service_card_click"
+      eventParams={{ service: service.slug }}
       href={`/${locale}/services/${service.slug}`}
       className={`group bg-gray-50 dark:bg-[#18181c] p-8 rounded-2xl border border-gray-200 dark:border-white/5 ${colors.glow} hover:-translate-y-1 transition-all duration-300`}
     >
@@ -50,6 +52,6 @@ export function ServiceCard({ service }: { service: Service }) {
       <span className="inline-flex items-center gap-1 text-sm font-semibold text-purple-500 group-hover:text-purple-400 transition-colors">
         Ver más <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
       </span>
-    </Link>
+    </TrackedLink>
   );
 }

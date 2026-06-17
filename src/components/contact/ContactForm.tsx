@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Send, User, Mail, Building2, Phone, FileText } from 'lucide-react';
 import { SERVICES } from '@/lib/data';
 import { submitContact } from '@/app/actions/contact';
+import { trackEvent } from '@/lib/analytics';
 
 const BUDGET_KEYS = ['b1', 'b2', 'b3', 'b4', 'b5'] as const;
 const TIMELINE_KEYS = ['t1', 't2', 't3', 't4'] as const;
@@ -30,7 +31,13 @@ export function ContactForm() {
     setStatus('loading');
     const result = await submitContact(formData);
     setStatus(result.ok ? 'success' : 'error');
-    if (result.ok) setFormData(EMPTY_FORM);
+    if (result.ok) {
+      trackEvent('contact_submit', {
+        service: formData.service || 'sin_especificar',
+        budget: formData.budget || 'sin_especificar',
+      });
+      setFormData(EMPTY_FORM);
+    }
   };
 
   if (status === 'success') {

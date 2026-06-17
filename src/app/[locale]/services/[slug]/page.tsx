@@ -5,6 +5,7 @@ import { ArrowLeft, Check, Code, Layers, ShoppingBag, BarChart2, Megaphone, Sear
 import { Container } from '@/components/ui/Section';
 import { GradientText } from '@/components/ui/GradientText';
 import { CTASection } from '@/components/home/CTASection';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 import { getService } from '@/lib/supabase/queries';
 import type { Metadata } from 'next';
 import type { Locale } from '@/lib/types';
@@ -107,12 +108,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 {service.price_label}
               </p>
             )}
-            <Link
+            <TrackedLink
+              event="quote_request"
+              eventParams={{ service: service.slug, location: 'service_hero' }}
               href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] transition-all hover:-translate-y-0.5"
             >
               {t('askPrice')} <ArrowRight className="w-4 h-4" />
-            </Link>
+            </TrackedLink>
           </div>
         </Container>
       </section>
@@ -147,12 +150,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                     {service.price_label}
                   </p>
                 )}
-                <Link
+                <TrackedLink
+                  event="quote_request"
+                  eventParams={{ service: service.slug, location: 'service_sidebar' }}
                   href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
                   className="block w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all"
                 >
                   {t('contactUs')}
-                </Link>
+                </TrackedLink>
               </div>
             </div>
           </Container>

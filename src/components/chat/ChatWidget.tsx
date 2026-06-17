@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { MessageCircle, X, Send, Bot } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -122,6 +123,7 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
     const next = [...messages, { role: 'user' as const, content: text }];
     setMessages(next);
     setLoading(true);
+    trackEvent('chat_message_sent');
 
     try {
       const res = await fetch('/api/chat', {
@@ -157,7 +159,12 @@ export function ChatWidget({ whatsapp }: ChatWidgetProps) {
     <>
       {/* Botón flotante */}
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() =>
+          setOpen((v) => {
+            if (!v) trackEvent('chat_open');
+            return !v;
+          })
+        }
         aria-label={open ? t('close') : t('open')}
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-900/30 transition-transform hover:scale-105 active:scale-95"
       >

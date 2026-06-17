@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 
 export function CTASection() {
   const t = useTranslations('home.cta');
@@ -19,12 +19,14 @@ export function CTASection() {
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
             {t('subtitle')}
           </p>
-          <Link
+          <TrackedLink
+            event="cta_click"
+            eventParams={{ location: 'cta_section', target: 'contact' }}
             href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all hover:-translate-y-0.5 text-lg"
           >
             {t('button')} <ArrowRight className="w-5 h-5" />
-          </Link>
+          </TrackedLink>
         </div>
       </div>
     </section>

@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { GradientText } from '@/components/ui/GradientText';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 
 export function Hero() {
   const t = useTranslations('home');
@@ -35,18 +35,22 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link
+            <TrackedLink
+              event="cta_click"
+              eventParams={{ location: 'hero', target: 'contact' }}
               href={`/${locale}/${locale === 'es' ? 'contacto' : 'contact'}`}
               className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-[0_0_25px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5"
             >
               {t('hero.ctaPrimary')} <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
+            </TrackedLink>
+            <TrackedLink
+              event="cta_click"
+              eventParams={{ location: 'hero', target: 'projects' }}
               href={`/${locale}/projects`}
               className="px-8 py-4 bg-gray-100 dark:bg-[#18181c] text-gray-900 dark:text-white font-semibold rounded-lg border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/5 transition-all text-center hover:-translate-y-0.5"
             >
               {t('hero.ctaSecondary')}
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </div>
